@@ -1,0 +1,783 @@
+@charset "utf-8";
+
+/* CSS Document */
+
+
+
+
+
+body {
+
+	margin-left: 0px;
+
+	margin-top: 0px;
+
+	margin-right: 0px;
+
+	margin-bottom: 0px;
+
+	background-color: #F9F8F2;
+
+	font-family: "kiti";
+
+}
+
+
+
+
+
+
+
+
+
+
+
+body,td,th { 
+
+	
+
+}
+
+
+
+
+
+
+
+
+
+a {
+
+	
+
+	color: #58595b;
+
+	text-decoration: none;
+
+}
+
+a:visited {
+
+	color: #58595B;
+
+}
+
+
+
+a:hover {
+
+	color: #2E2F30;
+
+}
+
+a:active {
+
+	color: #67338F;
+
+}
+
+
+
+
+
+
+
+.pic:link {
+
+	text-decoration: none;
+
+	color: #FFFFFF;
+
+}
+
+.pic:hover {
+
+	text-decoration: none;
+
+	color: #EA5A26;
+
+}
+
+
+
+
+
+a.project:link {
+
+	text-decoration: none;
+
+	color: #58595b;
+
+	font-weight: normal;
+
+	font-style: normal;
+
+}
+
+a.project:hover {
+
+	text-decoration: none;
+
+	color: #231f20;
+
+}
+
+a.btpic:hover {
+
+	text-decoration: blink;
+
+}
+
+.text-copyr {
+
+
+
+	color: #58595b;
+
+	text-align: left;
+
+}
+
+.text-thaifont {
+
+
+
+}
+
+.text-head {
+
+
+
+	text-align: justify;
+
+}
+
+.text-contentGray {
+
+
+
+	color: #616161;
+
+}
+
+.text-contentGray-big {
+
+
+
+	color: #666;
+
+
+
+}
+
+
+
+.text-contentGrayBig {
+
+	color: #373737;
+
+	padding-left:27px;
+
+	font-size:1.5em;
+
+	background:url(../images/bulet-1.png) no-repeat left center
+
+}
+
+
+
+.text-contentHeadGray {
+
+
+
+	color: #231f20;
+
+}
+
+.text-contentHeadPurple {
+
+
+
+	color: #5b2f81;
+
+}
+
+.text-contentHead-Orang {
+
+	
+
+	
+
+	color: #f0592b;
+
+}
+
+
+
+.text-contentHeadYear {
+
+	
+
+	color: #5b5b5b;
+
+	text-align: left;
+
+}
+
+.text-contentHeadOrang {
+
+	
+
+	color: #f0592b;
+
+	text-align: left;
+
+	font-style: normal;
+
+	font-weight: normal;
+
+}
+
+
+
+.text-contentHeadMango {
+
+	
+
+	color: #653291;
+
+	text-align: left;
+
+	font-style: normal;
+
+	font-weight: normal;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+#siteW {
+
+	width: 950px;
+
+	height:auto;
+
+	position: relative;
+
+}
+
+#head {
+
+	height: 209px;
+
+	argin:0; padding:0;
+
+	
+
+}
+
+#head-project {
+
+	height: 129px;
+
+	margin:0; padding:0
+
+}
+
+
+
+#logo-head {
+
+	height: 85px;
+
+	background-image: url(../images/logo_plus-condo.png);
+
+	background-repeat: no-repeat;
+
+	background-position: center;
+
+	margin-bottom: 36px;
+
+}
+
+
+
+#menu-socialTop {
+
+	height: 23px;
+
+	padding-top: 19px;
+
+}
+
+#menu-top-project {
+
+	height: 90px;
+
+	padding-top: 19px;
+
+	background-image: url(../images/logo-plus2-phuket-kathu.png);
+
+	background-repeat: no-repeat;
+
+	background-position: left 22px;
+
+}
+
+#menu-top-project1 {
+
+	height: 90px;
+
+	padding-top: 19px;
+
+	background-image: url(../images/logo-plus1-phuket-kathu.png);
+
+	background-repeat: no-repeat;
+
+	background-position: left 22px;
+
+}
+
+#menu-mainTop {
+
+	height: 28px;
+
+	overflow: visible;
+
+	background-image: url(../images/button.png);
+
+	background-repeat: repeat-x;
+
+	background-position: 0px -58px;
+
+	padding-top: 4px;
+
+}
+
+
+
+#menu-mainProject {
+
+	background-image: url(../images/button.png);
+
+	margin-top: 10px;
+
+	margin-bottom: 55px;
+
+	background-position: 0px -60px;
+
+}
+
+
+
+#menu-mainProjectInfo {
+
+	padding-top: 0px;
+
+	background-image: url(../images/button.png);
+
+	background-position: 0px -60px;
+
+	margin-bottom: 40px;
+
+}
+
+
+
+
+
+#picture {
+
+	height: 520px;
+
+}
+
+#picture-LineTop {
+
+	height: 8px;
+
+	background-color: #653291;
+
+}
+
+#picture-LineTop1 {
+
+	height: 8px;
+
+	background-color: #653291;
+
+}
+
+
+
+
+
+#content {
+
+	padding: 15px 10px 15px 10px;
+
+}
+
+.line-centerHi {
+
+	height: 22px;
+
+	width: 1px;
+
+	border-left-width: thin;
+
+	border-left-style: dotted;
+
+	border-left-color: #999999;
+
+}
+
+
+
+.line-centerWid {
+
+	margin-top: 4px;
+
+	border-top-width: thin;
+
+	border-top-style: dashed;
+
+	border-top-color: #666;
+
+	height: 22px;
+
+}
+
+.dot-centerHi {
+
+	border-left-width: thin;
+
+	border-left-style: dashed;
+
+	border-left-color: #999999;
+
+}
+
+.boxIn {
+
+	width: 950px;
+
+	float: left;
+
+	height: 500px;
+
+	z-index: 300;
+
+	background-repeat: no-repeat;
+
+	padding-bottom: 25px;
+
+	position:relative
+
+}
+
+
+
+
+
+
+
+.box-contentOne {
+
+	padding-bottom: 20px;
+
+}
+
+.box-contentTwo {
+
+	float: left;
+
+	width: 460px;
+
+	padding-bottom: 20px;
+
+}
+
+
+
+
+
+.box-centerTwo {
+
+	float: left;
+
+	width: 30px;
+
+	height: 60px;
+
+}
+
+.box-contentTree {
+
+	float: left;
+
+	width: 290px;
+
+	padding-bottom: 20px;
+
+	overflow: visible;
+
+}
+
+.box-contentFour {
+
+	float: left;
+
+	width: 222px;
+
+	padding-bottom: 20px;
+
+	overflow: visible;
+
+}
+
+
+
+.box-contentOnePerTree {
+
+	float: left;
+
+	width: 315px;
+
+	padding-bottom: 20px;
+
+	overflow: visible;
+
+}
+
+
+
+.box-contentTwoPerTree {
+
+	float: left;
+
+	width: 615px;
+
+	padding-bottom: 20px;
+
+	overflow: visible;
+
+}
+
+
+
+.box-centerTree {
+
+	float: left;
+
+	width: 20px;
+
+	height: 60px;
+
+}
+
+
+
+.box-centerTreed {
+
+	float: left;
+
+	width: 40px;
+
+	height: 60px;
+
+}
+
+.box-centerFour {
+
+	float: left;
+
+	width: 20px;
+
+	height: 60px;
+
+}
+
+
+
+.clearBox {
+
+	clear: both;
+
+	height: 5px;
+
+}
+
+.blog1000x500 {
+
+	height: 500px;
+
+	width: 1000px;
+
+}
+
+
+
+#blogPlusProject {
+
+	height: 396px;
+
+	background-color: #6acef5;
+
+}
+
+
+
+
+
+
+
+#footed {
+
+	height: 90px;
+
+	clear: both;
+
+}
+
+#menu-footed {
+
+}
+
+#copyri {
+
+	margin-top: 20px;
+
+	text-align: left;
+
+}
+
+.content-spaceButtom {
+
+	padding-bottom: 25px;
+
+}
+
+#apDivFoorplan {
+
+	height: 45px;
+
+	clear: both;
+
+	position: fixed;
+
+	z-index: 1000;
+
+	background-color: #FFF;
+
+	width: 100%;
+
+}
+
+#apDivUnitType {
+
+	height: 18px;
+
+	clear: both;
+
+	position: fixed;
+
+	z-index: 1000;
+
+	background-color: #FFF;
+
+	width: 100%;
+
+}
+
+.boxPading {
+
+	padding: 25px;
+
+}
+
+
+
+
+
+
+
+
+
+#projectconcept,
+
+#projectconcept  p{ text-align:left; font-size:1em; }
+
+
+
+#projectconcept img { border: #CCC 2px solid;
+
+					  box-shadow:2px 2px 2px 2px #eeeeee;
+
+					  }
+
+
+
+#projectconcept ul { list-style:none}
+
+
+
+#projectconcept ul li { margin: 7px 0 7px 0;
+
+						padding-left:30px;
+
+						background:url(../images/click-plus-small.png) no-repeat left  top}
+
+						
+
+#projectconcept ul li span { font-weight:bold;
+
+							  color:#111}
+
+						
+
+#projectconcept h4 { color:#642b90 ;
+
+					  font-weight:bold;
+
+					  font-size:1.3em;
+
+					  margin-top:50px;
+
+					  text-shadow:2px 3px 2px #CCCCCC}
+
+					  
+
+#projectconcept	 .last-p { padding:5px 15px;
+
+							background:#FFC;
+
+							border:2px dotted #CCCCCC}
+
+							
+
+#projectconcept	 .last-p p { font-size:1.1em; color:#333}
+
+
+
+
+
+
+
+span.font-bug { font-family:Arial, Helvetica,Georgia, Times, serif, sans-serif !important;
+
+			font-weight:500;
+
+			font-size:0.7em;
+
+			}
