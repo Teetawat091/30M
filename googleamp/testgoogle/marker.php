@@ -2,23 +2,18 @@
 <html>
 <body>
 
-<!--<form action="#">
-<input type="hidden" name="lat" id = "lat">
-<input type="hidden" name="lng" id = "lng">
-</form> -->
-
-<button onclick="showdistance()">Distance</button>
-
 <select>
   <option value="motercycle">มอเตอไซค์</option>
   <option value="car">รถยนต์</option>
   
 </select>
-<p id="dis"></p>
-
+<p id="from"></p>
+<button onclick="showlog()">To show distance</button>
+<p id="to"></p>
 <div id="map" style="width:100%;height:500px;"></div>
 
 <script>
+
 function myMap() {
   var mapCanvas = document.getElementById("map");
   
@@ -33,7 +28,8 @@ function myMap() {
 function placeMarker(map, location) {
   var marker = new google.maps.Marker({
     position: location,
-    map: map
+    map: map,
+    
   });
 
  // console.log(marker.getPosition().lat());
@@ -41,22 +37,30 @@ function placeMarker(map, location) {
   var latposition = [marker.getPosition().lat()];
   var lngposition = [marker.getPosition().lng()];
 
-  addarray(latposition,lngposition);
-   
+  addarray(latposition,lngposition); 
 }
-
 function addarray(array1,array2){
-  for(i=0;i<1;i++){
     console.log(array1);
     console.log(array2);
-  }
+  document.getElementById("from").innerHTML = "  lat: "+array1+" lng :"+array2;
+}
+var myLogs = [];
+(function () {
+  var log = console.log;
+  console.log = function () {
+    var args = Array.prototype.slice.call(arguments)
+    log.apply(this, args );
+    myLogs.push(args);
+  };
+}());
+function showlog(){
+  myLogs.toString();
+  document.getElementById("to").innerHTML = myLogs;
 
+  window.location.href = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+myLogs[0]+","+myLogs[1]+"&destinations="+myLogs[2]+","+myLogs[3]+"&key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0"
 }
 
-function showdistance(){
- 
-  document.getElementById("dis").innerHTML = "Distance : ";
-}
+
 </script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0&callback=myMap"></script>

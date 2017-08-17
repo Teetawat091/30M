@@ -65,21 +65,10 @@
 
     <input id="destination-input" class="controls" type="text"
         placeholder="Enter a destination location">
+   <div id="map"></div>
 
-
-    <div id="mode-selector" class="controls">
-      <input type="radio" name="type" id="changemode-walking" checked="checked">
-      <label for="changemode-walking">Walking</label>
-
-      <input type="radio" name="type" id="changemode-transit">
-      <label for="changemode-transit">Transit</label>
-
-      <input type="radio" name="type" id="changemode-driving">
-      <label for="changemode-driving">Driving</label>
-    </div>
-
-    <div id="map"></div>
-
+<button onclick="checklog()">log</button>
+    <p id= "log"> </p>
     <script>
       // This example requires the Places library. Include the libraries=places
       // parameter when you first load the API. For example:
@@ -91,6 +80,9 @@
           center: {lat: 15.8700,lng:100.9925},
           zoom: 6
         });
+        google.maps.event.addListener(map, 'click', function(event) {
+    placeMarker(map, event.latLng);
+  });
 
         new AutocompleteDirectionsHandler(map);
       }
@@ -102,7 +94,7 @@
         this.map = map;
         this.originPlaceId = null;
         this.destinationPlaceId = null;
-        this.travelMode = 'WALKING';
+        this.travelMode = 'DRIVING';
         var originInput = document.getElementById('origin-input');
         var destinationInput = document.getElementById('destination-input');
         var modeSelector = document.getElementById('mode-selector');
@@ -115,10 +107,6 @@
         var destinationAutocomplete = new google.maps.places.Autocomplete(
             destinationInput, {placeIdOnly: true});
 
-        this.setupClickListener('changemode-walking', 'WALKING');
-        this.setupClickListener('changemode-transit', 'TRANSIT');
-        this.setupClickListener('changemode-driving', 'DRIVING');
-
         this.setupPlaceChangedListener(originAutocomplete, 'ORIG');
         this.setupPlaceChangedListener(destinationAutocomplete, 'DEST');
 
@@ -130,7 +118,7 @@
       // Sets a listener on a radio button to change the filter type on Places
       // Autocomplete.
       AutocompleteDirectionsHandler.prototype.setupClickListener = function(id, mode) {
-        var radioButton = document.getElementById(id);
+        
         var me = this;
         radioButton.addEventListener('click', function() {
           me.travelMode = mode;
@@ -176,18 +164,34 @@
         });
       };
 
+      function placeMarker(map, location) {
+  var marker = new google.maps.Marker({
+    position: location,
+    map: map
+  });
+
+  console.log(marker.getPosition().lat());
+  console.log(marker.getPosition().lng());
+}
+var myLogs = [];
+(function () {
+  var log = console.log;
+  console.log = function () {
+    var args = Array.prototype.slice.call(arguments)
+    log.apply(this, args );
+    myLogs.push(args);
+  };
+}());
+
+function checklog(){
+  myLogs.toString();
+  document.getElementById("log").innerHTML = myLogs;
+}
+
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0&libraries=places&callback=initMap"
         async defer></script>
-        <?php
-
-         $url = "https://maps.googleapis.com/maps/api/directions/json?origin=75+9th+Ave+New+York,+NY&destination=MetLife+Stadium+1+MetLife+Stadium+Dr+East+Rutherford,+NJ+07073&key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0";
-
-
-
-
-         echo $url;
-
-        ?>
+       
   </body>
 </html>
