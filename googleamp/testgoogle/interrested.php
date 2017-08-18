@@ -49,11 +49,11 @@
       #right-panel {
         height: 100%;
         float: right;
-        width: 390px;
+        width: 200px;
         overflow: auto;
       }
       #map {
-        margin-right: 400px;
+        margin-right: 0px;
       }
       #floating-panel {
         background: #fff;
@@ -78,28 +78,25 @@
   </head>
   <body>
     <div id="floating-panel">
-      <strong>Start:</strong>
-      <select id="start">
-        <option value="chicago, il">Chicago</option>
-        <option value="st louis, mo">St Louis</option>
-        <option value="17.66495983051931,99.1845703125"> test</option>
-      
-      </select>
-      <br>
+    <form action="tojson.php" method="get">
+      <input type="hidden" name="start" id="start" value="">
       <strong>End:</strong>
-      <select id="end">
-      
-        <option value="san bernardino, ca">San Bernardino</option>
-        <option value="los angeles, ca">Los Angeles</option>
-        <option value="15.368949896534705,100.87646484375">testen</option>>
+      <select id="end" name="end">  
       </select>
+      <input type="submit" name="tonextpage" value="next">
+      </form>
+       <button onclick="log()">routing route</button>
+      <p id="sd"></p>
     </div>
     <div id="right-panel"></div>
     <div id="map"></div>
+    
     <script>
+    var directionsDisplay;
+    var directionsService;
       function initMap() {
-        var directionsDisplay = new google.maps.DirectionsRenderer;
-        var directionsService = new google.maps.DirectionsService;
+         directionsDisplay = new google.maps.DirectionsRenderer;
+         directionsService = new google.maps.DirectionsService;
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 7,
           center: {lat: 15.8700, lng: 100.9925}
@@ -156,6 +153,25 @@ var myLogs = [];
           }
         });
       }
+      function log (){
+       myLogs.toString();
+       document.getElementById("start").value =  myLogs[0]+","+myLogs[1];
+       document.getElementById("start").innerHTML =  myLogs[0]+","+myLogs[1];
+       var endvalue = document.getElementById("end");
+       for(i=2;i<4;i++){
+        var option = document.createElement("option");
+        if(i%2==0){
+          
+          option.text =  option.value = myLogs[i]+","+myLogs[i+1];
+       endvalue.add(option,0);
+        }
+       }
+      
+      }
+      
+//window.location.href = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins="+myLogs[0]+","+myLogs[1]+"&destinations="+myLogs[2]+","+myLogs[3]+"&key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0"
+  
+    
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0&callback=initMap">
