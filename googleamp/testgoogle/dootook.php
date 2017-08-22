@@ -13,8 +13,8 @@
       #map {
         height: 100%;
         float: left;
-        width: 100%;
-        height: 100%;
+        width: 70%;
+       
       }
       #floating-panel {
         position: absolute;
@@ -29,6 +29,33 @@
         line-height: 30px;
         padding-left: 10px;
       }
+      #right-panel {  
+        float: right;  
+        width: 29%;  
+        height: 100%;  
+      }  
+      #right-panel {  
+        font-family: 'Roboto','sans-serif';  
+        line-height: 30px;  
+        padding-left: 10px;  
+      }  
+ 
+      #right-panel select, #right-panel input {  
+        font-size: 15px;  
+      }  
+ 
+      #right-panel select {  
+        width: 100%;  
+      }  
+ 
+      #right-panel i {  
+        font-size: 12px;  
+      }  
+
+      .panel {  
+        height: 100%;  
+        overflow: auto;  
+      }  
 
     </style>
     <div id="floating-panel">
@@ -36,20 +63,27 @@
     <strong>ประเภทของยานภาหนะ </strong>
     <select name="select" id="vihicle">
       <option value="car">รถยนต์</option>
-      <option value="motercycle">มอเตอไซค์</option>
+      <option value="motercycle" selected="selected">มอเตอไซค์</option>
     </select>
     <select name="campus" id="campus" onchange="changecampus()" >
     <option value="" selected="selected">Please select your campus</option>
       <option value="7.90608272245317,98.36664140224457">ภูเก็ต</option>
       <option value="7.006341665683104,100.4985523223877">หาดใหญ่</option>
-      <option value="Ayuthaya">อยุธยา</option>
-      <option value="Suratthani">สุราษ</option>
+      <option value="14.343238520299131,100.60918271541595">อยุธยา</option>
+      <option value="9.11065637716888,99.30181503295898">สุราษ</option>
       <option value="13.168317602040103,100.93120604753494">ศรีราชา</option>
+    </select>
+    <select name="tt" id="tt" onchange="ending()">
+      <option value="">ไปยัง</option>
+      <option value="7.891948760651239,98.36819171905518">central</option>
+      <option value="Psu phuket">Psu Phuket</option>
+      <option value="สำนักงานประปาจังหวัดภูเก็ต">ประปา</option>
     </select>
       <input type="submit" name="submit" value="Go" onclick="d()" >
       <input type="hidden" name="or" value="" id="or">
       <input type="hidden" name="en" value="" id="en">
       <input type="hidden" name="cam" value="" id="cam"> 
+      <input type="hidden" name="total" value="" id="total">
     </form>
     </div>
     <p id="ss"></p>
@@ -61,6 +95,8 @@
         var directionsService;
         var campus;
         var lat_lng;
+        var lat;
+        var lng;
 
         lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
 
@@ -76,12 +112,12 @@
           directionsDisplay = new google.maps.DirectionsRenderer({
             draggable: true,
             map: map,
+            panel: document.getElementById('right-panel') 
 
           });
           directionsDisplay.addListener('directions_changed', function() {
             computeTotalDistance(directionsDisplay.getDirections());
-          });
-          myLogs.toString();
+          });          
         }
 
         function displayRoute(origin, destination, service, display) {
@@ -105,9 +141,30 @@
             map: map,
           });
           markers.push(marker);
-          console.log(marker.getPosition().lat());
-          console.log(marker.getPosition().lng());
-          myLogs;             
+           lat = marker.getPosition().lat();
+           lng = marker.getPosition().lng();
+           seten(lat,lng);             
+        }
+
+        function ending(){
+          var a= document.getElementById('en').value = document.getElementById('tt').value;
+          //alert(a);
+          displayRoute(''+document.getElementById('or').value+'',''+a+'',directionsService,
+            directionsDisplay);
+          clearMarkers();
+          markers = [];
+          
+          //document.getElementById('en').value = "";
+        }
+
+        function seten(lat,lng){
+          var e = document.getElementById('en').value = lat+","+lng;
+          //alert(typeof(e)+''+e+'');
+          displayRoute(''+document.getElementById('or').value+'',''+e+'',directionsService,
+            directionsDisplay);
+          clearMarkers(); 
+          markers = [];
+          //document.getElementById('en').value = "";
         }
 
         function setMapOnAll(map) {
@@ -120,71 +177,66 @@
           setMapOnAll(null);
         }
 
-        var myLogs = [];
-        (function () {
-          var log = console.log;
-          console.log = function () {
-            var args = Array.prototype.slice.call(arguments)
-            log.apply(this, args );
-            myLogs.push(args);
-          };
-        }());
-
         function d(){
-          document.getElementById('vihicle').value =  document.getElementById('vihicle').value;
-          document.getElementById('campus').value = document.getElementById('campus').value;
-          document.getElementById('en').value = myLogs[0]+","+myLogs[1];
+          //document.getElementById('vihicle').value =  document.getElementById('vihicle').value;
+          document.getElementById('cam').value;
+          document.getElementById('en').value ;
         }
         function changecampus(){
-          myLogs.toString();
           document.getElementById('or').value = document.getElementById('campus').value;
-          document.getElementById('cam').value = document.getElementById('campus').value;
-          //document.getElementById('en').value = myLogs[0]+","+myLogs[1];
-          //alert("สำนักงานจังหวัด"+document.getElementById('campus').value);
-          //direct(document.getElementById('campus').value);
+         
           if(document.getElementById('campus').value == "7.90608272245317,98.36664140224457"){
             lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
             initMap();
-            document.getElementById('en').value = myLogs[0]+","+myLogs[1];
-            direct(document.getElementById('campus').value);
-            document.getElementById('en').value ="";
-            document.getElementById('campus').selectedIndex = 0;
+            displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
+            directionsDisplay);
+            document.getElementById('campus').selectedIndex = 1;
           }//phuket
           else if(document.getElementById('campus').value =="7.006341665683104,100.4985523223877"){
             lat_lng = {lat:7.006341665683104,lng:100.4985523223877};
-            //document.getElementById('en').value ="";
             initMap();
-            document.getElementById('en').value = myLogs[0]+","+myLogs[1];
-            direct(document.getElementById('campus').value);
-            document.getElementById('en').value ="";
-            document.getElementById('campus').selectedIndex = 0;
+           displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
+            directionsDisplay);
+            document.getElementById('campus').selectedIndex = 2;
           }//hatyai
-          else if(document.getElementById('campus').value = "13.168317602040103,100.93120604753494"){
+          else if(document.getElementById('campus').value == "13.168317602040103,100.93120604753494"){
             lat_lng = {lat:13.168317602040103,lng:100.93120604753494};
-           // document.getElementById('en').value ="";
             initMap();
-            document.getElementById('en').value = myLogs[0]+","+myLogs[1];
-            direct(document.getElementById('campus').value);
-            document.getElementById('en').value ="";
-            document.getElementById('campus').selectedIndex = 0;
-          }
-          
-          }
-          function direct(campus){
-            if(myLogs.length==0){
-               displayRoute(campus,campus,directionsService,
+           displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
             directionsDisplay);
-            }
-            displayRoute(campus,myLogs[0]+","+myLogs[1],directionsService,
+            document.getElementById('campus').selectedIndex = 5;
+          }//sriraja
+          else if(document.getElementById('campus').value == "9.11065637716888,99.30181503295898"){
+             lat_lng = {lat:9.11065637716888,lng:99.30181503295898};
+            initMap();
+            displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
             directionsDisplay);
-            clearMarkers();
-            markers = [];
+            document.getElementById('campus').selectedIndex = 4;
+          }//surat
+          else if(document.getElementById('campus').value == "14.343238520299131,100.60918271541595"){
+            lat_lng = {lat:14.343238520299131,lng:100.60918271541595}
+            initMap();
+            displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
+            directionsDisplay);
+            document.getElementById('campus').selectedIndex = 3;
           }
+
+          }
+
+          function computeTotalDistance(result) {  
+          var total = 0;  
+          var myroute = result.routes[0];  
+          for (var i = 0; i < myroute.legs.length; i++) {  
+            total += myroute.legs[i].distance.value;  
+            }  
+          total = total / 1000;  
+          document.getElementById('total').value = total;  
+          }  
         </script>
       </head>
-
       <body>
 
         <div id="map"></div>
+        <div id="right-panel"></div> 
       </body>
 </html>
