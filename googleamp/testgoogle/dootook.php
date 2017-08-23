@@ -18,7 +18,7 @@
       }
       #floating-panel {
         position: absolute;
-        top: 16px;
+        top: 0px;
         left: 0%;
         z-index: 5;
         background-color: #fff;
@@ -59,13 +59,13 @@
 
     </style>
     <div id="floating-panel">
-    <form  action="todb.php" method="get">
+    <form  action="todb.php" method="post">
     <strong>ประเภทของยานภาหนะ </strong>
     <select name="select" id="vihicle">
       <option value="car">รถยนต์</option>
       <option value="motercycle" selected="selected">มอเตอไซค์</option>
     </select>
-    <select name="campus" id="campus" onchange="changecampus()" >
+    <select name="campus" id="campus" onchange="changecampus(this.selectedIndex)" >
     <option value="" selected="selected">Please select your campus</option>
       <option value="7.90608272245317,98.36664140224457">ภูเก็ต</option>
       <option value="7.006341665683104,100.4985523223877">หาดใหญ่</option>
@@ -73,20 +73,46 @@
       <option value="9.11065637716888,99.30181503295898">สุราษ</option>
       <option value="13.168317602040103,100.93120604753494">ศรีราชา</option>
     </select>
-    <select name="tt" id="tt" onchange="ending()">
+    <div id="subcats">
+
+    <select id="Phuket" name="subcategory" style="display:none" onchange="ending(this.id)">
       <option value="">ไปยัง</option>
-      <option value="7.891948760651239,98.36819171905518">central</option>
-      <option value="Psu phuket">Psu Phuket</option>
+      <option value="7.891948760651239,98.36819171905518">central<option>
+      <option value="Psuphuket">Psu Phuket</option>
       <option value="สำนักงานประปาจังหวัดภูเก็ต">ประปา</option>
     </select>
+
+    <select  id="Hatyai" name="subcategory" style="display:none" onchange="ending(this.id)">
+      <option value="">ไปยัง</option>
+      <option value="โรงพยาบาลสงขลานครินทร์">โรงพยาบาลสงขลานครินทร์</option>
+      <option value="Zoundhatyai">zound</option>
+    </select>
+
+    <select  id="Ayuthaya" name="subcategory" style="display:none" onchange="ending(this.id)">
+      <option value="">ไปยัง</option>
+      <option value="เจดีย์วัดสามปลื้ม">เจดีย์วัดสามปลื้ม</option>
+    </select>
+
+    <select  id="Surat" name="subcategory" style="display:none" onchange="ending(this.id)">
+      <option value="">ไปยัง</option>
+      <option value="โรงเรียนพุนพิน">พุนพิน</option>
+    </select>
+
+    <select  id="Sriraja" name="subcategory" style="display:none" onchange="ending(this.id)">
+      <option value="">ไปยัง</option>
+      <option value="สวนเสือศรีราชา">สวนเสือศรีราชา</option>
+    </select>
+
+    </div>
       <input type="submit" name="submit" value="Go" onclick="d()" >
       <input type="hidden" name="or" value="" id="or">
       <input type="hidden" name="en" value="" id="en">
       <input type="hidden" name="cam" value="" id="cam"> 
       <input type="hidden" name="total" value="" id="total">
+      <input type="hidden" name="dyroute" value="" id = "dyroute">
     </form>
     </div>
-    <p id="ss"></p>
+  
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0&callback=initMap"
         async defer></script>
         <script>
@@ -97,6 +123,7 @@
         var lat_lng;
         var lat;
         var lng;
+        var dynamicroute = [] ;
 
         lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
 
@@ -146,9 +173,9 @@
            seten(lat,lng);             
         }
 
-        function ending(){
-          var a= document.getElementById('en').value = document.getElementById('tt').value;
-          //alert(a);
+        function ending(id){
+          var a= document.getElementById('en').value = document.getElementById(id).value;
+          alert(a);
           displayRoute(''+document.getElementById('or').value+'',''+a+'',directionsService,
             directionsDisplay);
           clearMarkers();
@@ -182,14 +209,25 @@
           document.getElementById('cam').value;
           document.getElementById('en').value ;
         }
-        function changecampus(){
+        function changecampus(selectNo){
           document.getElementById('or').value = document.getElementById('campus').value;
+
+          var sels = document.getElementById("subcats").getElementsByTagName('SELECT'); 
+            for( var j=0; j<sels.length; j++ ) { 
+              sels[j].style.display = "none"; 
+                if ( j===(selectNo-1) ) { 
+                  sels[j].style.display = ''; 
+
+                } 
+            }
+
          
           if(document.getElementById('campus').value == "7.90608272245317,98.36664140224457"){
             lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
             initMap();
             displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
             directionsDisplay);
+
             document.getElementById('campus').selectedIndex = 1;
           }//phuket
           else if(document.getElementById('campus').value =="7.006341665683104,100.4985523223877"){
@@ -222,16 +260,25 @@
           }
 
           }
+        
 
           function computeTotalDistance(result) {  
-          var total = 0;  
+          var total = 0;
+          
           var myroute = result.routes[0];  
           for (var i = 0; i < myroute.legs.length; i++) {  
-            total += myroute.legs[i].distance.value;  
+            total += myroute.legs[i].distance.value; 
+            dynamicroute[i]= JSON.stringify(myroute.legs[i].steps);
+            console.log(dynamicroute[0]);
             }  
           total = total / 1000;  
-          document.getElementById('total').value = total;  
-          }  
+          document.getElementById('total').value = total;
+          console.log(dynamicroute.length);
+          document.getElementById('dyroute').value = dynamicroute[0]; 
+          //alert(JSON.stringify(dynamicroute));
+             
+          }
+
         </script>
       </head>
       <body>
