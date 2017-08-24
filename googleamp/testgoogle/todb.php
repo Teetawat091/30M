@@ -15,6 +15,13 @@ $conn = mysqli_connect($server, $user, $pass, $db);
 
 $url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=".$_POST['or']."&destinations=".$_POST['en']."&key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0";
 
+echo $url;
+$start   = $_POST['start_location'];
+echo '<br><br>';
+
+$a = substr($start, 1,strlen($start)-2);
+echo $a;
+
 $json = file_get_contents($url);
 $data = json_decode($json, TRUE);
 $distance = $_POST['total'];

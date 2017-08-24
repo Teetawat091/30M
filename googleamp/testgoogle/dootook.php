@@ -60,6 +60,15 @@
     </style>
     <div id="floating-panel">
     <form  action="todb.php" method="post">
+    <?php
+    $server = "localhost";
+    $user = "root";
+    $pass = "";
+    $db = "outgoing_form";
+    $conn = mysqli_connect($server, $user, $pass, $db);
+    mysqli_set_charset($conn,"utf8");
+    ?>
+    
     <strong>ประเภทของยานภาหนะ </strong>
     <select name="select" id="vihicle">
       <option value="car">รถยนต์</option>
@@ -67,21 +76,37 @@
     </select>
     <select name="campus" id="campus" onchange="changecampus(this.selectedIndex)" >
     <option value="" selected="selected">Please select your campus</option>
-      <option value="7.90608272245317,98.36664140224457">ภูเก็ต</option>
-      <option value="7.006341665683104,100.4985523223877">หาดใหญ่</option>
-      <option value="14.343238520299131,100.60918271541595">อยุธยา</option>
-      <option value="9.11065637716888,99.30181503295898">สุราษ</option>
-      <option value="13.168317602040103,100.93120604753494">ศรีราชา</option>
+      <?php
+    $sql = "SELECT brench_name,brench_lat,brench_lng FROM `brench` ORDER BY brench_id";
+    $res = mysqli_query($conn,$sql);
+    if($res){
+      while ($rec= mysqli_fetch_array($res,MYSQLI_ASSOC)) {
+      $category = $rec['name'];
+    ?>
+   <option value="<?php echo $rec['brench_lat'].",".$rec['brench_lng'] ?>"><?php  echo $rec['brench_name'] ?></option>
+    <?php 
+    }
+    }
+    ?>
     </select>
     <div id="subcats">
 
     <select id="Phuket" name="subcategory" style="display:none" onchange="ending(this.id)">
-      <option value="">ไปยัง</option>
-      <option value="7.891948760651239,98.36819171905518">central<option>
-      <option value="Psuphuket">Psu Phuket</option>
-      <option value="สำนักงานประปาจังหวัดภูเก็ต">ประปา</option>
+    <option value="" selected="selected">ต้องการจะไปที่</option>
+    <?php
+    $sqlphuket = "SELECT brench_destination_name,lat_destination,lng_destination FROM `brench-destination` ";
+    $phuketres = mysqli_query($conn,$sqlphuket);
+    if($phuketres){
+      while ($pkrec= mysqli_fetch_array($phuketres,MYSQLI_ASSOC)) {
+    ?>
+   <option value="<?php echo $pkrec['lat_destination'].",".$pkrec['lng_destination'] ?>"><?php  echo $pkrec['brench_destination_name'] ?></option>
+    <?php 
+    }
+    }
+    ?>
     </select>
 
+    </select>
     <select  id="Hatyai" name="subcategory" style="display:none" onchange="ending(this.id)">
       <option value="">ไปยัง</option>
       <option value="โรงพยาบาลสงขลานครินทร์">โรงพยาบาลสงขลานครินทร์</option>
@@ -110,6 +135,7 @@
       <input type="hidden" name="cam" value="" id="cam"> 
       <input type="hidden" name="total" value="" id="total">
       <input type="hidden" name="dyroute" value="" id = "dyroute">
+      <input type="hidden" name="start_location" value="" id="start_location">
     </form>
     </div>
   
@@ -174,6 +200,14 @@
         }
 
         function ending(id){
+          var currentdate = new Date();
+          var datetime = "Currentdate:" + currentdate.getFullYear() + "-"+currentdate.getMonth() 
+          + "-" + currentdate.getDay() + " " 
+          + currentdate.getHours() + ":" 
+          + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+
+          alert(datetime);
+
           var a= document.getElementById('en').value = document.getElementById(id).value;
           alert(a);
           displayRoute(''+document.getElementById('or').value+'',''+a+'',directionsService,
@@ -260,21 +294,23 @@
           }
 
           }
-        
-
           function computeTotalDistance(result) {  
           var total = 0;
-          
+          var test;
           var myroute = result.routes[0];  
           for (var i = 0; i < myroute.legs.length; i++) {  
             total += myroute.legs[i].distance.value; 
             dynamicroute[i]= JSON.stringify(myroute.legs[i].steps);
-            console.log(dynamicroute[0]);
+            //console.log(dynamicroute[0]);
+            test=myroute.legs[i].start_location;
+            console.log(test);
             }  
           total = total / 1000;  
           document.getElementById('total').value = total;
           console.log(dynamicroute.length);
           document.getElementById('dyroute').value = dynamicroute[0]; 
+          document.getElementById('start_location').value = test;
+
           //alert(JSON.stringify(dynamicroute));
              
           }
