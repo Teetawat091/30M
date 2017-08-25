@@ -10,57 +10,78 @@
 $server = "localhost";
 $user = "root";
 $pass = "";
-$db = "testgmap";
+$db = "ogf";
 $conn = mysqli_connect($server, $user, $pass, $db);
+mysqli_set_charset($conn,"utf8");
 
 $url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=".$_POST['or']."&destinations=".$_POST['en']."&key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0";
-
-echo $url;
-$start   = $_POST['start_location'];
-echo '<br><br>';
-
-$a = substr($start, 1,strlen($start)-2);
-echo $a;
 
 $json = file_get_contents($url);
 $data = json_decode($json, TRUE);
 $distance = $_POST['total'];
 $dest = $data['destination_addresses'][0];
 $origin = $data['origin_addresses'][0];
+
+$datetime = $_POST['datetime'];
+echo "   |Current Time : ".$datetime;
 $cost;
+$rate;
+$endpos = explode(',',$_POST['en']);
 
 echo "<pre>";
-print_r(json_decode($_POST['dyroute']));
+print_r($_POST['dyroute']);
 echo "<pre>";
-/*echo count($allstep);
-echo "<pre>";
-print_r($allstep);
-echo "<pre>"; */
+
+$steps = json_decode($_POST['dyroute'],TRUE);
+$countstep =  count($steps);
+echo "all step : ".$countstep.'<br>';
+
+//echo $steps[0]['distance']['text'];
+
+$eachdistance = [];
+$eachaction = [];
+$eachstartlat = [];
+$eachstartlng = [];
+$eachendlat = [];
+$eachendlng = [];
+
+for($i=0;$i<$countstep;$i++){
+	$eachdistance[$i]= $steps[$i]['distance']['text'];
+	$eachaction[$i]= $steps[$i]['instructions'];
+	$eachstartlat[$i] = $steps[$i]['start_location']['lat'];
+	$eachstartlng[$i] =  $steps[$i]['start_location']['lng'];
+	$eachendlat[$i] = $steps[$i]['end_location']['lat'];
+	$eachendlng[$i] = $steps[$i]['end_location']['lng'];
+	
+}
+for ($i=0; $i <$countstep; $i++) { 
+	# code...
+	echo $eachdistance[$i].$eachaction[$i].'<br>';
+	echo "Start : ".$eachstartlat[$i].','.$eachstartlng[$i].'<br>';
+	echo "end : ".$eachendlat[$i].','.$eachendlng[$i].'<br>';
+}
 
 echo "Distance : ".$distance." km";
 echo '<br>';
 echo 'From : '.$origin.'<br>';
 echo 'To : '.$dest.'<br><br>'.$_POST['select'].'<br>'.$_POST['cam'].'<br>';
-/*echo "<pre>";
-print_r($data); 
-echo "</pre>";
-*/
+
 $campus;
 
 if($_POST['or'] == '7.006341665683104,100.4985523223877'){
-	$campus = "Hattai";
+	$campus = 2;
 }
 elseif ($_POST['or']== '7.90608272245317,98.36664140224457') {
-	$campus = 'Phuket';
+	$campus = 1;
 }
 elseif ($_POST['or']=='13.168317602040103,100.93120604753494') {
-	$campus = 'Sriraja';
+	$campus = 5;
 }
 elseif ($_POST['or']=='9.11065637716888,99.30181503295898') {
-	$campus = 'Surat';
+	$campus = 4;
 }
 else if($_POST['or']=='14.343238520299131,100.60918271541595'){
-	$campus = 'Ayuthaya';
+	$campus = 3;
 }
 
 if (!$conn) {
@@ -68,22 +89,35 @@ if (!$conn) {
 }
 else {
 	if($_POST['select'] == 'car'){
-		$cost = round($distance * 4.5);
+		$rate = 4.5;
 	}
 	elseif ($_POST['select'] == 'motercycle') {
-		$cost = round($distance * 2) ;
+		$rate = 2 ;
 	}
 
-	$sql = "INSERT INTO testgmap (Origin,Dest,Campus,Vihecle,Distance,Cost)VALUES ('".$origin."','".$dest."','".$campus."','".$_POST['select']."',".$distance.",".$cost.")";
-	//$sql2 = "INSERT INTO landmark (name,campus,lat_lngor,lat_lngdest)VALUES ('test','".$campus."','".$_GET['or']."','".$_GET['en']."')";
+$orlatlng = explode(',',$_POST['or']);
 
-	if (mysqli_query($conn, $sql)) {
-		echo "add to db complete";
-   // mysqli_query($conn,$sql2);
-    	//echo $sql2;
+	$newdbsql = " INSERT INTO `user_outgoing` (`user_outgoing_id`, `branch_id`, `user_id`, `origin_lat`, `origin_lng`, `origin_branch_description_id`, `destination_lat`, `destination_lng`, `destination_branch_description_id`, `vihecle_type`, `distance`, `rate`, `cost`, `status`, `datetime_enter`) VALUES (NULL,".$campus.", '4', '".$orlatlng[0]."', '".$orlatlng[1]."', '0', '".$endpos[0]."', '".$endpos[1]."', '0', '".$_POST['select']."', ".$distance.", ".$rate.", ".$distance*$rate.",'wait' ,'".$datetime."')";
+
+	if (mysqli_query($conn, $newdbsql)) {
+		echo "add to db complete".'<br>';
+  
     }
  else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    echo "Error: " . $newdbsql . "<br>" . mysqli_error($conn);
+}
+
+
+
+for($i=0;$i<$countstep;$i++){
+	$sqlstep = "INSERT INTO `user_outgoing_detail`(user_outgoing_detail_id,user_outgoing_id,start_lat,start_lng,end_lat,end_lng,distance,instruction) VALUES ((SELECT user_outgoing_id FROM user_outgoing WHERE datetime_enter = '".$datetime."'),'".$eachstartlat[$i]."','".$eachstartlng[$i]."','".$eachendlat[$i]."','".$eachendlng[$i]."','".$eachdistance[$i]."','".$eachaction[$i]."')";
+	echo $sqlstep;
+	if(mysqli_query($conn,$sqlstep)){
+		echo "complete";
+	}
+	else{
+		echo "<br>"."fail";
+	}
 }
 
 	}

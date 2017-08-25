@@ -64,7 +64,7 @@
     $server = "localhost";
     $user = "root";
     $pass = "";
-    $db = "outgoing_form";
+    $db = "ogf";
     $conn = mysqli_connect($server, $user, $pass, $db);
     mysqli_set_charset($conn,"utf8");
     ?>
@@ -75,15 +75,15 @@
       <option value="motercycle" selected="selected">มอเตอไซค์</option>
     </select>
     <select name="campus" id="campus" onchange="changecampus(this.selectedIndex)" >
-    <option value="" selected="selected">Please select your campus</option>
+    <option value="" selected="selected">สาขา</option>
       <?php
-    $sql = "SELECT brench_name,brench_lat,brench_lng FROM `brench` ORDER BY brench_id";
+    $sql = "SELECT branch_name,branch_lat,branch_lng FROM `branch` ORDER BY branch_id";
     $res = mysqli_query($conn,$sql);
     if($res){
       while ($rec= mysqli_fetch_array($res,MYSQLI_ASSOC)) {
       $category = $rec['name'];
     ?>
-   <option value="<?php echo $rec['brench_lat'].",".$rec['brench_lng'] ?>"><?php  echo $rec['brench_name'] ?></option>
+   <option value="<?php echo $rec['branch_lat'].",".$rec['branch_lng'] ?>"><?php  echo $rec['branch_name'] ?></option>
     <?php 
     }
     }
@@ -94,12 +94,12 @@
     <select id="Phuket" name="subcategory" style="display:none" onchange="ending(this.id)">
     <option value="" selected="selected">ต้องการจะไปที่</option>
     <?php
-    $sqlphuket = "SELECT brench_destination_name,lat_destination,lng_destination FROM `brench-destination` ";
+    $sqlphuket = "SELECT branch_destination_name,lat_destination,lng_destination FROM `branch_destination` WHERE branch_id = 1  ";
     $phuketres = mysqli_query($conn,$sqlphuket);
     if($phuketres){
       while ($pkrec= mysqli_fetch_array($phuketres,MYSQLI_ASSOC)) {
     ?>
-   <option value="<?php echo $pkrec['lat_destination'].",".$pkrec['lng_destination'] ?>"><?php  echo $pkrec['brench_destination_name'] ?></option>
+   <option value="<?php echo $pkrec['lat_destination'].",".$pkrec['lng_destination'] ?>"><?php  echo $pkrec['branch_destination_name'] ?></option>
     <?php 
     }
     }
@@ -109,23 +109,62 @@
     </select>
     <select  id="Hatyai" name="subcategory" style="display:none" onchange="ending(this.id)">
       <option value="">ไปยัง</option>
-      <option value="โรงพยาบาลสงขลานครินทร์">โรงพยาบาลสงขลานครินทร์</option>
-      <option value="Zoundhatyai">zound</option>
+      <?php
+    $sqlhatyai = "SELECT branch_destination_name,lat_destination,lng_destination FROM `branch_destination` WHERE branch_id = 2 ";
+    $hatyaires = mysqli_query($conn,$sqlhatyai);
+    if($hatyaires){
+      while ($hrec= mysqli_fetch_array($hatyaires,MYSQLI_ASSOC)) {
+    ?>
+   <option value="<?php echo $hrec['lat_destination'].",".$hrec['lng_destination'] ?>"><?php  echo $hrec['branch_destination_name'] ?></option>
+    <?php 
+    }
+    }
+    ?>
     </select>
 
     <select  id="Ayuthaya" name="subcategory" style="display:none" onchange="ending(this.id)">
       <option value="">ไปยัง</option>
-      <option value="เจดีย์วัดสามปลื้ม">เจดีย์วัดสามปลื้ม</option>
+      <?php
+    $sqlayuthaya = "SELECT branch_destination_name,lat_destination,lng_destination FROM `branch_destination` WHERE branch_id = 3 ";
+    $ayuthayares = mysqli_query($conn,$sqlayuthaya);
+    if($ayuthayares){
+      while ($arec= mysqli_fetch_array($ayuthayares,MYSQLI_ASSOC)) {
+    ?>
+   <option value="<?php echo $arec['lat_destination'].",".$arec['lng_destination'] ?>"><?php  echo $arec['branch_destination_name'] ?></option>
+    <?php 
+    }
+    }
+    ?>
     </select>
 
     <select  id="Surat" name="subcategory" style="display:none" onchange="ending(this.id)">
       <option value="">ไปยัง</option>
-      <option value="โรงเรียนพุนพิน">พุนพิน</option>
+     <?php
+    $sqlsurat = "SELECT branch_destination_name,lat_destination,lng_destination FROM `branch_destination` WHERE branch_id = 4 ";
+    $suratres = mysqli_query($conn,$sqlsurat);
+    if($suratres){
+      while ($srec= mysqli_fetch_array($suratres,MYSQLI_ASSOC)) {
+    ?>
+   <option value="<?php echo $srec['lat_destination'].",".$srec['lng_destination'] ?>"><?php  echo $srec['branch_destination_name'] ?></option>
+    <?php 
+    }
+    }
+    ?>
     </select>
 
     <select  id="Sriraja" name="subcategory" style="display:none" onchange="ending(this.id)">
       <option value="">ไปยัง</option>
-      <option value="สวนเสือศรีราชา">สวนเสือศรีราชา</option>
+      <?php
+    $sqlsiraja = "SELECT branch_destination_name,lat_destination,lng_destination FROM `branch_destination` WHERE branch_id = 5 ";
+    $sirajares = mysqli_query($conn,$sqlsiraja);
+    if($sirajares){
+      while ($sirec= mysqli_fetch_array($sirajares,MYSQLI_ASSOC)) {
+    ?>
+   <option value="<?php echo $sirec['lat_destination'].",".$sirec['lng_destination'] ?>"><?php  echo $sirec['branch_destination_name'] ?></option>
+    <?php 
+    }
+    }
+    ?>
     </select>
 
     </div>
@@ -135,7 +174,8 @@
       <input type="hidden" name="cam" value="" id="cam"> 
       <input type="hidden" name="total" value="" id="total">
       <input type="hidden" name="dyroute" value="" id = "dyroute">
-      <input type="hidden" name="start_location" value="" id="start_location">
+      <input type="hidden" name="datetime" value="" id="datetime">
+
     </form>
     </div>
   
@@ -170,7 +210,21 @@
           });
           directionsDisplay.addListener('directions_changed', function() {
             computeTotalDistance(directionsDisplay.getDirections());
-          });          
+          }); 
+          var currentdate = new Date();
+        var month = currentdate.getMonth();
+          if(month<10){
+            month = "0"+month;
+          }
+          var day = currentdate.getDay();
+          if(day<10){
+            day = "0"+day;
+          }
+          datetime = currentdate.getFullYear() + "-"+month 
+          + "-" + day + " " 
+          + currentdate.getHours() + ":" 
+          + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+          document.getElementById('datetime').value = datetime;         
         }
 
         function displayRoute(origin, destination, service, display) {
@@ -200,16 +254,8 @@
         }
 
         function ending(id){
-          var currentdate = new Date();
-          var datetime = "Currentdate:" + currentdate.getFullYear() + "-"+currentdate.getMonth() 
-          + "-" + currentdate.getDay() + " " 
-          + currentdate.getHours() + ":" 
-          + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-
-          alert(datetime);
-
           var a= document.getElementById('en').value = document.getElementById(id).value;
-          alert(a);
+          //alert(a);
           displayRoute(''+document.getElementById('or').value+'',''+a+'',directionsService,
             directionsDisplay);
           clearMarkers();
@@ -302,15 +348,11 @@
             total += myroute.legs[i].distance.value; 
             dynamicroute[i]= JSON.stringify(myroute.legs[i].steps);
             //console.log(dynamicroute[0]);
-            test=myroute.legs[i].start_location;
-            console.log(test);
             }  
           total = total / 1000;  
           document.getElementById('total').value = total;
           console.log(dynamicroute.length);
           document.getElementById('dyroute').value = dynamicroute[0]; 
-          document.getElementById('start_location').value = test;
-
           //alert(JSON.stringify(dynamicroute));
              
           }
