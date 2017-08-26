@@ -107,13 +107,23 @@ $orlatlng = explode(',',$_POST['or']);
     echo "Error: " . $newdbsql . "<br>" . mysqli_error($conn);
 }
 
-
+$ogid;
+$foridsql = "SELECT user_outgoing_id FROM user_outgoing WHERE datetime_enter = '".$datetime."'";
+$result = mysqli_query($conn,$foridsql);
+if($result){
+	 while ($arec= mysqli_fetch_array($result,MYSQLI_ASSOC)){
+	 	echo  "Outgoing id : ".$arec['user_outgoing_id']."<br>";
+	 	$ogid=$arec['user_outgoing_id'];
+	 }
+	
+}
+//echo $ogid;
 
 for($i=0;$i<$countstep;$i++){
-	$sqlstep = "INSERT INTO `user_outgoing_detail`(user_outgoing_detail_id,user_outgoing_id,start_lat,start_lng,end_lat,end_lng,distance,instruction) VALUES ((SELECT user_outgoing_id FROM user_outgoing WHERE datetime_enter = '".$datetime."'),'".$eachstartlat[$i]."','".$eachstartlng[$i]."','".$eachendlat[$i]."','".$eachendlng[$i]."','".$eachdistance[$i]."','".$eachaction[$i]."')";
-	echo $sqlstep;
+	$sqlstep = "INSERT INTO `user_outgoing_detail`(user_outgoing_detail_id,user_outgoing_id,start_lat,start_lng,end_lat,end_lng,distance,instruction) VALUES (NULL,'".$ogid."','".$eachstartlat[$i]."','".$eachstartlng[$i]."','".$eachendlat[$i]."','".$eachendlng[$i]."','".$eachdistance[$i]."','".$eachaction[$i]."')";
+	//echo $sqlstep;
 	if(mysqli_query($conn,$sqlstep)){
-		echo "complete";
+		//echo "complete";
 	}
 	else{
 		echo "<br>"."fail";

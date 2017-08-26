@@ -46,7 +46,7 @@ function placeMarker(geocoder,map, location,infowindow) {
     position: location,
     map: map
   });
-  geocoder.geocode({'location :'+})
+  
 }
 </script>
 

@@ -301,7 +301,6 @@
                 } 
             }
 
-         
           if(document.getElementById('campus').value == "7.90608272245317,98.36664140224457"){
             lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
             initMap();
