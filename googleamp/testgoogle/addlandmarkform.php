@@ -21,7 +21,7 @@
 
     <div id="container">
     	
-    	<form name="addlandmarkform" id="addlandmarkform" action="#" method="get">
+    	<form name="addlandmarkform" id="addlandmarkform" action="" method="post">
     	<table align="" name = "addlandmark" id="addlandmark"  border="0" >
     		<tr>
     		<td border = "0">
@@ -76,9 +76,10 @@
     		</tr>
     	</table>
     	<button name="clear" onclick="refrech()">clear</button>
-    	<input type="submit" name="add" value="add" onclick="addlocation()">
+    	<input type="submit" name="add" value="add">
 
     	</form>
+   	
     </div>
     <script type="text/javascript">
 
@@ -96,9 +97,7 @@
     lat = 7.90608272245317;
     lng = 98.36664140224457;
 
-    function addlocation(){
-    	
-    }
+   
 
     function myMap() {
   	var mapCanvas = document.getElementById("map");
@@ -222,5 +221,45 @@ function setMapOnAll(map) {
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0&callback=myMap"></script>
+    <?php
+    
+    	//$sqlinsert = "INSERT INTO `branch_destination`(branch_destination_id,branch_destination_name,branch_id,lat_destination,lng_destination) VALUES (NULL,)"
+    	//echo "i sis".$_GET['locationname'];
+    	if(isset($_POST['branchid'])==false){
+    		
+    	}
+    	else {
+    		$id;
+    		if($_POST['branchid']== "ภูเก็ต"){
+    			$id = 1;
+    		}
+    		else if($_POST['branchid']== "หาดใหญ่"){
+    			$id = 2;
+
+    		}
+    		elseif ($_POST['branchid']== "อยุธยา") {
+    			$id = 3;
+    			# code...
+    		}
+    		elseif ($_POST['branchid']== "สุราษฯ") {
+    			$id = 4;
+    			# code...
+    		}
+    		else if($_POST['branchid']== "ศรีราชา"){
+    			$id = 5;
+
+    		}
+
+    		$sqlinsert = "INSERT INTO `branch_destination`(branch_destination_id,branch_destination_name,branch_id,lat_destination,lng_destination) VALUES (NULL,'".$_POST['locationname']."',".$id.",'".$_POST['lat_location']."','".$_POST['lng_location']."')";
+    		$insertres = mysqli_query($conn,$sqlinsert);
+    		if($insertres){
+   
+    		}
+    		else{
+    			echo "add fail";
+    		}
+    		
+    	}
+    ?>
     </body>
     </html>

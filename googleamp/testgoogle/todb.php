@@ -21,12 +21,22 @@ $data = json_decode($json, TRUE);
 $distance = $_POST['total'];
 $dest = $data['destination_addresses'][0];
 $origin = $data['origin_addresses'][0];
+$dest_description;
+if(isset($dest)==false){
+	$dest_description = 1;
+
+}
+else{
+	$dest_description = 0;
+}
 
 $datetime = $_POST['datetime'];
-echo "   |Current Time : ".$datetime;
+echo "Current Time : ".$datetime.'<br>';
+$orlatlng = explode(',',$_POST['or']);
+$endpos = explode(',',$_POST['en']);
 $cost;
 $rate;
-$endpos = explode(',',$_POST['en']);
+
 
 echo "<pre>";
 print_r($_POST['dyroute']);
@@ -34,7 +44,8 @@ echo "<pre>";
 
 $steps = json_decode($_POST['dyroute'],TRUE);
 $countstep =  count($steps);
-echo "all step : ".$countstep.'<br>';
+//echo "all step : ".$countstep.'<br>';
+
 
 //echo $steps[0]['distance']['text'];
 
@@ -44,6 +55,7 @@ $eachstartlat = [];
 $eachstartlng = [];
 $eachendlat = [];
 $eachendlng = [];
+$encoderoute =[];
 
 for($i=0;$i<$countstep;$i++){
 	$eachdistance[$i]= $steps[$i]['distance']['text'];
@@ -52,19 +64,20 @@ for($i=0;$i<$countstep;$i++){
 	$eachstartlng[$i] =  $steps[$i]['start_location']['lng'];
 	$eachendlat[$i] = $steps[$i]['end_location']['lat'];
 	$eachendlng[$i] = $steps[$i]['end_location']['lng'];
+	$encoderoute[$i] = $steps[$i]['polyline']['points'];
+	$eachaction[$i] = strip_tags($eachaction[$i]);
 	
 }
 for ($i=0; $i <$countstep; $i++) { 
 	# code...
-	echo $eachdistance[$i].$eachaction[$i].'<br>';
-	echo "Start : ".$eachstartlat[$i].','.$eachstartlng[$i].'<br>';
-	echo "end : ".$eachendlat[$i].','.$eachendlng[$i].'<br>';
+	echo $encoderoute[$i].'<br>';
+	
 }
 
-echo "Distance : ".$distance." km";
+echo '<br>'."Distance : ".$distance." km";
 echo '<br>';
 echo 'From : '.$origin.'<br>';
-echo 'To : '.$dest.'<br><br>'.$_POST['select'].'<br>'.$_POST['cam'].'<br>';
+echo 'To : '.$dest.'<br>'."Vihecle : ".$_POST['select'].'<br>'.$_POST['cam'];
 
 $campus;
 
@@ -95,12 +108,12 @@ else {
 		$rate = 2 ;
 	}
 
-$orlatlng = explode(',',$_POST['or']);
+	echo 'Cost : '.$distance*$rate ." bath".'<br>';
 
-	$newdbsql = " INSERT INTO `user_outgoing` (`user_outgoing_id`, `branch_id`, `user_id`, `origin_lat`, `origin_lng`, `origin_branch_description_id`, `destination_lat`, `destination_lng`, `destination_branch_description_id`, `vihecle_type`, `distance`, `rate`, `cost`, `status`, `datetime_enter`) VALUES (NULL,".$campus.", '4', '".$orlatlng[0]."', '".$orlatlng[1]."', '0', '".$endpos[0]."', '".$endpos[1]."', '0', '".$_POST['select']."', ".$distance.", ".$rate.", ".$distance*$rate.",'wait' ,'".$datetime."')";
+	$newdbsql = " INSERT INTO `user_outgoing` (`user_outgoing_id`, `branch_id`, `user_id`, `origin_lat`, `origin_lng`, `origin_branch_description_id`, `destination_lat`, `destination_lng`, `destination_branch_description_id`, `vihecle_type`, `distance`, `rate`, `cost`, `status`, `datetime_enter`) VALUES (NULL,".$campus.", '4', '".$orlatlng[0]."', '".$orlatlng[1]."', '0', '".$endpos[0]."', '".$endpos[1]."', '".$dest_description."', '".$_POST['select']."', ".$distance.", ".$rate.", ".$distance*$rate.",'wait' ,'".$datetime."')";
 
 	if (mysqli_query($conn, $newdbsql)) {
-		echo "add to db complete".'<br>';
+		//echo "add to db complete".'<br>';
   
     }
  else {
@@ -112,7 +125,7 @@ $foridsql = "SELECT user_outgoing_id FROM user_outgoing WHERE datetime_enter = '
 $result = mysqli_query($conn,$foridsql);
 if($result){
 	 while ($arec= mysqli_fetch_array($result,MYSQLI_ASSOC)){
-	 	echo  "Outgoing id : ".$arec['user_outgoing_id']."<br>";
+	 	//echo  "Outgoing id : ".$arec['user_outgoing_id']."<br>";
 	 	$ogid=$arec['user_outgoing_id'];
 	 }
 	

@@ -4,6 +4,9 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Draggable directions</title>
+
+   
+
     <style>
       html, body {
         height: 100%;
@@ -89,7 +92,9 @@
     }
     ?>
     </select>
-    <div id="subcats">
+    <input type="submit" name="submit" value="Go" onclick="d()" >
+    <div id="subcats" align="left">
+
 
     <select id="Phuket" name="subcategory" style="display:none" onchange="ending(this.id)">
     <option value="" selected="selected">ต้องการจะไปที่</option>
@@ -168,7 +173,6 @@
     </select>
 
     </div>
-      <input type="submit" name="submit" value="Go" onclick="d()" >
       <input type="hidden" name="or" value="" id="or">
       <input type="hidden" name="en" value="" id="en">
       <input type="hidden" name="cam" value="" id="cam"> 
@@ -356,11 +360,13 @@
              
           }
 
+
+
         </script>
       </head>
       <body>
-
         <div id="map"></div>
         <div id="right-panel"></div> 
+        
       </body>
 </html>
