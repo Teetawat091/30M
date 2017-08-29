@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>  <!-- www.techstrikers.com -->
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Draggable directions</title>
-
-   
-
+  <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+  <script type="text/javascript" src="js/html2canvas.js"></script>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <title>Draggable directions</title>
     <style>
       html, body {
         height: 100%;
@@ -92,7 +91,7 @@
     }
     ?>
     </select>
-    <input type="submit" name="submit" value="Go" onclick="d()" >
+    <input type="submit" name="submit" value="Go" onclick="d()" id="takeshot" >
     <div id="subcats" align="left">
 
 
@@ -257,6 +256,20 @@
            seten(lat,lng);             
         }
 
+        /*function take_screenshot()
+        {
+        html2canvas(document.body, {  
+        onrendered: function(canvas)  
+        {
+        var img = canvas.toDataURL()
+        $.post("save_screenshot.php", {data: img}, function (file){
+        window.location.href =  "save_screenshot.php?file="+ file
+              });
+            }
+          });
+           
+        }*/
+
         function ending(id){
           var a= document.getElementById('en').value = document.getElementById(id).value;
           //alert(a);
@@ -292,6 +305,8 @@
           //document.getElementById('vihicle').value =  document.getElementById('vihicle').value;
           document.getElementById('cam').value;
           document.getElementById('en').value ;
+          var snap = "<?php echo snapshot();?>";
+
         }
         function changecampus(selectNo){
           document.getElementById('or').value = document.getElementById('campus').value;
@@ -304,8 +319,8 @@
 
                 } 
             }
-
-          if(document.getElementById('campus').value == "7.90608272245317,98.36664140224457"){
+            
+           if(document.getElementById('campus').value == "7.90608272245317,98.36664140224457"){
             lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
             initMap();
             displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
@@ -359,14 +374,31 @@
           //alert(JSON.stringify(dynamicroute));
              
           }
-
-
+          if(document.getElementById('campus').selectedIndex == 0){
+            lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
+            initMap();
+          }
 
         </script>
       </head>
-      <body>
+      <?php
+       function snapshot(){
+        $img = imagegrabscreen();
+        imagepng($img,"img/snapshot.png");
+        imagedestroy($img);
+        }
+      if(isset($_POST['campus'])==true){
+        //snapshot();
+
+      }
+      else{
+       //snapshot();
+      }
+      
+      ?>
+      <body onload="initMap()">
         <div id="map"></div>
+       
         <div id="right-panel"></div> 
-        
       </body>
 </html>

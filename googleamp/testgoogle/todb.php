@@ -1,8 +1,9 @@
 <html>
 <title>show information</title>
 <meta charset="UTF-8">
-<body>
-	<iframe src="http://127.0.0.1/testgoogle/dootook.php"height="500" width="100%"frameborder="0"scrolling="auto"align="center">
+<meta name="viewport" content="width = device-width, initial-scale = 1.0">
+<body >
+<iframe src="http://127.0.0.1/testgoogle/dootook.php"height="500" width="100%"frameborder="0"scrolling="auto"align="center">
 </iframe>
 </body>
 
@@ -37,7 +38,6 @@ $endpos = explode(',',$_POST['en']);
 $cost;
 $rate;
 
-
 echo "<pre>";
 print_r($_POST['dyroute']);
 echo "<pre>";
@@ -45,8 +45,6 @@ echo "<pre>";
 $steps = json_decode($_POST['dyroute'],TRUE);
 $countstep =  count($steps);
 //echo "all step : ".$countstep.'<br>';
-
-
 //echo $steps[0]['distance']['text'];
 
 $eachdistance = [];
@@ -55,7 +53,7 @@ $eachstartlat = [];
 $eachstartlng = [];
 $eachendlat = [];
 $eachendlng = [];
-$encoderoute =[];
+
 
 for($i=0;$i<$countstep;$i++){
 	$eachdistance[$i]= $steps[$i]['distance']['text'];
@@ -64,13 +62,7 @@ for($i=0;$i<$countstep;$i++){
 	$eachstartlng[$i] =  $steps[$i]['start_location']['lng'];
 	$eachendlat[$i] = $steps[$i]['end_location']['lat'];
 	$eachendlng[$i] = $steps[$i]['end_location']['lng'];
-	$encoderoute[$i] = $steps[$i]['polyline']['points'];
 	$eachaction[$i] = strip_tags($eachaction[$i]);
-	
-}
-for ($i=0; $i <$countstep; $i++) { 
-	# code...
-	echo $encoderoute[$i].'<br>';
 	
 }
 
