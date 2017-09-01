@@ -3,7 +3,12 @@
   <head>  <!-- www.techstrikers.com -->
     <meta name="viewport" content="width = device-width, initial-scale = 1.0">
     <meta charset="utf-8">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <title>Add Landmark Form</title>
+    <style type="text/css">
+    
+
+    </style>
     </head>
 
     <?php
@@ -14,18 +19,13 @@
     $conn = mysqli_connect($server, $user, $pass, $db);
     mysqli_set_charset($conn,"utf8");
     ?>
-
     <body>
-
-    <div id="map" style="width:100%;height:420px;"></div>
-
-    <div id="container">
-    	
+    <div class="col-xs-12 col-lg-8 bg" id="map" style="height:662px;width:100%;float: left;"></div>
+    <div>
     	<form name="addlandmarkform" id="addlandmarkform" action="" method="post">
-    	<table align="" name = "addlandmark" id="addlandmark"  border="0" >
+    	<table align="" name = "addlandmark" id="addlandmark"  border="0" cellpadding="7" cellspacing="5">
     		<tr>
-    		<td border = "0">
-    		Add Landmark Form
+    		<td border = "0"><strong><b>Add Landmark Form</b></strong>
     		
     		</td>
     		</tr>
@@ -40,72 +40,74 @@
       						while ($rec= mysqli_fetch_array($res,MYSQLI_ASSOC)) {
     					?>
    					<option value="<?php echo $rec['branch_name'] ?>"><?php  echo $rec['branch_id']." - ".$rec['branch_name'] ?></option>
-    				<?php 
+    				<?php
     				}
     				}
     				?>
     			</select>
     		</td>
     		<td>
-    			<input type="text" name="name of branch" id="branchname" value="" readonly="readonly">
+    			<input type="text" name="name of branch" id="branchname" value="" readonly="readonly" style="text-align: center;">
     		</td>
     		</tr>
     		<tr>
     		<td>
-    			ชื่อสถานที่ 
+    			ชื่อสถานที่
     		</td>
     		<td>
     			<input type="text" name="locationname" id="locationname" value="">
     		</td>
     		</tr>
     		<tr>
-    			<td>
-    				ละติจูด
-    			</td>
-    			<td>
-    				<input type="text" name="lat_location" value="" id="lat_location" readonly="readonly">
-    			</td>
+    		<td>
+    			เกี่ยวกับสถานที่ 	    			
+    		</td>
+    		<td>
+    			<textarea rows="4" cols="22"></textarea>
+    		</td>    			
     		</tr>
     		<tr>
+    			
     			<td>
-    				ลองติจูด
-    			</td>
-    			<td>
-    				<input type="text" name="lng_location" value="" id="lng_location" readonly="readonly">
+    				<input type="hidden" name="lat_location" value="" id="lat_location" readonly="readonly">
+    				<input type="hidden" name="lng_location" value="" id="lng_location" readonly="readonly">
     			</td>
     		</tr>
+    		
+    		<tr>
+    		<td>
+    			
+    		</td>
+    		<td>
+    			<input type="submit" name="add" value="add" disabled="disabled" id="add">
+    			&nbsp;&nbsp;
+    			<button name="clear" type="reset" value="reset">clear</button>
+    		</td>
+    			
+    		</tr>
     	</table>
-    	<button name="clear" onclick="refrech()">clear</button>
-    	<input type="submit" name="add" value="add">
-
     	</form>
-   	
     </div>
+    
     <script type="text/javascript">
-
-    function refrech(){
-    	//window.location.href = "http://127.0.0.1/testgoogle/dootook.php";
-    	window.location.reload();
-    }
-
     var lat;
     var lng;
     var location_lat;
     var location_lng;
     var markers = [];
+    var infowindow;
+    var geocoder;
 
     lat = 7.90608272245317;
     lng = 98.36664140224457;
-
-   
 
     function myMap() {
   	var mapCanvas = document.getElementById("map");
   	var myCenter=new google.maps.LatLng(lat,lng);
   	var mapOptions = {center: myCenter, zoom: 13};
   	var map = new google.maps.Map(mapCanvas, mapOptions);
-  	var geocoder = new google.maps.Geocoder;
-  	var infowindow = new google.maps.InfoWindow;
+  	geocoder = new google.maps.Geocoder;
+  	infowindow = new google.maps.InfoWindow;
 
   	google.maps.event.addListener(map, 'click', function(event) {
     	placeMarker(geocoder,map, event.latLng,infowindow);
@@ -141,11 +143,10 @@
     map: map
   		});
   	var infowindow = new google.maps.InfoWindow({
-    content: 'Latitude: ' + location.lat() +
-    '<br>Longitude: ' + location.lng()
+    content: 'Latitude: ' + location.lat()
+    
 	});
 	markers.push(marker);
-
 	infowindow.open(map,marker);
 
 	location_lat = marker.getPosition().lat();
@@ -219,14 +220,19 @@ function setMapOnAll(map) {
     	//myMap();
     }
 
+    if(document.getElementById('lat_location').value ==''){
+    	document.getElementByName('add').disabled = false;
+
+    }
+
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0&callback=myMap"></script>
     <?php
-    
+
     	//$sqlinsert = "INSERT INTO `branch_destination`(branch_destination_id,branch_destination_name,branch_id,lat_destination,lng_destination) VALUES (NULL,)"
     	//echo "i sis".$_GET['locationname'];
     	if(isset($_POST['branchid'])==false){
-    		
+
     	}
     	else {
     		$id;
@@ -253,12 +259,12 @@ function setMapOnAll(map) {
     		$sqlinsert = "INSERT INTO `branch_destination`(branch_destination_id,branch_destination_name,branch_id,lat_destination,lng_destination) VALUES (NULL,'".$_POST['locationname']."',".$id.",'".$_POST['lat_location']."','".$_POST['lng_location']."')";
     		$insertres = mysqli_query($conn,$sqlinsert);
     		if($insertres){
-   
+
     		}
     		else{
     			echo "add fail";
     		}
-    		
+
     	}
     ?>
     </body>

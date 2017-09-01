@@ -2,7 +2,8 @@
 <html>
   <head>  <!-- www.techstrikers.com -->
   <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
-  <script type="text/javascript" src="js/html2canvas.js"></script>
+  <!--<script type="text/javascript" src="js/html2canvas.js"></script>-->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
   <title>Draggable directions</title>
@@ -15,8 +16,8 @@
       #map {
         height: 100%;
         float: left;
-        width: 70%;
-       
+        width: 100%;
+
       }
       #floating-panel {
         position: absolute;
@@ -31,35 +32,36 @@
         line-height: 30px;
         padding-left: 10px;
       }
-      #right-panel {  
-        float: right;  
-        width: 29%;  
-        height: 100%;  
-      }  
-      #right-panel {  
-        font-family: 'Roboto','sans-serif';  
-        line-height: 30px;  
-        padding-left: 10px;  
-      }  
- 
-      #right-panel select, #right-panel input {  
-        font-size: 15px;  
-      }  
- 
-      #right-panel select {  
-        width: 100%;  
-      }  
- 
-      #right-panel i {  
-        font-size: 12px;  
-      }  
+      #right-panel {
+        float: right;
+        width: 100%;
+        height: 100%;
+      }
+      #right-panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 20px;
+        padding-left: 5px;
+      }
 
-      .panel {  
-        height: 100%;  
-        overflow: auto;  
-      }  
+      #right-panel select, #right-panel input {
+        font-size: 5px;
+      }
+
+      #right-panel select {
+        width: 100%;
+      }
+
+      #right-panel i {
+        font-size: 10px;
+      }
+
+      .panel {
+        height: 100%;
+        overflow: auto;
+      }
 
     </style>
+
     <div id="floating-panel">
     <form  action="todb.php" method="post">
     <?php
@@ -69,13 +71,15 @@
     $db = "ogf";
     $conn = mysqli_connect($server, $user, $pass, $db);
     mysqli_set_charset($conn,"utf8");
+
     ?>
-    
-    <strong>ประเภทของยานภาหนะ </strong>
+
+    <strong>ยานภาหนะ </strong>
     <select name="select" id="vihicle">
       <option value="car">รถยนต์</option>
       <option value="motercycle" selected="selected">มอเตอไซค์</option>
     </select>
+
     <select name="campus" id="campus" onchange="changecampus(this.selectedIndex)" >
     <option value="" selected="selected">สาขา</option>
       <?php
@@ -83,17 +87,17 @@
     $res = mysqli_query($conn,$sql);
     if($res){
       while ($rec= mysqli_fetch_array($res,MYSQLI_ASSOC)) {
-      $category = $rec['name'];
+     
     ?>
    <option value="<?php echo $rec['branch_lat'].",".$rec['branch_lng'] ?>"><?php  echo $rec['branch_name'] ?></option>
-    <?php 
+    <?php
     }
     }
     ?>
     </select>
-    <input type="submit" name="submit" value="Go" onclick="d()" id="takeshot" >
+    <input type="submit" name="submit" value="บันทึก" onclick="d()" id="takeshot" >
     <div id="subcats" align="left">
-
+    <strong id="textselect" style="display:none">เลือกสถานที่ที่ต้องการจะไป</strong>
 
     <select id="Phuket" name="subcategory" style="display:none" onchange="ending(this.id)">
     <option value="" selected="selected">ต้องการจะไปที่</option>
@@ -104,7 +108,7 @@
       while ($pkrec= mysqli_fetch_array($phuketres,MYSQLI_ASSOC)) {
     ?>
    <option value="<?php echo $pkrec['lat_destination'].",".$pkrec['lng_destination'] ?>"><?php  echo $pkrec['branch_destination_name'] ?></option>
-    <?php 
+    <?php
     }
     }
     ?>
@@ -120,7 +124,7 @@
       while ($hrec= mysqli_fetch_array($hatyaires,MYSQLI_ASSOC)) {
     ?>
    <option value="<?php echo $hrec['lat_destination'].",".$hrec['lng_destination'] ?>"><?php  echo $hrec['branch_destination_name'] ?></option>
-    <?php 
+    <?php
     }
     }
     ?>
@@ -135,7 +139,7 @@
       while ($arec= mysqli_fetch_array($ayuthayares,MYSQLI_ASSOC)) {
     ?>
    <option value="<?php echo $arec['lat_destination'].",".$arec['lng_destination'] ?>"><?php  echo $arec['branch_destination_name'] ?></option>
-    <?php 
+    <?php
     }
     }
     ?>
@@ -150,7 +154,7 @@
       while ($srec= mysqli_fetch_array($suratres,MYSQLI_ASSOC)) {
     ?>
    <option value="<?php echo $srec['lat_destination'].",".$srec['lng_destination'] ?>"><?php  echo $srec['branch_destination_name'] ?></option>
-    <?php 
+    <?php
     }
     }
     ?>
@@ -165,23 +169,23 @@
       while ($sirec= mysqli_fetch_array($sirajares,MYSQLI_ASSOC)) {
     ?>
    <option value="<?php echo $sirec['lat_destination'].",".$sirec['lng_destination'] ?>"><?php  echo $sirec['branch_destination_name'] ?></option>
-    <?php 
+    <?php
     }
     }
     ?>
     </select>
-
+    
     </div>
       <input type="hidden" name="or" value="" id="or">
       <input type="hidden" name="en" value="" id="en">
-      <input type="hidden" name="cam" value="" id="cam"> 
+      <input type="hidden" name="cam" value="" id="cam">
       <input type="hidden" name="total" value="" id="total">
       <input type="hidden" name="dyroute" value="" id = "dyroute">
       <input type="hidden" name="datetime" value="" id="datetime">
-
     </form>
-    </div>
   
+    </div>
+
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0&callback=initMap"
         async defer></script>
         <script>
@@ -193,6 +197,7 @@
         var lat;
         var lng;
         var dynamicroute = [] ;
+        var index = 0;
 
         lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
 
@@ -208,26 +213,27 @@
           directionsDisplay = new google.maps.DirectionsRenderer({
             draggable: true,
             map: map,
-            panel: document.getElementById('right-panel') 
+            panel: document.getElementById('right-panel')
 
           });
           directionsDisplay.addListener('directions_changed', function() {
             computeTotalDistance(directionsDisplay.getDirections());
-          }); 
+          });
           var currentdate = new Date();
-        var month = currentdate.getMonth();
+
+        var month = currentdate.getMonth()+1;
           if(month<10){
             month = "0"+month;
           }
-          var day = currentdate.getDay();
+          var day = currentdate.getDate();
           if(day<10){
             day = "0"+day;
           }
-          datetime = currentdate.getFullYear() + "-"+month 
-          + "-" + day + " " 
-          + currentdate.getHours() + ":" 
+          datetime = currentdate.getFullYear() + "-"+month
+          + "-" + day + " "
+          + currentdate.getHours() + ":"
           + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-          document.getElementById('datetime').value = datetime;         
+          document.getElementById('datetime').value = datetime;
         }
 
         function displayRoute(origin, destination, service, display) {
@@ -253,13 +259,13 @@
           markers.push(marker);
            lat = marker.getPosition().lat();
            lng = marker.getPosition().lng();
-           seten(lat,lng);             
+           seten(lat,lng);
         }
 
         /*function take_screenshot()
         {
-        html2canvas(document.body, {  
-        onrendered: function(canvas)  
+        html2canvas(document.body, {
+        onrendered: function(canvas)
         {
         var img = canvas.toDataURL()
         $.post("save_screenshot.php", {data: img}, function (file){
@@ -267,7 +273,7 @@
               });
             }
           });
-           
+
         }*/
 
         function ending(id){
@@ -277,7 +283,7 @@
             directionsDisplay);
           clearMarkers();
           markers = [];
-          
+
           //document.getElementById('en').value = "";
         }
 
@@ -286,7 +292,7 @@
           //alert(typeof(e)+''+e+'');
           displayRoute(''+document.getElementById('or').value+'',''+e+'',directionsService,
             directionsDisplay);
-          clearMarkers(); 
+          clearMarkers();
           markers = [];
           //document.getElementById('en').value = "";
         }
@@ -310,78 +316,77 @@
         }
         function changecampus(selectNo){
           document.getElementById('or').value = document.getElementById('campus').value;
+          index = selectNo;
 
-          var sels = document.getElementById("subcats").getElementsByTagName('SELECT'); 
-            for( var j=0; j<sels.length; j++ ) { 
-              sels[j].style.display = "none"; 
-                if ( j===(selectNo-1) ) { 
-                  sels[j].style.display = ''; 
+          var sels = document.getElementById("subcats").getElementsByTagName('SELECT');
+            for( var j=0; j<sels.length; j++ ) {
+              sels[j].style.display = "none";
+                if ( j===(selectNo-1) ) {
+                  sels[j].style.display = '';
 
-                } 
+                }
             }
-            
-           if(document.getElementById('campus').value == "7.90608272245317,98.36664140224457"){
+
+           if(document.getElementById('campus').selectedIndex == 1){
             lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
             initMap();
             displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
             directionsDisplay);
-
-            document.getElementById('campus').selectedIndex = 1;
+            //document.getElementById('campus').selectedIndex = 1;
           }//phuket
-          else if(document.getElementById('campus').value =="7.006341665683104,100.4985523223877"){
+          else if(document.getElementById('campus').selectedIndex == 2){
             lat_lng = {lat:7.006341665683104,lng:100.4985523223877};
             initMap();
            displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
             directionsDisplay);
-            document.getElementById('campus').selectedIndex = 2;
+           // document.getElementById('campus').selectedIndex = 2;
           }//hatyai
-          else if(document.getElementById('campus').value == "13.168317602040103,100.93120604753494"){
+          else if(document.getElementById('campus').selectedIndex == 5){
             lat_lng = {lat:13.168317602040103,lng:100.93120604753494};
             initMap();
            displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
             directionsDisplay);
-            document.getElementById('campus').selectedIndex = 5;
+            //document.getElementById('campus').selectedIndex = 5;
           }//sriraja
-          else if(document.getElementById('campus').value == "9.11065637716888,99.30181503295898"){
+          else if(document.getElementById('campus').selectedIndex == 4){
              lat_lng = {lat:9.11065637716888,lng:99.30181503295898};
             initMap();
             displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
             directionsDisplay);
-            document.getElementById('campus').selectedIndex = 4;
+            //document.getElementById('campus').selectedIndex = 4;
           }//surat
-          else if(document.getElementById('campus').value == "14.343238520299131,100.60918271541595"){
+          else if(document.getElementById('campus').selectedIndex == 3){
             lat_lng = {lat:14.343238520299131,lng:100.60918271541595}
             initMap();
             displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('or').value+'',directionsService,
             directionsDisplay);
-            document.getElementById('campus').selectedIndex = 3;
+           // document.getElementById('campus').selectedIndex = 3;
           }
 
           }
-          function computeTotalDistance(result) {  
+          function computeTotalDistance(result) {
           var total = 0;
           var test;
-          var myroute = result.routes[0];  
-          for (var i = 0; i < myroute.legs.length; i++) {  
-            total += myroute.legs[i].distance.value; 
+          var myroute = result.routes[0];
+          for (var i = 0; i < myroute.legs.length; i++) {
+            total += myroute.legs[i].distance.value;
             dynamicroute[i]= JSON.stringify(myroute.legs[i].steps);
             //console.log(dynamicroute[0]);
-            }  
-          total = total / 1000;  
+            //console.log(myroute);
+            }
+          total = total / 1000;
           document.getElementById('total').value = total;
           console.log(dynamicroute.length);
-          document.getElementById('dyroute').value = dynamicroute[0]; 
+          document.getElementById('dyroute').value = dynamicroute[0];
           //alert(JSON.stringify(dynamicroute));
-             
-          }
-          if(document.getElementById('campus').selectedIndex == 0){
-            lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
-            initMap();
-          }
 
+          }
+        
+         
         </script>
       </head>
       <?php
+      
        function snapshot(){
         $img = imagegrabscreen();
         imagepng($img,"img/snapshot.png");
@@ -394,11 +399,10 @@
       else{
        //snapshot();
       }
-      
       ?>
       <body onload="initMap()">
-        <div id="map"></div>
-       
-        <div id="right-panel"></div> 
+        <div id="map" class="col-xs-12 col-md-12 col-lg-10"></div>
+
+        <div id="right-panel" class="col-lg-2"></div>
       </body>
 </html>

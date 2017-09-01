@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<meta charset="utf-8">
+<script>
+function changeSelect( selectNo ) {
+var sels = document.getElementById("subcats").getElementsByTagName('SELECT');
+
+
+for( var j=0; j<sels.length; j++ ) {
+sels[j].style.display = "none";
+if ( j===(selectNo-1) ) {
+    sels[j].style.display = '';
+
+}
+}
+}
+</script>
+
+</HEAD>
+
+<BODY>
+<select name="category" onchange="changeSelect( this.selectedIndex)">
+<option value="7.90608272245317,98.36664140224457">ภูเก็ต</option>
+      <option value="7.006341665683104,100.4985523223877">หาดใหญ่</option>
+      <option value="14.343238520299131,100.60918271541595">อยุธยา</option>
+      <option value="9.11065637716888,99.30181503295898">สุราษ</option>
+      <option value="13.168317602040103,100.93120604753494">ศรีราชา</option>
+</select>
+<div id="subcats">
+<select name="subcategory" style="display:none">
+<option value="0">Select Sub-Category</option>
+<option value="1">A</option>
+<option value="2">B</option>
+<option value="3">C</option>
+</select>
+
+<select name="subcategory" style="display:none">
+<option value="0">Select Sub-Category</option>
+<option value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+</select>
+
+<div id="subcat2" align = "right" style="display:none">
+<select name="subcategory" >
+<option value="0">Select Sub-Category</option>
+<option value="1">a</option>
+<option value="2">b</option>
+<option value="3">c</option>
+</select>
+</div>
+</div>
+</BODY>
+
+</HTML>

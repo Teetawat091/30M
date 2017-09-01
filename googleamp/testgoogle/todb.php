@@ -140,10 +140,13 @@ mysqli_close($conn);
 
 ?>
 <body>
-	<button id="refresh" onclick="redirect()">Back</button>
+	<a href="dootook.php"><button id="refresh">Back</button></a>
+	<button onclick="sendmail()">send mail</button>>
+
+
 	<script type="text/javascript">
-	function redirect(){
-		window.location.href = "http://127.0.0.1/testgoogle/dootook.php";
+	function sendmail(){
+		//window.location.href = "dootook.php";
 	}
 	</script>
 </body>
