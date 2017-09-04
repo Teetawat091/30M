@@ -143,7 +143,7 @@
     map: map
   		});
   	var infowindow = new google.maps.InfoWindow({
-    content: 'Latitude: ' + location.lat()
+    content: 'กดปุ่ม add เพื่อเพิ่มสถานที่นี้ลงไปในฐานข้อมูล'
     
 	});
 	markers.push(marker);
@@ -161,6 +161,12 @@
        	markers = [];
        	document.getElementById('lat_location').value ="" ;
 		document.getElementById('lng_location').value = "";
+        }
+        if(markers.length == 0){
+        	document.getElementById('add').disabled = 'disabled';
+        }
+        else{
+        	document.getElementById('add').disabled= '';
         }
 
 }

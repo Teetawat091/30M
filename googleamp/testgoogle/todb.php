@@ -38,9 +38,9 @@ $endpos = explode(',',$_POST['en']);
 $cost;
 $rate;
 
-echo "<pre>";
+/*echo "<pre>";
 print_r($_POST['dyroute']);
-echo "<pre>";
+echo "<pre>";*/
 
 $steps = json_decode($_POST['dyroute'],TRUE);
 $countstep =  count($steps);
@@ -53,7 +53,6 @@ $eachstartlat = [];
 $eachstartlng = [];
 $eachendlat = [];
 $eachendlng = [];
-
 
 for($i=0;$i<$countstep;$i++){
 	$eachdistance[$i]= $steps[$i]['distance']['text'];
@@ -141,12 +140,12 @@ mysqli_close($conn);
 ?>
 <body>
 	<a href="dootook.php"><button id="refresh">Back</button></a>
-	<button onclick="sendmail()">send mail</button>>
+	<button onclick="sendmail()">send mail</button>
 
 
 	<script type="text/javascript">
 	function sendmail(){
-		//window.location.href = "dootook.php";
+		window.location.href = "sendmail.php";
 	}
 	</script>
 </body>

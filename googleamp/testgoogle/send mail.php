@@ -5,18 +5,15 @@
 </head>
 <body>
 <?php
-$strTo = "sandna03@gmail.com";
-$strSubject = "Test Send Email";
-$strHeader = "From: chitpitak.t@gmail.com";
-$strMessage = "My Body & My Description";
-$flgSend = @mail($strTo,$strSubject,$strMessage,$strHeader);  // @ = No Show Error //
-if($flgSend){
-echo "Email Sending.";
-}
-else{
-echo "Email Can Not Send.";
-}
+// the message
+$msg = "First line of text\nSecond line of text";
 
+// use wordwrap() if lines are longer than 70 characters
+$msg = wordwrap($msg,70);
+
+// send email
+@mail("sandna03@gmail.com","My subject",$msg,"chitpitak.t@gmail.com");
 ?>
+
 </body>
 </html>
