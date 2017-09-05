@@ -388,16 +388,10 @@
       
        function snapshot(){
         $img = imagegrabscreen();
-        imagepng($img,"img/snapshot.png");
+        imagejpeg($img,"img/snapshot.jpg");
         imagedestroy($img);
         }
-      if(isset($_POST['campus'])==true){
-        //snapshot();
-
-      }
-      else{
-       //snapshot();
-      }
+     
       ?>
       <body onload="initMap()">
         <div id="map" class="col-xs-12 col-md-12 col-lg-10"></div>

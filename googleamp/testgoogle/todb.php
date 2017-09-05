@@ -6,7 +6,6 @@
 <iframe src="http://127.0.0.1/testgoogle/dootook.php"height="500" width="100%"frameborder="0"scrolling="auto"align="center">
 </iframe>
 </body>
-
 <?php
 $server = "localhost";
 $user = "root";
@@ -100,6 +99,7 @@ else {
 	}
 
 	echo 'Cost : '.$distance*$rate ." bath".'<br>';
+	echo "<input type='hidden' value = '".$distance*$rate."' name = 'cost'>";
 
 	$newdbsql = " INSERT INTO `user_outgoing` (`user_outgoing_id`, `branch_id`, `user_id`, `origin_lat`, `origin_lng`, `origin_branch_description_id`, `destination_lat`, `destination_lng`, `destination_branch_description_id`, `vihecle_type`, `distance`, `rate`, `cost`, `status`, `datetime_enter`) VALUES (NULL,".$campus.", '4', '".$orlatlng[0]."', '".$orlatlng[1]."', '0', '".$endpos[0]."', '".$endpos[1]."', '".$dest_description."', '".$_POST['select']."', ".$distance.", ".$rate.", ".$distance*$rate.",'wait' ,'".$datetime."')";
 
@@ -138,15 +138,10 @@ for($i=0;$i<$countstep;$i++){
 mysqli_close($conn);
 
 ?>
+
+<a href="mailer.php"><button>Send mail</button></a>
+<a href="dootook.php"><button>Back</button></a>
+
 <body>
-	<a href="dootook.php"><button id="refresh">Back</button></a>
-	<button onclick="sendmail()">send mail</button>
-
-
-	<script type="text/javascript">
-	function sendmail(){
-		window.location.href = "sendmail.php";
-	}
-	</script>
 </body>
 </html>
