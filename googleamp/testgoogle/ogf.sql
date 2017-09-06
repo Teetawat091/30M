@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 25, 2017 at 12:42 PM
+-- Generation Time: Sep 06, 2017 at 12:07 PM
 -- Server version: 10.1.25-MariaDB
 -- PHP Version: 7.1.7
 
@@ -67,10 +67,21 @@ CREATE TABLE `branch_destination` (
 INSERT INTO `branch_destination` (`branch_destination_id`, `branch_destination_name`, `branch_id`, `lat_destination`, `lng_destination`) VALUES
 (1, 'เซนทรัล ภูเก็ต', 1, '7.891948760651239\r\n', '98.36819171905518'),
 (2, 'มอ ภูเก็ต', 1, '7.894393014197344', '98.35289239883423'),
-(3, 'อาม่าติ่มซำ', 2, '7.004893437492478\r\n', '100.48960447311401'),
 (4, 'เจดีย์สามปลื้ม', 3, '14.353747020428148', '100.59146404266357'),
 (5, 'โรงพยาบาลศรีวิชัย', 4, '9.115465787018001', '99.30926084518433'),
-(6, 'โจ้กเปิดหม้อ', 5, '13.167779595288456', '100.92538833618164');
+(6, 'โจ้กเปิดหม้อ', 5, '13.167779595288456', '100.92538833618164'),
+(9, 'สวนสาธารณะหาดใหญ่', 2, '7.042971821437289', '100.50739288330078'),
+(12, 'เขารัง', 1, '7.893649112474572', '98.3796501159668'),
+(13, 'สวนเสือศรีราชา', 5, '13.148358327567177', '101.01070404052734'),
+(14, 'ตลาดน้ำกรุงเก่า', 3, '14.358694471904762', '100.54344177246094'),
+(15, 'สนามบินสุราษ', 4, '9.13430025281776', '99.14268493652344'),
+(16, 'สนามบินภูเก็ต', 1, '8.111235871444734', '98.30635070800781'),
+(17, 'บิ๊กซีสุราษฯ', 4, '9.148197713142977', '99.3698787689209'),
+(18, 'สวนนกภูเก็ต', 1, '7.864232040751287', '98.34403038024902'),
+(19, 'แหลมพรหมเทพ', 1, '7.759299883556808', '98.30360412597656'),
+(45, 'โรงพยาบาลบางบาล', 3, '14.366884550349408', '100.48739433288574'),
+(46, 'จังซีลอน', 1, '7.892288831575531', '98.29828262329102'),
+(47, 'สวนสัตว์เปิดเขาเขียว', 5, '13.215213662455822', '101.05636596679688');
 
 -- --------------------------------------------------------
 
@@ -89,9 +100,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `branch_name`, `user_name`) VALUES
-(3, 'ภูเก็ต', 'jgffgh'),
-(4, 'ภูเก็ต', 'rbecb'),
-(5, 'ภูเก็ต', 'xvqvqv');
+(4, 'ภูเก็ต', 'rbecb');
 
 -- --------------------------------------------------------
 
@@ -117,31 +126,6 @@ CREATE TABLE `user_outgoing` (
   `datetime_enter` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
---
--- Dumping data for table `user_outgoing`
---
-
-INSERT INTO `user_outgoing` (`user_outgoing_id`, `branch_id`, `user_id`, `origin_lat`, `origin_lng`, `origin_branch_description_id`, `destination_lat`, `destination_lng`, `destination_branch_description_id`, `vihecle_type`, `distance`, `rate`, `cost`, `status`, `datetime_enter`) VALUES
-(85, 1, 4, '7.90608272245317', '98.36664140224457', '0', '7.891948760651239\r\n', '98.36819171905518', '0', 'motercycle', 2.18, 2, 4.36, 'wait', '2017-07-05 16:45:55'),
-(86, 4, 4, '9.11065637716888', '99.30181503295898', '0', '9.115465787018001', '99.30926084518433', '0', 'motercycle', 3.799, 2, 7.598, 'wait', '2017-07-05 16:46:51'),
-(87, 3, 4, '14.343238520299131', '100.60918271541595', '0', '', '', '0', 'motercycle', 0, 2, 0, 'wait', '2017-07-05 16:54:37'),
-(88, 2, 4, '7.006341665683104', '100.4985523223877', '0', '7.004893437492478\r\n', '100.48960447311401', '0', 'car', 1.572, 4.5, 7.074, 'wait', '2017-07-05 16:57:20'),
-(89, 2, 4, '7.006341665683104', '100.4985523223877', '0', '7.004893437492478\r\n', '100.48960447311401', '0', 'car', 1.572, 4.5, 7.074, 'wait', '2017-07-05 16:57:20'),
-(90, 2, 4, '7.006341665683104', '100.4985523223877', '0', '7.004893437492478\r\n', '100.48960447311401', '0', 'car', 1.572, 4.5, 7.074, 'wait', '2017-07-05 16:57:20'),
-(91, 2, 4, '7.006341665683104', '100.4985523223877', '0', '7.004893437492478\r\n', '100.48960447311401', '0', 'car', 1.572, 4.5, 7.074, 'wait', '2017-07-05 16:57:20'),
-(92, 2, 4, '7.006341665683104', '100.4985523223877', '0', '7.004893437492478\r\n', '100.48960447311401', '0', 'car', 1.572, 4.5, 7.074, 'wait', '2017-07-05 16:57:20'),
-(93, 2, 4, '7.006341665683104', '100.4985523223877', '0', '7.004893437492478\r\n', '100.48960447311401', '0', 'car', 1.572, 4.5, 7.074, 'wait', '2017-07-05 16:57:20'),
-(94, 2, 4, '7.006341665683104', '100.4985523223877', '0', '7.004893437492478\r\n', '100.48960447311401', '0', 'car', 1.572, 4.5, 7.074, 'wait', '2017-07-05 16:57:20'),
-(95, 2, 4, '7.006341665683104', '100.4985523223877', '0', '7.004893437492478\r\n', '100.48960447311401', '0', 'car', 1.572, 4.5, 7.074, 'wait', '2017-07-05 16:57:20'),
-(96, 2, 4, '7.006341665683104', '100.4985523223877', '0', '7.004893437492478\r\n', '100.48960447311401', '0', 'car', 1.572, 4.5, 7.074, 'wait', '2017-07-05 16:57:20'),
-(97, 2, 4, '7.006341665683104', '100.4985523223877', '0', '7.004893437492478\r\n', '100.48960447311401', '0', 'car', 1.572, 4.5, 7.074, 'wait', '2017-07-05 16:57:20'),
-(98, 3, 4, '14.343238520299131', '100.60918271541595', '0', '14.353747020428148', '100.59146404266357', '0', 'car', 2.761, 4.5, 12.4245, 'wait', '2017-07-05 17:12:16'),
-(99, 3, 4, '14.343238520299131', '100.60918271541595', '0', '14.353747020428148', '100.59146404266357', '0', 'car', 2.761, 4.5, 12.4245, 'wait', '2017-07-05 17:12:16'),
-(100, 1, 4, '7.90608272245317', '98.36664140224457', '0', '7.894393014197344', '98.35289239883423', '0', 'car', 5.206, 4.5, 23.427, 'wait', '2017-07-05 17:32:43'),
-(101, 1, 4, '7.90608272245317', '98.36664140224457', '0', '7.894393014197344', '98.35289239883423', '0', 'car', 5.206, 4.5, 23.427, 'wait', '2017-07-05 17:32:43'),
-(102, 1, 4, '7.90608272245317', '98.36664140224457', '0', '7.894393014197344', '98.35289239883423', '0', 'car', 5.206, 4.5, 23.427, 'wait', '2017-07-05 17:32:43'),
-(103, 1, 4, '7.90608272245317', '98.36664140224457', '0', '7.894393014197344', '98.35289239883423', '0', 'car', 5.206, 4.5, 23.427, 'wait', '2017-07-05 17:32:43');
-
 -- --------------------------------------------------------
 
 --
@@ -156,7 +140,7 @@ CREATE TABLE `user_outgoing_detail` (
   `end_lat` varchar(100) COLLATE utf8_bin NOT NULL,
   `end_lng` varchar(100) COLLATE utf8_bin NOT NULL,
   `distance` varchar(60) COLLATE utf8_bin NOT NULL,
-  `instruction` varchar(100) COLLATE utf8_bin NOT NULL
+  `instruction` varchar(200) COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
@@ -187,13 +171,16 @@ ALTER TABLE `user`
 -- Indexes for table `user_outgoing`
 --
 ALTER TABLE `user_outgoing`
-  ADD PRIMARY KEY (`user_outgoing_id`);
+  ADD PRIMARY KEY (`user_outgoing_id`),
+  ADD KEY `branch_id` (`branch_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `user_outgoing_detail`
 --
 ALTER TABLE `user_outgoing_detail`
-  ADD PRIMARY KEY (`user_outgoing_detail_id`);
+  ADD PRIMARY KEY (`user_outgoing_detail_id`),
+  ADD KEY `user_outgoing_id` (`user_outgoing_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -208,22 +195,22 @@ ALTER TABLE `branch`
 -- AUTO_INCREMENT for table `branch_destination`
 --
 ALTER TABLE `branch_destination`
-  MODIFY `branch_destination_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `branch_destination_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `user_outgoing`
 --
 ALTER TABLE `user_outgoing`
-  MODIFY `user_outgoing_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
+  MODIFY `user_outgoing_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 --
 -- AUTO_INCREMENT for table `user_outgoing_detail`
 --
 ALTER TABLE `user_outgoing_detail`
-  MODIFY `user_outgoing_detail_id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
+  MODIFY `user_outgoing_detail_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1243;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

@@ -14,6 +14,8 @@ $db = "ogf";
 $conn = mysqli_connect($server, $user, $pass, $db);
 mysqli_set_charset($conn,"utf8");
 
+echo $_POST['or'];
+
 $url = "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=".$_POST['or']."&destinations=".$_POST['en']."&key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0";
 
 $json = file_get_contents($url);

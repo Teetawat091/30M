@@ -311,7 +311,7 @@
           //document.getElementById('vihicle').value =  document.getElementById('vihicle').value;
           document.getElementById('cam').value;
           document.getElementById('en').value ;
-          var snap = "<?php echo snapshot();?>";
+          <?php echo snapshot();?>
 
         }
         function changecampus(selectNo){

@@ -265,6 +265,7 @@ function setMapOnAll(map) {
     		$sqlinsert = "INSERT INTO `branch_destination`(branch_destination_id,branch_destination_name,branch_id,lat_destination,lng_destination) VALUES (NULL,'".$_POST['locationname']."',".$id.",'".$_POST['lat_location']."','".$_POST['lng_location']."')";
     		$insertres = mysqli_query($conn,$sqlinsert);
     		if($insertres){
+    			
 
     		}
     		else{
