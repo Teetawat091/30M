@@ -6,7 +6,20 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <title>Add Landmark Form</title>
     <style type="text/css">
-    
+    html,body{
+    	height: 100%;
+    }
+    	#map{
+    		height: 100%;
+    		width: 100%;
+    		float: left;
+
+    	}
+    	#panel{
+    		height: 100%;
+    		float: right;
+    		
+    	}
 
     </style>
     </head>
@@ -20,8 +33,8 @@
     mysqli_set_charset($conn,"utf8");
     ?>
     <body>
-    <div class="col-xs-12 col-lg-8 bg" id="map" style="height:662px;width:100%;float: left;"></div>
-    <div>
+    <div class="col-xs-12 col-lg-8 bg" id="map"></div>
+    <div id="panel">
     	<form name="addlandmarkform" id="addlandmarkform" action="" method="post">
     	<table align="" name = "addlandmark" id="addlandmark"  border="0" cellpadding="7" cellspacing="5">
     		<tr>

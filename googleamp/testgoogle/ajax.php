@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ajax</title>
+	<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+	<meta charset="utf-8">
+</head>
+<body>
+<?php
+  if(isset($_POST['sweets'])) 
+  {
+    echo $_POST['sweets'];
+    exit;
+  }
+  ?>
+
+    <script>
+        $(function(){
+          $("select[name='sweets']").change(function () {
+          var str = "";
+         /* $("select[name='sweets'] option:selected").each(function () {
+                str += $(this).text() + " ";
+
+              });*/
+
+                jQuery.ajax({
+                type: "POST",
+                data:  $("#name").serialize(),
+
+                success: function(data){
+                  //  jQuery(".res").html(data);
+
+                    $('#test').html(data);
+
+
+                }
+                });  
+               /* var str = $("form").serialize();
+                $(".res").text(str);*/
+        });
+        });
+        </script>
+
+
+ <div id="test">
+
+  </div>
+
+<form id="a" action="" method="post">
+  <select name="sweets" id="name">
+   <option value="1">Chocolate</option>
+   <option value="2">Candy</option>
+   <option value="3">Taffy</option>
+   <option value="4">Caramel</option>
+   <option value="5">Fudge</option>
+  <option value="6">Cookie</option>
+</select>
+</form>
+
+</body>
+</html>
