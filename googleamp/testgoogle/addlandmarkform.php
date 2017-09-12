@@ -16,9 +16,7 @@
 
     	}
     	#panel{
-    		height: 100%;
-    		float: right;
-    		
+    		height: 100%;  		
     	}
 
     </style>

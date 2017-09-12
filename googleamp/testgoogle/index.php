@@ -3,6 +3,8 @@
 <html>
 <head>
 <meta charset="utf-8">
+<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
+<link href="css/bootstrap.min.css" rel="stylesheet">
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 	<title>Home</title>
 </head>
@@ -19,12 +21,19 @@
 	#leftpanel{
 		float: left;
 		height: 100%;
-		width: 15%;
+		width: 1px;
 		padding-top: 5%;
 		background-color: #ffff99;
 		border: 1;
 		line-height: 30px;
 		font-family: 'Roboto','sans-serif';
+		transition: width 3s;
+		 
+
+	}
+	#leftpanel:hover{
+
+		width: 15%;
 	}
 	button.btn{
 		width: 70%;
@@ -41,7 +50,9 @@
 		float: left;
 		height: 100%;
 		width: 85%;
-		padding-top: 20px;
+		padding-top: 26px;
+		padding-left: 1px;
+		
 	}
 
 </style>
@@ -57,13 +68,21 @@
 </div>
 <div id="leftpanel">
 <strong> Selectform </strong>
-	<a href="addlandmarkform.php"><button class="btn"><strong><i>Add location form</i></strong></button></a>
-	<a href="dootook.php"><button class="btn"><strong><i>Out going form</i></strong></button></a>
-	<a href="s.html"><button class="btn"><strong><i>To test dropdown</i></strong></button></a>
-	<a href="sendmail.php"><button class="btn"><strong><i>Send mail(mailer)</i></strong></button></a>
+	<a href="index.php?page=addlandmarkform"><button class="btn" id="addlandmarkform"><strong><i>Add location form</i></strong></button></a>
+	<a href="index.php?page=dootook"><button class="btn" id="addlandmarkform"><strong><i>Outgoing Form</i></strong></button></a>
+	
+	
 </div>
-<div id="body">
-<iframe src="addlandmarkform.php" height="100%" width="100%" frameborder="0" scrolling="auto" align="center"></iframe>
+<div id="body" >
+<?php 
+
+if (isset($_GET['page'])) {	
+include($_GET['page'].".php");
+}
+else{
+	include("addlandmarkform.php");
+}
+?>
 </div>
 </body>
 </html>

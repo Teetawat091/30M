@@ -2,10 +2,10 @@
 <title>show information</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width = device-width, initial-scale = 1.0">
-<body >
+<body onload="initdatetime()">
 <iframe src="http://127.0.0.1/testgoogle/dootook.php"height="500" width="100%" frameborder="0" scrolling="auto" align="center">
 </iframe>
-</body>
+
 <?php
 $server = "localhost";
 $user = "root";
@@ -132,9 +132,22 @@ mysqli_close($conn);
 
 ?>
 
-<a href="mailer.php"><button>Send mail</button></a>
-<a href="dootook.php"><button>Back</button></a>
+<table>
+	<tr>
+		<td>
+			<form method="get" action="mailer.php">
+				<input type="hidden" name="dt" value="<?php echo $ogid; ?>" >
+				<input type="submit" name="submit" value="Send mail">
+			</form>
+			<a href="dootook.php"><button>Back</button></a>
+		</td>
+		
+	</tr>
+</table>
 
-<body>
+<script type="text/javascript">
+
+	
+</script>
 </body>
 </html>

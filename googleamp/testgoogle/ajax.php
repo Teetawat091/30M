@@ -6,6 +6,16 @@
 	<meta charset="utf-8">
 </head>
 <body>
+<style type="text/css">
+	#a{
+		padding-left: 10%;
+		padding-top: 30px;
+	}
+	#test{
+		padding-left: 10%;
+	}
+</style>
+
 <?php
   if(isset($_POST['sweets'])) 
   {
@@ -18,25 +28,24 @@
         $(function(){
           $("select[name='sweets']").change(function () {
           var str = "";
-         /* $("select[name='sweets'] option:selected").each(function () {
+          $("select[name='sweets'] option:selected").each(function () {
                 str += $(this).text() + " ";
 
-              });*/
+              });
 
                 jQuery.ajax({
                 type: "POST",
                 data:  $("#name").serialize(),
 
                 success: function(data){
-                  //  jQuery(".res").html(data);
-
+                    jQuery(".res").html(data);
                     $('#test').html(data);
-
+                    console.log(data);
 
                 }
                 });  
-               /* var str = $("form").serialize();
-                $(".res").text(str);*/
+                var str = $("form").serialize();
+                $(".res").text(str);
         });
         });
         </script>
