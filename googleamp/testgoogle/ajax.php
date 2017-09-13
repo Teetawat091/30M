@@ -29,7 +29,7 @@
           $("select[name='sweets']").change(function () {
           var str = "";
           $("select[name='sweets'] option:selected").each(function () {
-                str += $(this).text() + " ";
+                str += $(this).index() + " ";
 
               });
 
@@ -39,18 +39,17 @@
 
                 success: function(data){
                     jQuery(".res").html(data);
-                    $('#test').html(data);
+                    //$('#test').html(data);
                     console.log(data);
 
                 }
                 });  
                 var str = $("form").serialize();
                 $(".res").text(str);
+                //console.log(str);
         });
         });
         </script>
-
-
  <div id="test">
 
   </div>

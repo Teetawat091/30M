@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>...</title>
 </head>
 <body>
-<?php
+<?php 
 
-$q = $_REQUEST["q"];
+if($_POST['id']){
+	$id = $_POST['id'];
+}
+echo "Welcome ". $id ."!"; // Success Message
 
 
-  ?>
-</body>
-</html>>
+
+ ?>
+
+</html>

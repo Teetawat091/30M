@@ -21,19 +21,13 @@
 	#leftpanel{
 		float: left;
 		height: 100%;
-		width: 1px;
+		width: 15%;
 		padding-top: 5%;
 		background-color: #ffff99;
 		border: 1;
 		line-height: 30px;
 		font-family: 'Roboto','sans-serif';
 		transition: width 3s;
-		 
-
-	}
-	#leftpanel:hover{
-
-		width: 15%;
 	}
 	button.btn{
 		width: 70%;
