@@ -14,7 +14,7 @@
 	}
 	#head{
 		width: 100%;
-		background-color: #ffff99;
+		background-color: #ff9900;
 		position: absolute;
 		text-align: center;
 	}
@@ -23,7 +23,7 @@
 		height: 100%;
 		width: 15%;
 		padding-top: 5%;
-		background-color: #ffff99;
+		background-color: #ff9900;
 		border: 1;
 		line-height: 30px;
 		font-family: 'Roboto','sans-serif';
@@ -45,9 +45,13 @@
 		height: 100%;
 		width: 85%;
 		padding-top: 26px;
-		padding-left: 1px;
-		
+			
 	}
+	input[type = text],select,textarea{
+		border-radius: 4px;
+		border: 1px solid #ccc;
+	}
+
 
 </style>
 <body>

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-  <head>  sssss
+  <head> 
   <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
   <!--<script type="text/javascript" src="js/html2canvas.js"></script>-->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -42,6 +42,7 @@
         font-family: 'Roboto','sans-serif';
         line-height: 20px;
         padding-left: 5px;
+        background-color: #DDDDDD;
       }
 
       #right-panel select, #right-panel input {
@@ -187,60 +188,56 @@
                 $('#cam').val(selectNo) ;
                 $('#subcats').show();
                 //window.history.pushState({}, '', '?page=dootook&id='+selectNo);
+                $('#right-panel').empty();
 
                 if(selectNo == 1){
                   lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
                   initMap();
                   displayRoute(''+$('#or').val()+'',''+$('#or').val()+'',directionsService,
                   directionsDisplay);
-                  //document.getElementById('campus').selectedIndex = 1;
-                 //  <?php $sqldes //= "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id=1"; ?>*/
+                  
                 }//phuket
                 else if(selectNo == 2){
                   lat_lng = {lat:7.006341665683104,lng:100.4985523223877};
                   initMap();
                   displayRoute(''+$('#or').val()+'',''+$('#or').val()+'',directionsService,
                   directionsDisplay);
-                  //<?php $sqldes //= "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id=2"; ?>
-                  // document.getElementById('campus').selectedIndex = 2;
+                  
                 }//hatyai
                 else if(selectNo == 5){
                   lat_lng = {lat:13.168317602040103,lng:100.93120604753494};
                   initMap();
                   displayRoute(''+$('#or').val()+'',''+$('#or').val()+'',directionsService,
                   directionsDisplay);
-                  //<?php $sqldes// = "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id=3"; ?>
-                  //document.getElementById('campus').selectedIndex = 5;
+                  
                 }//sriraja
                 else if(selectNo == 4){
                   lat_lng = {lat:9.11065637716888,lng:99.30181503295898};
                   initMap();
                   displayRoute(''+$('#or').val()+'',''+$('#or').val()+'',directionsService,
                   directionsDisplay);
-                  //<?php $sqldes //= "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id=4"; ?>
-                     //document.getElementById('campus').selectedIndex = 4;
+                  
                 }//surat
                 else if(selectNo == 3){
                   lat_lng = {lat:14.343238520299131,lng:100.60918271541595}
                   initMap();
                   displayRoute(''+$('#or').val()+'',''+$('#or').val()+'',directionsService,
                   directionsDisplay);
-                  //<?php $sqldes //= "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id=5"; ?>
-                  // document.getElementById('campus').selectedIndex = 3;
+                  
                   }
 
                 });
 
                 jQuery.ajax({
-                type: "POST",
-               // async:false,
-                data:  $("#campus").serialize(),
-
-                success: function(data){
-                      alert(data);
-                   // jQuery(".res").html(data);
-                   // $('#body').html(data);
-                   // console.log(data);
+                  url: 'recieve.php',
+                  type: "POST",
+                  // async:false,
+                  data:  $('#campus').serialize(),
+                  success: function(data){
+                     // alert(data);
+                    // jQuery(".res").html(data);
+                     $('#subcats').html(data);
+                     console.log(data);
 
                 }
                 });  
@@ -291,33 +288,10 @@
     $i;
     mysqli_set_charset($conn,"utf8");
 
+    /*if (isset($_POST['id'])) {
+      $sqldes = "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id".$_POST['id'];
+    }*/
 
-    if(isset($_POST['campus'])){
-      if($_POST['campus']=='7.90608272245317,98.36664140224457'){
-        $i=1;
-
-      }
-      elseif ($_POST['campus']=='7.006341665683104,100.4985523223877') {
-        $i=2;
-        # code...
-      }
-      elseif ($_POST['campus']=='14.343238520299131,100.60918271541595') {
-        # code...
-        $i=3;
-      }
-      elseif ($_POST['campus']=='9.11065637716888,99.30181503295898') {
-        # code...
-        $i=4;
-      }
-      elseif ($_POST['campus']=='13.168317602040103,100.93120604753494') {
-        # code...
-        $i=5;
-      }
-          $GLOBALS['sqldes'] = "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id =".$i;
-          echo $sqldes;
-
-          
-        }
     ?>
       <div id="floating-panel">
     <form  action="todb.php" method="post">
@@ -352,7 +326,7 @@
     <option value="" selected="selected">สำนักงาน</option>
     <?php
     //$sqldes = "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id=1";
-    $GLOBALS['sqldes'] = "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id =".$i;
+    //$GLOBALS['sqldes'] = "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id =".$i;
     $startres = mysqli_query($conn,$sqldes);
     if($startres){
       while ($startrec= mysqli_fetch_array($startres,MYSQLI_ASSOC)) {
@@ -370,7 +344,7 @@
       <?php
     //$sqlhatyai = "SELECT branch_destination_name,lat_destination,lng_destination FROM `branch_destination` WHERE branch_id =".$i;
    // $hatyaires = mysqli_query($conn,$sqlhatyai);
-      $GLOBALS['sqldes'] = "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id =".$i;
+      //$GLOBALS['sqldes'] = "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id =".$i;
       $startres = mysqli_query($conn,$sqldes);
     if($startres){
       while ($hrec= mysqli_fetch_array($startres,MYSQLI_ASSOC)) {
@@ -393,9 +367,9 @@
     </form>
   
     </div>
-    <div id="map" class="col-xs-12 col-md-12 col-lg-10"></div>
+      <body onload="initMap()">
+        <div id="map" class="col-xs-12 col-md-12 col-lg-10"></div>
     <div id="right-panel" class="col-lg-2"></div>
-      <body onload="initMap()" id="body">
         
 
 

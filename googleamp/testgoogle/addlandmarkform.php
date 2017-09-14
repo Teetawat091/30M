@@ -16,7 +16,8 @@
 
     	}
     	#panel{
-    		height: 100%;  		
+    		height: 100%;  
+            background-color: #DDDDDD;		
     	}
 
     </style>

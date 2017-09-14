@@ -3,7 +3,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width = device-width, initial-scale = 1.0">
 <body onload="initdatetime()">
-<iframe src="http://127.0.0.1/testgoogle/dootook.php"height="500" width="100%" frameborder="0" scrolling="auto" align="center">
+<iframe src="dootook.php" height="500" width="100%" frameborder="0" scrolling="auto" align="center">
 </iframe>
 
 <?php
