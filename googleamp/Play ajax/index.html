@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>First page to play ajax</title>
+	<meta charset="utf-8">
+
+</head>
+<style type="text/css">
+html,body{
+	height: 100%;
+}
+	#head{
+		text-align: center;
+	}
+	#show{
+		height: 5%;
+	}
+	.body{
+		width: 100%;
+		height: 95%;
+		background-color: #DDDDDD;
+	}
+	#navbar{
+		width: 100%;
+		height: 4%;
+		background-color: #696969;
+	}
+	#navbar button{
+		border: 0;
+		background-color: transparent;
+		color: white;
+		text-align: center;
+	}
+	#newbody{
+		height: 100%;
+		width: 100%;
+		background-color: #ffffcc;
+	}
+</style>
+<body>	
+	<div id="head">
+		<strong>AJAX</strong>
+	</div>
+	Test Input : <input type="text" name="input" id="input" onkeyup="showoutput(this.value)">
+		<div id="show" ></div>
+		<div class="body">
+			<div id="navbar">
+				<button onclick="page('index')"><strong>Home</strong></button>&nbsp;&nbsp;
+				<button onclick="page('1')"><strong>show innerText</strong></button>&nbsp;&nbsp;
+				<button onclick="page('2')"><strong>show innerHTML</strong></button>&nbsp;&nbsp;
+				<button onclick="page('3')"><strong>subcats</strong></button>&nbsp;&nbsp;
+				<button><strong>Home</strong></button>&nbsp;&nbsp;
+				<button><strong>Home</strong></button>&nbsp;&nbsp;
+			</div>
+			<div id="newbody">home page body</div>
+		</div>
+
+</body>
+<script type="text/javascript">
+	function showsubcatval(value) {
+		//alert(value);
+		var xmlhttp = new XMLHttpRequest();
+		xmlhttp.onreadystatechange = function(){
+		if(this.readyState == 4 && this.status ==200){
+			//alert(this.responseText);
+				document.getElementById('subcat').innerHTML = this.responseText;
+			
+			//document.getElementById('newbody').innerText = this.responseText;
+		}
+		else{
+			document.getElementById('subcat').innerHTML = "Loading fail";
+		}
+	};
+	xmlhttp.open('GET','subcat.php',true);
+	xmlhttp.send();
+		
+	}
+
+
+	function showoutput(str) {
+		
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+        	//alert(str);
+            if (this.readyState == 4 && this.status == 200) {
+				////alert(this.responseText);
+				
+                document.getElementById("show").innerHTML = this.responseText;
+				//document.getElementById("test").value = this.responseText;
+				//innerText = this.responseText;
+            }else{
+				//document.getElementById("show").innerHTML = "Loading";
+			}
+        };
+        xmlhttp.open("GET", "output.php?q=" + str, true);
+        xmlhttp.send();
+}
+function page(name){
+	var xmlhttp = new XMLHttpRequest();
+	xmlhttp.onreadystatechange = function(){
+		if(this.readyState == 4 && this.status ==200){
+			//alert(this.responseText);
+			 if(name=='1'){
+				document.getElementById('newbody').innerText = this.responseText;
+			}
+			else{
+				document.getElementById('newbody').innerHTML = this.responseText;
+			}
+			//document.getElementById('newbody').innerText = this.responseText;
+		}
+		else{
+			document.getElementById('newbody').innerHTML = "Loading fail";
+		}
+	};
+	xmlhttp.open('GET',name+'.php',true);
+	xmlhttp.send();
+}
+
+
+</script>
+</html>

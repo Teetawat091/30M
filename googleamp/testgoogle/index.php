@@ -12,12 +12,7 @@
 	html,body{
 		height: 100%;
 	}
-	#head{
-		width: 100%;
-		background-color: #ff9900;
-		position: absolute;
-		text-align: center;
-	}
+	
 	#leftpanel{
 		float: left;
 		height: 100%;
@@ -28,6 +23,7 @@
 		line-height: 30px;
 		font-family: 'Roboto','sans-serif';
 		transition: width 3s;
+		text-align: center;
 	}
 	button.btn{
 		width: 70%;
@@ -43,30 +39,34 @@
 	#body{
 		float: left;
 		height: 100%;
-		width: 85%;
-		padding-top: 26px;
-			
+		width: 85%;		
 	}
 	input[type = text],select,textarea{
 		border-radius: 4px;
 		border: 1px solid #ccc;
 	}
+	button,input[type = submit]{
+		border-radius: 4px;
+		font-weight: bold;
+
+		
+	}
+	button:hover{
+		box-shadow: 2px 5px 5px #888888;
+		background-color: #9900cc;
+		color: white;
+
+
+	}
 
 
 </style>
 <body>
-<div id="head">
-<table align="center">
-	<tr>
-		<td>
-			<strong>Form</strong>
-		</td>
-	</tr>
-</table>
-</div>
+
 <div id="leftpanel">
-<strong> Selectform </strong>
+<strong> Selectform </strong><br><br><br>
 	<a href="index.php?page=addlandmarkform"><button class="btn" id="addlandmarkform"><strong><i>Add location form</i></strong></button></a>
+	<br><br>
 	<a href="index.php?page=dootook"><button class="btn" id="addlandmarkform"><strong><i>Outgoing Form</i></strong></button></a>
 	
 	

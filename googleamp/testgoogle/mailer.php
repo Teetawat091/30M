@@ -17,10 +17,10 @@ require_once "phpmailer/phpmailer/class.phpmailer.php";
 
 $message = '<html><body style="background:#eee;">';
 $message .= '';
-$message .= '<table border = "0" cellspacing = "5" cellpadding = "5"><tr><td><form method = "get" action = http://127.0.0.1/testgoogle/approve.php>';
+$message .= '<table border = "0" cellspacing = "5" cellpadding = "5"><tr><td><form method = "get" action = http://127.0.0.1:81/testgoogle/approve.php>';
 $message .= '<input type = "hidden" name = "goingid" value ='.$goingid.'>';
 $message .= '<input type = "submit" name = "approve" value = "Approve" style = "background-color: #4CAF50;border-radius: 4px;font-size: 16px;color: white;box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);">'; 
-$message .= '</form></td><td><form method="get" action="http://127.0.0.1/testgoogle/cancle.php">';
+$message .= '</form></td><td><form method="get" action="http://127.0.0.1:81/testgoogle/cancle.php">';
 $message .= '&nbsp;&nbsp;&nbsp;';
 $message .= '<input type = "hidden" name = "goid" value='.$goingid.'>';
 $message .= '<input type = "submit" name = "cancle" value = "Cancle" style = "background-color: #4CAF50;border-radius: 4px;font-size: 16px;color: white;box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);">';
@@ -87,7 +87,7 @@ try {
     $mail->Send();
    echo $msg = "Mail send successfully";
    //echo $message;
-    header( "location: index.php" );
+    header( "location:index.php" );
  	exit(0);
 
 } catch (phpmailerException $e) {

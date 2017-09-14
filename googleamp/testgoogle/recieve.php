@@ -43,7 +43,7 @@ $server = "localhost";
 ?>
 	<div id="subcats" align="left">
     <strong>จาก</strong>
-    <select id="Phuket" name="subcategory" onchange="ending(this.id)">
+    <select id="Phuket" name="subcategory" onchange="starting(this.id)">
     <option value="" selected="selected">เลือกสถานที่</option>
     <?php
     //$sqldes = "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id=1";

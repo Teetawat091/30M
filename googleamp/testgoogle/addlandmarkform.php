@@ -91,9 +91,9 @@
     			
     		</td>
     		<td>
-    			<input type="submit" name="add" value="add" disabled="disabled" id="add">
+    			<input type="submit" name="add" value="Add" disabled="disabled" id="add">
     			&nbsp;&nbsp;
-    			<button name="clear" type="reset" value="reset">clear</button>
+    			<button name="clear" type="reset" value="reset">Clear</button>
     		</td>
     			
     		</tr>
