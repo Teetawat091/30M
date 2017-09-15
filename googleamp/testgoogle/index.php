@@ -1,86 +1,48 @@
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="utf-8">
-<script type="text/javascript" src="js/jquery-3.2.1.js"></script>
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-	<title>Home</title>
+	<title></title>
 </head>
 <style type="text/css">
-	html,body{
+html,body{
+	height: 100%;
+}
+	#login{
 		height: 100%;
-	}
-	
-	#leftpanel{
-		float: left;
-		height: 100%;
-		width: 15%;
-		padding-top: 5%;
 		background-color: #ff9900;
-		border: 1;
-		line-height: 30px;
-		font-family: 'Roboto','sans-serif';
-		transition: width 3s;
 		text-align: center;
-	}
-	button.btn{
-		width: 70%;
-		height: 30px;
-		background-color: #363636;
-		border: 0;
-		border-spacing: 50px;
-		border-radius: 8px;
-		text-align: center;
-		color: white;
-		
-	}
-	#body{
-		float: left;
-		height: 100%;
-		width: 85%;		
-	}
-	input[type = text],select,textarea{
-		border-radius: 4px;
-		border: 1px solid #ccc;
-	}
-	button,input[type = submit]{
-		border-radius: 4px;
-		font-weight: bold;
+		padding-top: 10%;
 
-		
 	}
-	button:hover{
-		box-shadow: 2px 5px 5px #888888;
+	input[type = submit]{
+		background-color:#363636;
+		border: 0px ;
+		border-radius: 3px;
+		border-width: bold;
+		color: white;
+	}
+	input[type = text],input[type = password]{
+		border: 1px solid:#333 ;
+		border-radius: 3px;
+
+	}
+
+	input[type = submit]:hover{
 		background-color: #9900cc;
-		color: white;
-
+		box-shadow: 2px 2px 3px;
 
 	}
-
-
 </style>
 <body>
+	<div id="login">
+		
+		<form action="check.php" method="post">
+		Username : <input type="text" name="user" id="user" value=""><br>
+		<br>
+		Password : <input type="password" name="pass" id="pass" value=""><br><br>
+		<input type="submit" name="submit" id="submit" value="Login">
+		
+	</div>
 
-<div id="leftpanel">
-<strong> Selectform </strong><br><br><br>
-	<a href="index.php?page=addlandmarkform"><button class="btn" id="addlandmarkform"><strong><i>Add location form</i></strong></button></a>
-	<br><br>
-	<a href="index.php?page=dootook"><button class="btn" id="addlandmarkform"><strong><i>Outgoing Form</i></strong></button></a>
-	
-	
-</div>
-<div id="body" >
-<?php 
-
-if (isset($_GET['page'])) {	
-include($_GET['page'].".php");
-}
-else{
-	include("addlandmarkform.php");
-}
-?>
-</div>
 </body>
 </html>

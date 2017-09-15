@@ -87,7 +87,7 @@ try {
     $mail->Send();
    echo $msg = "Mail send successfully";
    //echo $message;
-    header( "location:index.php" );
+    header( "location:hrview.php" );
  	exit(0);
 
 } catch (phpmailerException $e) {

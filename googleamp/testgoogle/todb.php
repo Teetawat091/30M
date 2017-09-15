@@ -2,10 +2,15 @@
 <title>show information</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width = device-width, initial-scale = 1.0">
+<style type="text/css">
+	#php{
+		background-color:  #DDDDDD;
+	}
+</style>
 <body onload="initdatetime()">
 <iframe src="dootook.php" height="500" width="100%" frameborder="0" scrolling="auto" align="center">
 </iframe>
-
+<div id="php">
 <?php
 $server = "localhost";
 $user = "root";
@@ -132,6 +137,7 @@ mysqli_close($conn);
 
 ?>
 
+
 <table>
 	<tr>
 		<td>
@@ -144,10 +150,6 @@ mysqli_close($conn);
 		
 	</tr>
 </table>
-
-<script type="text/javascript">
-
-	
-</script>
+</div>
 </body>
 </html>

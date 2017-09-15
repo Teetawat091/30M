@@ -29,6 +29,7 @@ else{
 
 
  ?>
+ window.history.back()
  Hello it's me
 </body>
 </html>

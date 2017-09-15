@@ -37,6 +37,12 @@
         float: right;
         width: 100%;
         height: 100%;
+        overflow:  hidden;
+        overflow-y: scroll;
+        scrollbar-arrow-color:blue;
+        scrollbar-face-color: #e7e7e7;
+        scrollbar-3dlight-color: #a0a0a0;
+        scrollbar-darkshadow-color:#888888;
       }
       #right-panel {
         font-family: 'Roboto','sans-serif';
@@ -139,9 +145,7 @@
 
         function starting(id){
           document.getElementById('or').value = document.getElementById(id).value;
-          //alert(start);
-          //alert($('#en').val());
-          
+           
         }
 
         function ending(id){
@@ -155,8 +159,6 @@
           markers = [];
 
           }
-         
-
           //document.getElementById('en').value = "";
         }
 
@@ -271,7 +273,7 @@
             }
           total = total / 1000;
           document.getElementById('total').value = total;
-          console.log(dynamicroute.length);
+          //console.log(dynamicroute.length);
           document.getElementById('dyroute').value = dynamicroute[0];
           slat = JSON.stringify(myroute.legs[0].start_location);
           document.getElementById('realstart').value = slat;
