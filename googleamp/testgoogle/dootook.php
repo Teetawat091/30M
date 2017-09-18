@@ -2,7 +2,8 @@
 <html>
   <head> 
   <script type="text/javascript" src="js/jquery-3.2.1.js"></script>
-  <!--<script type="text/javascript" src="js/html2canvas.js"></script>-->
+  <script type="text/javascript" src="js/html2canvas.js"></script>
+  <script type="text/javascript" src="js/canvas2image.js"></script>
   <link href="css/bootstrap.min.css" rel="stylesheet">
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
@@ -145,6 +146,7 @@
 
         function starting(id){
           document.getElementById('or').value = document.getElementById(id).value;
+          document.getElementById('index').value = document.getElementById(id).selectedIndex;
            
         }
 
@@ -186,10 +188,28 @@
 
         function d(){
           //document.getElementById('vihicle').value =  document.getElementById('vihicle').value;
-          document.getElementById('en').value ;
-          <?php echo snapshot();?>
+        document.getElementById('en').value ;
+        html2canvas(document.getElementById('map'), {
+          useCORS: true,
+          allowTaint:false,
+          //taintTest: false,
+          onrendered: function(canvas) {
+            var dataUrl= canvas.toDataURL("image/png");
+            //document.getElementById('pic').appendChild( canvas );
+            canvas.id = "c";
+            var img =  document.createElement("img");
+            img.setAttribute('src', dataUrl);
+            img.setAttribute('download','img/snapshot.jpg');
+            document.getElementById('pic').appendChild(img);
+           // var url = img.src.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+           // window.open(url);
+           console.log(img);
 
+            //document.write('<img src="' + dataUrl + '"/>');
+            }
+          });
         }
+        
           $(function(){
           $("select[name='campus']").change(function () {
           var str = "";
@@ -198,6 +218,7 @@
                 $('#or').val($('#campus').val());
                //alert($('#campus').val());
                 var selectNo = $(this).index();
+
                 $('#cam').val(selectNo) ;
                 $('#subcats').show();
                 //window.history.pushState({}, '', '?page=dootook&id='+selectNo);
@@ -283,14 +304,6 @@
           }
         </script>
       </head>
-      <?php  
-     
-       function snapshot(){
-        $img = imagegrabscreen();
-        imagejpeg($img,"img/snapshot.jpg");
-        imagedestroy($img);
-        }
-      ?>
        <?php
     $server = "localhost";
     $user = "root";
@@ -303,8 +316,8 @@
 
     ?>
       <div id="floating-panel">
-    <form  action="todb.php" method="post">
-   
+    
+   <!--<form action="todb.php" method="post">-->
     <strong>ยานภาหนะ </strong>
     <select name="select" id="vihicle">
       <option value="car">รถยนต์</option>
@@ -328,7 +341,7 @@
     ?>
     </select>
   
-    <input type="submit" name="submit" value="บันทึก" onclick="d()" id="takeshot" disabled="disabled" >
+    <button onclick="d()">บันทึก</button>
     <div id="subcats" align="left" style="display:none">
     <strong>จาก</strong>
     <select id="Phuket" name="subcategory" onchange="starting(this.id)">
@@ -371,12 +384,14 @@
       <input type="hidden" name="dyroute" value="" id = "dyroute">
       <input type="hidden" name="datetime" value="" id="datetime">
       <input type="hidden" name="realstart" value="" id="realstart">
-    </form>
+      <input type="hidden" name="index" id="index" value="">
+    <!--</form>-->
   
     </div>
       <body onload="initMap()">
         <div id="map" class="col-xs-12 col-md-12 col-lg-10"></div>
         <div id="right-panel" class="col-lg-2"></div>
+        <div id="pic"><image id= "image" src=""></image></div>
       </body>
 
 </html>
