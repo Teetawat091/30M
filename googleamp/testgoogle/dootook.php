@@ -196,16 +196,16 @@
           onrendered: function(canvas) {
             var dataUrl= canvas.toDataURL("image/png");
             //document.getElementById('pic').appendChild( canvas );
-            canvas.id = "c";
+            
             var img =  document.createElement("img");
             img.setAttribute('src', dataUrl);
+            img.setAttribute('id', 'imm');
             img.setAttribute('download','img/snapshot.jpg');
             document.getElementById('pic').appendChild(img);
+            console.log(img);
            // var url = img.src.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
            // window.open(url);
-           console.log(img);
-
-            //document.write('<img src="' + dataUrl + '"/>');
+           //document.write('<img src="' + dataUrl + '"/>');
             }
           });
         }
