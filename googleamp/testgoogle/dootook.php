@@ -207,7 +207,7 @@
         function savepic(){
           //document.getElementById('vihicle').value =  document.getElementById('vihicle').value;
         document.getElementById('en').value ;
-        html2canvas(document.body, {
+        html2canvas(document.getElementById('map'), {
           useCORS: true,
           allowTaint:false,
           taintTest: false,

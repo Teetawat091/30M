@@ -3,12 +3,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width = device-width, initial-scale = 1.0">
 <style type="text/css">
+html,body{
+	height: 100%;
+}
 	#php{
 		background-color:  #DDDDDD;
+		float: right;
+		width: 30%;
+		height: 100%;
+	}
+	button,input[type = submit]{
+		border-radius: 4px;
+		border :1px solid:#ccc;
+		background-color: #ff9900;
+	}
+	button:hover{
+		background-color: #9900cc;
+		box-shadow: 5px 2px 2px;
+	}
+	input[type = submit]:hover{
+		background-color: #9900cc;
+		box-shadow: 5px 2px 2px;
 	}
 </style>
 <body >
-<img src="img/image.png" width="100%">
+<img src="img/image.png" width="70%">
 <div id="php">
 <?php
 $server = "localhost";
@@ -52,7 +71,7 @@ else{
 }
 //echo $originsstatus;
 $datetime = $_POST['datetime'];
-echo "Current Time : ".$datetime.'<br>';
+echo "Current Time : ".$datetime;
 
 $endpos = explode(',',$_POST['en']);
 $rate;
@@ -103,7 +122,7 @@ else {
 		$rate = 2 ;
 	}
 
-	echo 'Cost : '.$distance*$rate ." bath".'<br>';
+	echo 'Cost : '.$distance*$rate ." bath".'<br>'.'<br>';
 	echo "<input type='hidden' value = '".$distance*$rate."' name = 'cost'>";
 
 	$newdbsql = " INSERT INTO `user_outgoing` (`user_outgoing_id`, `branch_id`, `user_id`, `origin_lat`, `origin_lng`, `origin_branch_description_id`, `destination_lat`, `destination_lng`, `destination_branch_description_id`, `vihecle_type`, `distance`, `rate`, `cost`, `status`, `datetime_enter`) VALUES (NULL,".$_POST['cam'].", '4', '".$slat[0]."', '".$slat[1]."','".$originsstatus."', '".$endpos[0]."', '".$endpos[1]."', '".$dest_description."', '".$_POST['select']."', ".$distance.", ".$rate.", ".$distance*$rate.",'wait' ,'".$datetime."')";
@@ -143,7 +162,6 @@ for($i=0;$i<$countstep;$i++){
 mysqli_close($conn);
 
 ?>
-
 
 <div style="float: left;">
 <form method="get" action="mailer.php">
