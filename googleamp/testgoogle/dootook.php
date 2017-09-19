@@ -5,15 +5,18 @@
   <script type="text/javascript" src="js/html2canvas.js"></script>
   <script type="text/javascript" src="js/canvas2image.js"></script>
   <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
   <meta charset="utf-8">
   <title>Draggable directions</title>
     <style>
-   
+
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
+        font-family: 'Prompt', sans-serif;
+        text-align: justify;
       }
 
       #map {
@@ -23,15 +26,12 @@
 
       }
       #floating-panel {
-        position: absolute;
-        
+        position: absolute;    
         left: 15%;
         z-index: 5;
         background-color: #fff;
         padding: 5px;
         border: 0px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
         line-height: 30px;
         padding-left: 10px;
         
@@ -48,7 +48,7 @@
         scrollbar-darkshadow-color:#888888;
       }
       #right-panel {
-        font-family: 'Roboto','sans-serif';
+        
         line-height: 20px;
         padding-left: 5px;
         background-color: #DDDDDD;
@@ -66,6 +66,22 @@
         font-size: 10px;
       }
 
+      input[type = text],select,textarea{
+        border-radius: 4px;
+        border: 1px solid #ccc;
+      }
+
+      button,input[type = submit]{
+        border-radius: 4px;
+        font-weight: bold;  
+      }
+
+      button:hover{
+        box-shadow: 2px 5px 5px #888888;
+        background-color: #9900cc;
+        color: white;
+      }
+      
       .panel {
         height: 100%;
         overflow: auto;
@@ -73,7 +89,7 @@
 
     </style>
     
-        <script id = "sc" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0&callback=initMap"></script>
+        <script id = "sc" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0&callback=initMap" async defer></script>
         <script>
         var markers = [];
         var directionsDisplay;
@@ -188,13 +204,13 @@
           setMapOnAll(null);
         }
 
-        function d(){
+        function savepic(){
           //document.getElementById('vihicle').value =  document.getElementById('vihicle').value;
         document.getElementById('en').value ;
         html2canvas(document.body, {
           useCORS: true,
           allowTaint:false,
-          //taintTest: false,
+          taintTest: false,
           onrendered: function(canvas) {
             var dataUrl= canvas.toDataURL("image/png");
             //document.getElementById('pic').appendChild( canvas );
@@ -202,8 +218,9 @@
             var img =  document.createElement("img");
             img.setAttribute('src', dataUrl);
             img.setAttribute('id', 'image');
+            img.setAttribute('style', 'text-align:justify;display:none');
             img.setAttribute('download','img/snapshot.jpg');
-            document.getElementById('intd').appendChild(img);
+            document.getElementById('pic').appendChild(img);
            // var url = img.src.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
            // window.open(url);
            var imm = document.getElementById('image').src;
@@ -212,14 +229,14 @@
            xml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
            xml.onreadystatechange = function(){
             if(this.readyState == 4 && this.status ==200){
-             // alert(dataUrl);
+              //alert(datetime);
               //document.getElementById('pic').innerHTML = this.responseText;
-              //console.log(this.responseText);
+              //alert(this.responseText);
               //alert(document.getElementById('pic').innerHTML);
             }
            
            }
-           xml.send('imgsrc='+dataUrl);
+           xml.send('imgsrc='+dataUrl+'&datetime='+datetime);
             //document.write('<img src="' + dataUrl + '"/>');
             }
           });
@@ -356,7 +373,7 @@
     ?>
     </select>
   
-    <button onclick="d()">บันทึก</button>
+    <button onclick="savepic()">บันทึก</button>
     <div id="subcats" align="left" style="display:none">
     <strong>จาก</strong>
     <select id="Phuket" name="subcategory" onchange="starting(this.id)">
@@ -406,7 +423,7 @@
       <body onload="initMap()">
         <div id="map" class="col-xs-12 col-md-12 col-lg-10"></div>
         <div id="right-panel" class="col-lg-2"></div>
-        <div id="pic"><table style="text-align: justify;"><tr><td><div id="intd"></div></td></tr></table></div>
+        <div id="pic"></div>
       </body>
 
 </html>

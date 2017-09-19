@@ -3,22 +3,40 @@
   <head>  <!-- www.techstrikers.com -->
     <meta name="viewport" content="width = device-width, initial-scale = 1.0">
     <meta charset="utf-8">
+    
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <title>Add Landmark Form</title>
     <style type="text/css">
     html,body{
     	height: 100%;
     }
-    	#map{
-    		height: 100%;
-    		width: 100%;
-    		float: left;
 
-    	}
-    	#panel{
-    		height: 100%;  
-            background-color: #DDDDDD;		
-    	}
+    #map{
+    	height: 100%;
+    	width: 100%;
+    	float: left;
+    }
+
+    input[type = text],select,textarea{
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+
+    button,input[type = submit]{
+        border-radius: 4px;
+        font-weight: bold;       
+    }
+
+    button:hover{
+        box-shadow: 2px 5px 5px #888888;
+        background-color: #9900cc;
+        color: white;
+    }
+
+    #panel{
+    	height: 100%;  
+        background-color: #DDDDDD;		
+    }
 
     </style>
     </head>

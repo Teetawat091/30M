@@ -8,7 +8,7 @@
 	}
 </style>
 <body >
-<img src="img/image.png">
+<img src="img/image.png" width="100%">
 <div id="php">
 <?php
 $server = "localhost";

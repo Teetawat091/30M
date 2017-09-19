@@ -41,21 +41,7 @@
 		height: 100%;
 		width: 85%;		
 	}
-	input[type = text],select,textarea{
-		border-radius: 4px;
-		border: 1px solid #ccc;
-	}
-	button,input[type = submit]{
-		border-radius: 4px;
-		font-weight: bold;
-		
-	}
-	button:hover{
-		box-shadow: 2px 5px 5px #888888;
-		background-color: #9900cc;
-		color: white;
-
-	}
+	
 
 </style>
 <body>
