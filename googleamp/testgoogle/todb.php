@@ -8,8 +8,7 @@
 	}
 </style>
 <body >
-<iframe src="dootook.php" height="500" width="100%" frameborder="0" scrolling="auto" align="center">
-</iframe>
+<img src="img/image.png">
 <div id="php">
 <?php
 $server = "localhost";

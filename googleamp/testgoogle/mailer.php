@@ -80,7 +80,7 @@ $mail->AddAddress('ilchaose_kakz@live.com');
 $mail->MsgHTML($message);
 
 // add attachment if any
-$mail->AddAttachment('img/snapshot.jpg');
+$mail->AddAttachment('img/image.png');
 
 try {
     // send mail

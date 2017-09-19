@@ -9,11 +9,13 @@
   <meta charset="utf-8">
   <title>Draggable directions</title>
     <style>
+   
       html, body {
         height: 100%;
         margin: 0;
         padding: 0;
       }
+
       #map {
         height: 100%;
         float: left;
@@ -156,7 +158,7 @@
           if($('#or').val()!=""){
              displayRoute(''+document.getElementById('or').value+'',''+end+'',directionsService,
             directionsDisplay);
-          document.getElementById('takeshot').disabled = '';
+          //document.getElementById('takeshot').disabled = '';
           clearMarkers();
           markers = [];
 
@@ -170,7 +172,7 @@
           //alert(document.getElementById('en').value);
           displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('en').value+'',directionsService,
             directionsDisplay);
-          document.getElementById('takeshot').disabled = '';     
+          //document.getElementById('takeshot').disabled = '';     
           clearMarkers();
           markers = [];
           //document.getElementById('en').value = "";
@@ -189,23 +191,36 @@
         function d(){
           //document.getElementById('vihicle').value =  document.getElementById('vihicle').value;
         document.getElementById('en').value ;
-        html2canvas(document.getElementById('map'), {
+        html2canvas(document.body, {
           useCORS: true,
           allowTaint:false,
           //taintTest: false,
           onrendered: function(canvas) {
             var dataUrl= canvas.toDataURL("image/png");
             //document.getElementById('pic').appendChild( canvas );
-            
+            canvas.id = "c";
             var img =  document.createElement("img");
             img.setAttribute('src', dataUrl);
-            img.setAttribute('id', 'imm');
+            img.setAttribute('id', 'image');
             img.setAttribute('download','img/snapshot.jpg');
-            document.getElementById('pic').appendChild(img);
-            console.log(img);
+            document.getElementById('intd').appendChild(img);
            // var url = img.src.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
            // window.open(url);
-           //document.write('<img src="' + dataUrl + '"/>');
+           var imm = document.getElementById('image').src;
+           var xml = new XMLHttpRequest();
+           xml.open('post','snap.php',true);
+           xml.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+           xml.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status ==200){
+             // alert(dataUrl);
+              //document.getElementById('pic').innerHTML = this.responseText;
+              //console.log(this.responseText);
+              //alert(document.getElementById('pic').innerHTML);
+            }
+           
+           }
+           xml.send('imgsrc='+dataUrl);
+            //document.write('<img src="' + dataUrl + '"/>');
             }
           });
         }
@@ -317,7 +332,7 @@
     ?>
       <div id="floating-panel">
     
-   <!--<form action="todb.php" method="post">-->
+   <form action="todb.php" method="post">
     <strong>ยานภาหนะ </strong>
     <select name="select" id="vihicle">
       <option value="car">รถยนต์</option>
@@ -385,13 +400,13 @@
       <input type="hidden" name="datetime" value="" id="datetime">
       <input type="hidden" name="realstart" value="" id="realstart">
       <input type="hidden" name="index" id="index" value="">
-    <!--</form>-->
+    </form>
   
     </div>
       <body onload="initMap()">
         <div id="map" class="col-xs-12 col-md-12 col-lg-10"></div>
         <div id="right-panel" class="col-lg-2"></div>
-        <div id="pic"><image id= "image" src=""></image></div>
+        <div id="pic"><table style="text-align: justify;"><tr><td><div id="intd"></div></td></tr></table></div>
       </body>
 
 </html>
