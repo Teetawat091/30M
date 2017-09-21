@@ -35,6 +35,7 @@
         line-height: 30px;
         padding-left: 10px;
         
+        
       }
       #right-panel {
         float: right;
@@ -66,14 +67,15 @@
         font-size: 10px;
       }
 
-      input[type = text],select,textarea{
+      input[type = text],select{
         border-radius: 4px;
-        border: 1px solid #ccc;
+        border: 1px solid:#ccc;
       }
 
-      button,input[type = submit]{
+      button{
         border-radius: 4px;
         font-weight: bold;  
+        border:1;
       }
 
       button:hover{
@@ -88,6 +90,31 @@
       }
 
     </style>
+        <?php
+    $server = "localhost";
+    $user = "root";
+    $pass = "";
+    $db = "ogf";
+    $conn = mysqli_connect($server, $user, $pass, $db);
+    $sqldes;
+    $i;
+    $userbranchlatlng = array();
+    mysqli_set_charset($conn,"utf8");
+    
+    $branchnamesql = "select branch.branch_lat,branch.branch_lng
+    from branch, user
+    where branch.branch_name = user.branch_name
+    and user.branch_name = '".$_GET['branch']."'";
+    
+    $branchres = mysqli_query($conn,$branchnamesql);
+    if($branchres){
+        while($ress = mysqli_fetch_array($branchres,MYSQLI_ASSOC)){
+            $userbranchlatlng[0] = $ress['branch_lat'];
+            $userbranchlatlng[1] = $ress['branch_lng'];
+        }
+    }
+
+    ?>
     
         <script id = "sc" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0&callback=initMap" async defer></script>
         <script>
@@ -98,7 +125,7 @@
         var lat;
         var lng;
         var dynamicroute = [] ;
-        
+                 
         lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
 
         function initMap() {
@@ -165,6 +192,8 @@
         function starting(id){
           document.getElementById('or').value = document.getElementById(id).value;
           document.getElementById('index').value = document.getElementById(id).selectedIndex;
+          displayRoute(''+document.getElementById('or').value+'',''+end+'',directionsService,
+            directionsDisplay);
            
         }
 
@@ -332,21 +361,14 @@
           document.getElementById('realstart').value = slat;
           //console.log(slat);
           //alert(JSON.stringify(dynamicroute));
-
+              
+             
           }
+           
         </script>
       </head>
-       <?php
-    $server = "localhost";
-    $user = "root";
-    $pass = "";
-    $db = "ogf";
-    $conn = mysqli_connect($server, $user, $pass, $db);
-    $sqldes;
-    $i;
-    mysqli_set_charset($conn,"utf8");
 
-    ?>
+  
       <div id="floating-panel">
     
    <form action="todb.php" method="post">
@@ -417,6 +439,10 @@
       <input type="hidden" name="datetime" value="" id="datetime">
       <input type="hidden" name="realstart" value="" id="realstart">
       <input type="hidden" name="index" id="index" value="">
+       <input type="hidden" name="uid" id="uid" value="<?php echo $_GET['uid'] ?>">
+       <input type="hidden" name="userlat" id="userlat" value="<?php echo $userbranchlatlng[0] ?>">
+       <input type="hidden" name="userlng" id="userlng" value="<?php echo $userbranchlatlng[1] ?>">
+    
     </form>
   
     </div>
@@ -425,5 +451,10 @@
         <div id="right-panel" class="col-lg-2"></div>
         <div id="pic"></div>
       </body>
+    <script>
+        
+        var userlatlng = document.getElementById('userlat').value+","+document.getElementById('userlng').value;
+        console.log(userlatlng);
+    </script>
 
 </html>

@@ -24,7 +24,9 @@
 
     button,input[type = submit]{
         border-radius: 4px;
-        font-weight: bold;       
+        font-weight: bold;   
+        border:0; 
+        background-color: #DDDDDD;   
     }
 
     button:hover{

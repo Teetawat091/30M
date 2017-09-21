@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+    <meta charset="utf-8">
+    <meta content="initial-scale=1.0">
+	<title>Login</title>
 </head>
 <style type="text/css">
 html,body{
@@ -41,6 +43,7 @@ html,body{
 		<br>
 		Password : <input type="password" name="pass" id="pass" value=""><br><br>
 		<input type="submit" name="submit" id="submit" value="Login">
+		</form>
 		
 	</div>
 

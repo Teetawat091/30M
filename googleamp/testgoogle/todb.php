@@ -2,20 +2,26 @@
 <title>show information</title>
 <meta charset="UTF-8">
 <meta name="viewport" content="width = device-width, initial-scale = 1.0">
+<link href="https://fonts.googleapis.com/css?family=Prompt" rel="stylesheet">
 <style type="text/css">
 html,body{
 	height: 100%;
+	font-family: 'Prompt', sans-serif;
+
 }
 	#php{
 		background-color:  #DDDDDD;
 		float: right;
 		width: 30%;
 		height: 100%;
+		font-family: 'Prompt', sans-serif;
+
 	}
 	button,input[type = submit]{
 		border-radius: 4px;
 		border :1px solid:#ccc;
 		background-color: #ff9900;
+		font-weight: bold;
 	}
 	button:hover{
 		background-color: #9900cc;
@@ -54,6 +60,8 @@ $distance = $_POST['total'];
 $dest = $data['destination_addresses'][0];
 $origin = $data['origin_addresses'][0];
 $dest_description;
+$uid = $_POST['uid'];
+    
 if(isset($dest)==false){
 	$dest_description = 1;
 
@@ -125,7 +133,7 @@ else {
 	echo 'Cost : '.$distance*$rate ." bath".'<br>'.'<br>';
 	echo "<input type='hidden' value = '".$distance*$rate."' name = 'cost'>";
 
-	$newdbsql = " INSERT INTO `user_outgoing` (`user_outgoing_id`, `branch_id`, `user_id`, `origin_lat`, `origin_lng`, `origin_branch_description_id`, `destination_lat`, `destination_lng`, `destination_branch_description_id`, `vihecle_type`, `distance`, `rate`, `cost`, `status`, `datetime_enter`) VALUES (NULL,".$_POST['cam'].", '4', '".$slat[0]."', '".$slat[1]."','".$originsstatus."', '".$endpos[0]."', '".$endpos[1]."', '".$dest_description."', '".$_POST['select']."', ".$distance.", ".$rate.", ".$distance*$rate.",'wait' ,'".$datetime."')";
+	$newdbsql = " INSERT INTO `user_outgoing` (`user_outgoing_id`, `branch_id`, `user_id`, `origin_lat`, `origin_lng`, `origin_branch_description_id`, `destination_lat`, `destination_lng`, `destination_branch_description_id`, `vihecle_type`, `distance`, `rate`, `cost`, `status`, `datetime_enter`) VALUES (NULL,".$_POST['cam'].",".$uid.", '".$slat[0]."', '".$slat[1]."','".$originsstatus."', '".$endpos[0]."', '".$endpos[1]."', '".$dest_description."', '".$_POST['select']."', ".$distance.", ".$rate.", ".$distance*$rate.",'wait' ,'".$datetime."')";
 //echo $newdbsql;
 	if (mysqli_query($conn, $newdbsql)) {
 		//echo "add to db complete".'<br>';
@@ -157,7 +165,19 @@ for($i=0;$i<$countstep;$i++){
 		echo "<br>"."fail";
 	}
 }
-
+    
+    $bossmailsql = "SELECT boss_email FROM user WHERE user_id =".$uid;
+    //echo $bossmailsql;
+    $bossmail;
+    $bossmailresult =  mysqli_query($conn,$bossmailsql);
+    if($bossmailresult){
+        while ($mailres= mysqli_fetch_array($bossmailresult,MYSQLI_ASSOC)){
+	 	
+	 	$bossmail=$mailres['boss_email'];
+	 }
+    }
+    //echo $bossmail;
+        
 	}
 mysqli_close($conn);
 
@@ -166,6 +186,8 @@ mysqli_close($conn);
 <div style="float: left;">
 <form method="get" action="mailer.php">
 	<input type="hidden" name="dt" value="<?php echo $ogid; ?>" >
+    <input type="hidden" name="boss" value="<?php echo $bossmail; ?>">
+    <input type="hidden" name="uid" value="<?php echo $uid; ?>">
 	<input type="submit" name="submit" value="Send mail">
 </form>
 </div>	

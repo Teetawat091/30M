@@ -10,7 +10,7 @@ $src = $_POST['imgsrc'];
   array("/\^/", "/:/", "/ /", "/\(/", "/{/"),
   "", $_POST['datetime']);*/
 
-#save img to server
+#เซฟรูปลงเซิฟเวอ
 $img = str_replace('data:image/png;base64,', '', $src);
 $img = str_replace(' ', '+', $img);
 $data = base64_decode($img);

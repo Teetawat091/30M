@@ -1,9 +1,3 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
 	<?php
 
 	session_start();
@@ -11,9 +5,10 @@
 	$serverName	  = "localhost";
 	$userName	  = "root";
 	$userPassword	  = "";
-	$dbName	  = "login";
+	$dbName	  = "ogf";
 
 	$con = mysqli_connect($serverName,$userName,$userPassword,$dbName);
+    mysqli_set_charset($con,"utf8");
 
 	if (mysqli_connect_errno())
 	{
@@ -22,15 +17,15 @@
 	}
 
 	//*** Reject user not online
-	$intRejectTime = 20; // Minute
-	$sql = "UPDATE user SET status = '0' WHERE 1";
+	$intRejectTime = 5; // Minute
+	$sql = "UPDATE user SET `status`='offline' WHERE user.status='online'";
 	$query = mysqli_query($con,$sql);
 
 	$strUsername = mysqli_real_escape_string($con,$_POST['user']);
 	$strPassword = mysqli_real_escape_string($con,$_POST['pass']);
 
-	$strSQL = "SELECT * FROM user WHERE name = '".$strUsername."' 
-	and pass = '".$strPassword."'";
+	$strSQL = "SELECT * FROM user WHERE email = '".$strUsername."' 
+	and password = '".$strPassword."'";
 	$objQuery = mysqli_query($con,$strSQL);
 	$objResult = mysqli_fetch_array($objQuery);
 	if(!$objResult)
@@ -40,7 +35,7 @@
 	}
 	else
 	{
-		if($objResult["status"] == "1")
+		if($objResult["status"] == 'online')
 		{
 			echo "'".$strUsername."' Exists login!";
 			exit();
@@ -48,19 +43,19 @@
 		else
 		{
 			//*** Update Status Login
-			$sql = "UPDATE user SET status = '1'  WHERE UserID = '".$objResult["id"]."' ";
+			$sql = "UPDATE user SET status = 'online'  WHERE user_id ='".$objResult["user_id"]."'";
 			$query = mysqli_query($con,$sql);
 
 			//*** Session
-			$_SESSION["id"] = $objResult["id"];
+			$_SESSION["user_id"] = $objResult["user_id"];
 			session_write_close();
 
 			//*** Go to Main page
 			if($objResult["position"]=="hr"){
-				header("location:hrview.php");
+				header("location:hrview.php?uid=".$objResult["user_id"]."&branch=".$objResult["branch_name"]);
 			}
 			else{
-				header("location:dootook.php");
+				header("location:dootook.php?uid=".$objResult["user_id"]."&branch=".$objResult["branch_name"]);
 			}
 			
 		}
@@ -69,6 +64,3 @@
 	mysqli_close($con);
 
 	?>
-
-</body>
-</html>

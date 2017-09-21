@@ -18,7 +18,7 @@ $sql = "UPDATE `user_outgoing` SET `status` = 'cancle' WHERE `user_outgoing`.`us
 $res = mysqli_query($conn,$sql);
 if($res){
 	echo "Approve Complete";
-	header("location:https://mail.google.com");
+	//header("location:https://mail.google.com");
 }
 else{
 	echo "Approve Fail";

@@ -18,7 +18,7 @@ $sql = "UPDATE `user_outgoing` SET `status` = 'approve' WHERE `user_outgoing`.`u
 $res = mysqli_query($conn,$sql);
 if($res){
 	echo "Approve Complete";
-	header( "location:https://mail.google.com" );
+	//header( "location:https://mail.google.com" );
  	exit(0);
 
 }

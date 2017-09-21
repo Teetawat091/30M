@@ -41,16 +41,15 @@
 		height: 100%;
 		width: 85%;		
 	}
-	
-
 </style>
+      
 <body>
 
 <div id="leftpanel">
 <strong> Selectform </strong><br><br><br>
-	<a href="hrview.php?page=addlandmarkform"><button class="btn" id="addlandmarkform"><strong><i>Add location form</i></strong></button></a>
+	<a href="" id="landmark"><button class="btn" id="addlandmarkform"><strong><i>Add location form</i></strong></button></a>
 	<br><br>
-	<a href="hrview.php?page=dootook"><button class="btn" id="addlandmarkform"><strong><i>Outgoing Form</i></strong></button></a>
+	<a href="" id="dootook"><button class="btn" id="dootook"><strong><i>Outgoing Form</i></strong></button></a>
 	
 	
 </div>
@@ -66,4 +65,13 @@ else{
 ?>
 </div>
 </body>
+    <script>
+        var uid = <?php echo $_GET['uid'] ?>;
+        console.log(uid);
+        
+        document.getElementById('landmark').href = "hrview.php?page=addlandmarkform&uid="+uid;
+        document.getElementById('dootook').href = "hrview.php?page=dootook&uid="+uid;
+
+        
+    </script>
 </html>
