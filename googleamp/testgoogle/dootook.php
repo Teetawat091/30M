@@ -97,11 +97,10 @@
     $db = "ogf";
     $conn = mysqli_connect($server, $user, $pass, $db);
     $sqldes;
-    $i;
     $userbranchlatlng = array();
     mysqli_set_charset($conn,"utf8");
     
-    $branchnamesql = "select branch.branch_lat,branch.branch_lng
+    $branchnamesql = "select branch.branch_lat,branch.branch_lng,branch_id
     from branch, user
     where branch.branch_name = user.branch_name
     and user.branch_name = '".$_GET['branch']."'";
@@ -111,6 +110,7 @@
         while($ress = mysqli_fetch_array($branchres,MYSQLI_ASSOC)){
             $userbranchlatlng[0] = $ress['branch_lat'];
             $userbranchlatlng[1] = $ress['branch_lng'];
+            $userbranchlatlng[2] = $ress['branch_id'];
         }
     }
 
@@ -126,13 +126,14 @@
         var lng;
         var dynamicroute = [] ;
                  
-        lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
+        //lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
 
         function initMap() {
-          var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 13,
-            center: lat_lng
-          });
+          var mappop ={
+              center:new google.maps.LatLng(<?php echo $userbranchlatlng[0]?>,<?php echo $userbranchlatlng[1] ?>),
+              zoom:15
+          }
+          var map = new google.maps.Map(document.getElementById('map'),mappop);
           google.maps.event.addListener(map, 'click', function(event) {
             placeMarker(map, event.latLng);
           });
@@ -160,8 +161,26 @@
           + "-" + day + " "
           + currentdate.getHours() + ":"
           + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-          document.getElementById('datetime').value = datetime;
+          document.getElementById('datetime').value = datetime; 
+
+
+          //ใส่marker+routing เข้าที่เดิมที่จุดที่สำนักงานอยู่ 
+          placeMarker(map,{lat:<?php echo $userbranchlatlng[0] ?>,lng:<?php echo $userbranchlatlng[1] ?>});
+
+          // marker แสดงที่ตั้งสำนักงานแต่ละที่แบบไม่routing+infowindow ให้รู้ว่าสำนักงานจังหวัดไหน -------*******-------- ใส่แล้วบัค
+          /*var marker = new google.maps.Marker({
+            position:new google.maps.LatLng(<?php echo $userbranchlatlng[0]?>,<?php echo $userbranchlatlng[1] ?>),
+            map: map,
+          });
+          markers.push(marker);
+          //infowindow
+          var infowindow = new google.maps.InfoWindow({
+          content: 'สำนักงานจังหวัด : ' + '<?php echo $_GET['branch'] ?>'
+          });
+          infowindow.open(map,marker);*/
+   
         }
+           
 
         function displayRoute(origin, destination, service, display) {
           service.route({
@@ -192,7 +211,7 @@
         function starting(id){
           document.getElementById('or').value = document.getElementById(id).value;
           document.getElementById('index').value = document.getElementById(id).selectedIndex;
-          displayRoute(''+document.getElementById('or').value+'',''+end+'',directionsService,
+          displayRoute(''+document.getElementById('or').value+'',''+document.getElementById('en').value+'',directionsService,
             directionsDisplay);
            
         }
@@ -247,7 +266,6 @@
             var img =  document.createElement("img");
             img.setAttribute('src', dataUrl);
             img.setAttribute('id', 'image');
-            img.setAttribute('style', 'text-align:justify;display:none');
             img.setAttribute('download','img/snapshot.jpg');
             document.getElementById('pic').appendChild(img);
            // var url = img.src.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
@@ -271,76 +289,6 @@
           });
         }
         
-          $(function(){
-          $("select[name='campus']").change(function () {
-          var str = "";
-          $("select[name='campus'] option:selected").each(function () {
-               // str += $(this).index() + " ";
-                $('#or').val($('#campus').val());
-               //alert($('#campus').val());
-                var selectNo = $(this).index();
-
-                $('#cam').val(selectNo) ;
-                $('#subcats').show();
-                //window.history.pushState({}, '', '?page=dootook&id='+selectNo);
-                $('#right-panel').empty();
-
-                if(selectNo == 1){
-                  lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
-                  initMap();
-                  displayRoute(''+$('#campus').val()+'',''+$('#campus').val()+'',directionsService,
-                  directionsDisplay);
-                  
-                }//phuket
-                else if(selectNo == 2){
-                  lat_lng = {lat:7.006341665683104,lng:100.4985523223877};
-                  initMap();
-                  displayRoute(''+$('#campus').val()+'',''+$('#campus').val()+'',directionsService,
-                  directionsDisplay);
-                  
-                }//hatyai
-                else if(selectNo == 5){
-                  lat_lng = {lat:13.168317602040103,lng:100.93120604753494};
-                  initMap();
-                  displayRoute(''+$('#campus').val()+'',''+$('#campus').val()+'',directionsService,
-                  directionsDisplay);
-                  
-                }//sriraja
-                else if(selectNo == 4){
-                  lat_lng = {lat:9.11065637716888,lng:99.30181503295898};
-                  initMap();
-                  displayRoute(''+$('#campus').val()+'',''+$('#campus').val()+'',directionsService,
-                  directionsDisplay);
-                  
-                }//surat
-                else if(selectNo == 3){
-                  lat_lng = {lat:14.343238520299131,lng:100.60918271541595}
-                  initMap();
-                  displayRoute(''+$('#campus').val()+'',''+$('#campus').val()+'',directionsService,
-                  directionsDisplay);
-                  
-                  }
-
-                });
-
-                jQuery.ajax({
-                  url: 'recieve.php',
-                  type: "POST",
-                  // async:false,
-                  data:  $('#campus').serialize(),
-                  success: function(data){
-                     // alert(data);
-                    // jQuery(".res").html(data);
-                     $('#subcats').html(data);
-                     //console.log(data);
-
-                }
-                });  
-               // var str = $("form").serialize();
-               // $(".res").text(str);
-                //console.log(str);
-        });
-        });
           function computeTotalDistance(result) {
           var total = 0;
           var test;
@@ -380,32 +328,33 @@
     <strong>สาขา</strong>
 
     <select name="campus" id="campus">
-    <option value="" selected="selected">สาขา</option>
-      <?php
+    <option value="" selected="selected"><?php echo $_GET['branch'] ?></option>
+     <!-- ดึงสาขาทั้งหมดมาจาก DB <?php
     $sql = "SELECT branch_name,branch_lat,branch_lng FROM `branch` ORDER BY branch_id";
     $res = mysqli_query($conn,$sql);
     if($res){
       while ($rec= mysqli_fetch_array($res,MYSQLI_ASSOC)) { 
-       ; 
+       
     ?>
    <option value="<?php echo $rec['branch_lat'].",".$rec['branch_lng'] ?>"><?php  echo $rec['branch_name'] ?></option><
     <?php
     }
     }
-    ?>
+    ?>-->
     </select>
   
     <button onclick="savepic()">บันทึก</button>
-    <div id="subcats" align="left" style="display:none">
+    <div id="subcats" align="left" style="display:block">
     <strong>จาก</strong>
     <select id="Phuket" name="subcategory" onchange="starting(this.id)">
-    <option value="" selected="selected">สำนักงาน</option>
+    <option value="<?php echo $userbranchlatlng[0].','.$userbranchlatlng[1] ?>" selected="selected">สำนักงาน</option>
+     </script>
     <?php
-    //$sqldes = "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id=1";
-    //$GLOBALS['sqldes'] = "SELECT branch_destination_name,lat_destination,lng_destination FROM branch_destination WHERE branch_id =".$i;
+    $sqldes = "select branch_destination.branch_destination_name,branch_destination.lat_destination,branch_destination.lng_destination from branch_destination,branch where branch_destination.branch_id = branch.branch_id and branch.branch_id =".$userbranchlatlng[2];
     $startres = mysqli_query($conn,$sqldes);
     if($startres){
       while ($startrec= mysqli_fetch_array($startres,MYSQLI_ASSOC)) {
+          
     ?>
    <option value="<?php echo $startrec['lat_destination'].",".$startrec['lng_destination'] ?>"><?php  echo $startrec['branch_destination_name'] ?></option>
     <?php
@@ -439,22 +388,23 @@
       <input type="hidden" name="datetime" value="" id="datetime">
       <input type="hidden" name="realstart" value="" id="realstart">
       <input type="hidden" name="index" id="index" value="">
-       <input type="hidden" name="uid" id="uid" value="<?php echo $_GET['uid'] ?>">
-       <input type="hidden" name="userlat" id="userlat" value="<?php echo $userbranchlatlng[0] ?>">
-       <input type="hidden" name="userlng" id="userlng" value="<?php echo $userbranchlatlng[1] ?>">
+      <input type="hidden" name="uid" id="uid" value="<?php echo $_GET['uid'] ?>">
+      <input type="hidden" name="branch" id="branch" value="<?php echo $_GET['branch'] ?>">
+      <input type="hidden" name="userlat" id="userlat" value="<?php echo $userbranchlatlng[0] ?>">
+      <input type="hidden" name="userlng" id="userlng" value="<?php echo $userbranchlatlng[1] ?>">
     
     </form>
   
     </div>
-      <body onload="initMap()">
+      <body >
         <div id="map" class="col-xs-12 col-md-12 col-lg-10"></div>
         <div id="right-panel" class="col-lg-2"></div>
         <div id="pic"></div>
       </body>
     <script>
-        
-        var userlatlng = document.getElementById('userlat').value+","+document.getElementById('userlng').value;
-        console.log(userlatlng);
+     document.getElementById('or').value = <?php echo $userbranchlatlng[0]?>;
+     document.getElementById('or').value = document.getElementById('or').value+","+<?php echo $userbranchlatlng[1] ?>;
+     document.getElementById('cam').value = <?php echo $userbranchlatlng[2] ?>;    
     </script>
 
 </html>

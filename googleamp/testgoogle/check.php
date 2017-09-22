@@ -18,7 +18,7 @@
 
 	//*** Reject user not online
 	$intRejectTime = 5; // Minute
-	$sql = "UPDATE user SET `status`='offline' WHERE user.status='online'";
+	$sql = "UPDATE user SET status='offline' WHERE user.status='online'";
 	$query = mysqli_query($con,$sql);
 
 	$strUsername = mysqli_real_escape_string($con,$_POST['user']);
@@ -30,7 +30,9 @@
 	$objResult = mysqli_fetch_array($objQuery);
 	if(!$objResult)
 	{
-		echo "Username or Password Incorrect!";
+		echo "<script type = 'text/javascript'>confirm('Username or Password Wrong');</script>";
+		header('location:index.php');
+		
 		exit();
 	}
 	else

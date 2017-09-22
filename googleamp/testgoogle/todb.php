@@ -14,7 +14,7 @@ html,body{
 		float: right;
 		width: 30%;
 		height: 100%;
-		font-family: 'Prompt', sans-serif;
+		
 
 	}
 	button,input[type = submit]{
@@ -145,6 +145,7 @@ else {
 
 $ogid;
 $foridsql = "SELECT user_outgoing_id FROM user_outgoing WHERE datetime_enter = '".$datetime."'";
+//echo $foridsql;
 $result = mysqli_query($conn,$foridsql);
 if($result){
 	 while ($arec= mysqli_fetch_array($result,MYSQLI_ASSOC)){
@@ -177,7 +178,18 @@ for($i=0;$i<$countstep;$i++){
 	 }
     }
     //echo $bossmail;
-        
+
+    $position;
+    $positionsql = "SELECT position FROM user WHERE user_id=".$uid;
+    //echo $positionsql;
+    $pos = mysqli_query($conn,$positionsql);
+    if($pos){
+    	while ($poss = mysqli_fetch_array($pos,MYSQLI_ASSOC)) {
+    		$position = $poss['position'];
+    	}
+    }
+    //echo $position;
+
 	}
 mysqli_close($conn);
 
@@ -188,10 +200,22 @@ mysqli_close($conn);
 	<input type="hidden" name="dt" value="<?php echo $ogid; ?>" >
     <input type="hidden" name="boss" value="<?php echo $bossmail; ?>">
     <input type="hidden" name="uid" value="<?php echo $uid; ?>">
+    <input type="hidden" name="branch" value="<?php echo $_POST['branch']?>">
 	<input type="submit" name="submit" value="Send mail">
 </form>
 </div>	
-<div id="backbtn" style="float: left; padding-left: 30px"><a href="dootook.php"><button>Back</button></a></div>
+<div id="backbtn" style="float: left; padding-left: 30px"><a id = "backlink" href=""><button>Back</button></a></div>
 </div>
 </body>
+<script type="text/javascript">
+
+	var userposition = "<?php echo $position; ?>";
+	//console.log(userposition);
+	if (userposition==="hr") {
+		document.getElementById('backlink').href = "hrview.php?uid=<?php echo $uid?>&branch=<?php echo $_POST['branch']?>"
+	}else{
+		document.getElementById('backlink').href = "dootook.php?uid=<?php echo $uid?>&branch=<?php echo $_POST['branch']?>"
+	}
+	
+</script>
 </html>

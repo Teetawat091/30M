@@ -106,11 +106,11 @@ try {
         }
     }
     if($position=="hr"){
-        header( "location:hrview.php?uid=".$_GET['uid'] );
+        header( "location:hrview.php?uid=".$_GET['uid']."&branch=".$_GET['branch']);
         
     }
     else{
-        header( "location:dootook.php?uid=".$_GET['uid'] );
+        header( "location:dootook.php?uid=".$_GET['uid']."&branch=".$_GET['branch'] );
         
     }
  	exit(0);

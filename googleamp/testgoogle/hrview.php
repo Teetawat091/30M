@@ -47,9 +47,9 @@
 
 <div id="leftpanel">
 <strong> Selectform </strong><br><br><br>
-	<a href="" id="landmark"><button class="btn" id="addlandmarkform"><strong><i>Add location form</i></strong></button></a>
+	<a href="hrview.php?page=addlandmarkform&uid=<?php echo $_GET['uid'] ?>&branch=<?php echo $_GET['branch']?>" id="landmark"><button class="btn" id="addlandmarkform"><strong><i>Add location form</i></strong></button></a>
 	<br><br>
-	<a href="" id="dootook"><button class="btn" id="dootook"><strong><i>Outgoing Form</i></strong></button></a>
+	<a href="hrview.php?page=dootook&uid=<?php echo $_GET['uid'] ?>&branch=<?php echo $_GET['branch']?>" id="dootook"><button class="btn" id="dootook"><strong><i>Outgoing Form</i></strong></button></a>
 	
 	
 </div>
@@ -65,13 +65,4 @@ else{
 ?>
 </div>
 </body>
-    <script>
-        var uid = <?php echo $_GET['uid'] ?>;
-        console.log(uid);
-        
-        document.getElementById('landmark').href = "hrview.php?page=addlandmarkform&uid="+uid;
-        document.getElementById('dootook').href = "hrview.php?page=dootook&uid="+uid;
-
-        
-    </script>
 </html>
