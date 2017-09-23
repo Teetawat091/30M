@@ -165,7 +165,7 @@
 
 
           //ใส่marker+routing เข้าที่เดิมที่จุดที่สำนักงานอยู่ 
-          placeMarker(map,{lat:<?php echo $userbranchlatlng[0] ?>,lng:<?php echo $userbranchlatlng[1] ?>});
+          placeMarker(map,{lat:<?php echo $userbranchlatlng[0]; ?>,lng:<?php echo $userbranchlatlng[1]; ?>});
 
           // marker แสดงที่ตั้งสำนักงานแต่ละที่แบบไม่routing+infowindow ให้รู้ว่าสำนักงานจังหวัดไหน -------*******-------- ใส่แล้วบัค
           /*var marker = new google.maps.Marker({
