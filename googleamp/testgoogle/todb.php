@@ -179,7 +179,7 @@ for($i=0;$i<$countstep;$i++){
     }
     //echo $bossmail;
 
-    $position;
+   /* $position;
     $positionsql = "SELECT position FROM user WHERE user_id=".$uid;
     //echo $positionsql;
     $pos = mysqli_query($conn,$positionsql);
@@ -188,7 +188,7 @@ for($i=0;$i<$countstep;$i++){
     		$position = $poss['position'];
     	}
     }
-    //echo $position;
+    echo $position;*/
 
 	}
 mysqli_close($conn);
@@ -209,13 +209,15 @@ mysqli_close($conn);
 </body>
 <script type="text/javascript">
 
-	var userposition = "<?php echo $position; ?>";
+
+	//var userposition = "<?php echo $position; ?>";
 	//console.log(userposition);
-	if (userposition==="hr") {
+
+	/*if (userposition==="hr") {
 		document.getElementById('backlink').href = "hrview.php?uid=<?php echo $uid?>&branch=<?php echo $_POST['branch']?>"
 	}else{
 		document.getElementById('backlink').href = "dootook.php?uid=<?php echo $uid?>&branch=<?php echo $_POST['branch']?>"
-	}
+	}*/
 	
 </script>
 </html>

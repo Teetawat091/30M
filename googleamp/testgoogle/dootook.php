@@ -94,16 +94,17 @@
     $server = "localhost";
     $user = "root";
     $pass = "";
-    $db = "ogf";
+    $db = "pongcool_ps";
     $conn = mysqli_connect($server, $user, $pass, $db);
     $sqldes;
     $userbranchlatlng = array();
     mysqli_set_charset($conn,"utf8");
     
-    $branchnamesql = "select branch.branch_lat,branch.branch_lng,branch_id
-    from branch, user
-    where branch.branch_name = user.branch_name
-    and user.branch_name = '".$_GET['branch']."'";
+    $branchnamesql = "select branchs.branch_lat,branchs.branch_lng,branchs.branch_id
+    from branchs, user
+    where branchs.branch_id = user.branch_id
+    and user.branch_id =".$_GET['branch']." LIMIT 1";
+    //echo $branchnamesql;
     
     $branchres = mysqli_query($conn,$branchnamesql);
     if($branchres){
@@ -111,8 +112,12 @@
             $userbranchlatlng[0] = $ress['branch_lat'];
             $userbranchlatlng[1] = $ress['branch_lng'];
             $userbranchlatlng[2] = $ress['branch_id'];
+
         }
+        
     }
+
+
 
     ?>
     
@@ -126,7 +131,8 @@
         var lng;
         var dynamicroute = [] ;
                  
-        //lat_lng = {lat:7.90608272245317,lng:98.36664140224457};
+        //lat_lng = '<?php echo $userbranchlatlng[0] ?>';
+        //console.log(lat_lng);
 
         function initMap() {
           var mappop ={
@@ -163,25 +169,31 @@
           + currentdate.getMinutes() + ":" + currentdate.getSeconds();
           document.getElementById('datetime').value = datetime; 
 
+          document.getElementById('or').value = mappop.center;
+          var og = document.getElementById('or').value.substr(1);
+          og = og.substr(0,og.length-1);
 
-          //ใส่marker+routing เข้าที่เดิมที่จุดที่สำนักงานอยู่ 
-          placeMarker(map,{lat:<?php echo $userbranchlatlng[0]; ?>,lng:<?php echo $userbranchlatlng[1]; ?>});
+          document.getElementById('or').value = og;
+
+          //console.log(document.getElementById('or').value);
+
+          //ใส่marker+routing เข้าที่เดิมที่จุดที่สำนักงานอยู่ ได้100เปอ
+          placeMarker(map,mappop.center);
 
           // marker แสดงที่ตั้งสำนักงานแต่ละที่แบบไม่routing+infowindow ให้รู้ว่าสำนักงานจังหวัดไหน -------*******-------- ใส่แล้วบัค
-          /*var marker = new google.maps.Marker({
-            position:new google.maps.LatLng(<?php echo $userbranchlatlng[0]?>,<?php echo $userbranchlatlng[1] ?>),
+          /*var mark = new google.maps.Marker({
+            position:mappop.center,
             map: map,
           });
-          markers.push(marker);
+          markers.push(mark);*/
           //infowindow
-          var infowindow = new google.maps.InfoWindow({
+          /*var infowindow = new google.maps.InfoWindow({
           content: 'สำนักงานจังหวัด : ' + '<?php echo $_GET['branch'] ?>'
           });
-          infowindow.open(map,marker);*/
+          infowindow.open(map,mark);*/
    
         }
            
-
         function displayRoute(origin, destination, service, display) {
           service.route({
             origin: origin,
@@ -308,8 +320,7 @@
           slat = JSON.stringify(myroute.legs[0].start_location);
           document.getElementById('realstart').value = slat;
           //console.log(slat);
-          //alert(JSON.stringify(dynamicroute));
-              
+          //alert(JSON.stringify(dynamicroute));              
              
           }
            
@@ -329,8 +340,8 @@
 
     <select name="campus" id="campus">
     <option value="" selected="selected"><?php echo $_GET['branch'] ?></option>
-     <!-- ดึงสาขาทั้งหมดมาจาก DB <?php
-    $sql = "SELECT branch_name,branch_lat,branch_lng FROM `branch` ORDER BY branch_id";
+    <?php // ดึงสาขาทั้งหมดมาจาก DB
+    $sql = "SELECT branch_name FROM `branch` WHERE branch_id =".$_GET['branch'];
     $res = mysqli_query($conn,$sql);
     if($res){
       while ($rec= mysqli_fetch_array($res,MYSQLI_ASSOC)) { 
@@ -340,7 +351,7 @@
     <?php
     }
     }
-    ?>-->
+    ?>
     </select>
   
     <button onclick="savepic()">บันทึก</button>
