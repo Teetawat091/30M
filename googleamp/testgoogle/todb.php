@@ -182,7 +182,8 @@ for($i=0;$i<$countstep;$i++){
     else{
     	echo "fail";
     }
-    //print_r($bossid);
+
+    print_r($bossid);
     $bossid = str_replace("[", "", $bossid);
     $bossid = str_replace("]", "", $bossid);				
     //var_dump($bossid);
@@ -204,7 +205,8 @@ for($i=0;$i<$countstep;$i++){
     	
     }
     else{
-    	//echo $bossid;
+    	for($i=0;$i<count($bossid);$i++){
+    	echo $bossid;
     	$bossmailsql = "SELECT email FROM user WHERE user.user_id =".$bossid;
     	//echo $bossmailsql;
     	$bossmailresult =  mysqli_query($conn,$bossmailsql);
@@ -215,6 +217,7 @@ for($i=0;$i<$countstep;$i++){
     }
     
     }
+}
     echo '<pre>';
     echo var_dump($bossmail);
     echo '</pre>';
@@ -228,7 +231,7 @@ mysqli_close($conn);
 <div style="float: left;">
 <form method="get" action="mailer.php">
 	<input type="hidden" name="dt" value="<?php echo $ogid; ?>" >
-    <input type="hidden" name="boss" value="<?php echo $bossmail; ?>">
+    <input type="hidden" name="boss" value="" id="boss">
     <input type="hidden" name="uid" value="<?php echo $uid; ?>">
     <input type="hidden" name="branch" value="<?php echo $_POST['branch']?>">
 	<input type="submit" name="submit" value="Send mail">
@@ -242,6 +245,8 @@ mysqli_close($conn);
 
 	var bmail = <?php echo $encodebossmail; ?>;
 	console.log(bmail);
+	document.getElementById('boss').value = bmail;
+	console.log(document.getElementById('boss').value);
 	
 	var userposition = "<?php echo $position; ?>";
 	//console.log(userposition);

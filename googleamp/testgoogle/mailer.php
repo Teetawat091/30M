@@ -14,24 +14,31 @@
 // display all error except deprecated and notice
 $goingid = $_GET['dt'];
 //ทำต่อbossmail หลายยคน
-/*$bossmail;
-echo $_GET['boss'];
+$bossmail;
+//echo $_GET['boss'];
+$bossmail /*=json_decode($_GET['boss'])*/;
+//echo $bossmail;
 if(strpos($_GET['boss'], ",")!==false){
     $bossmail = explode(",", $_GET['boss']);
     for($i=0;$i<count($bossmail);$i++){
         echo '<br>'.$bossmail[$i].'<br>';
     }
-}*/
+}
+else{
+    $bossmail =  $_GET['boss'];
+    echo $bossmail.'<br>';
+}
+echo count($bossmail);
 
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 require_once "phpmailer/phpmailer/class.phpmailer.php";
 
 $message = '<html><body style="background:#eee;">';
 $message .= '';
-$message .= '<table border = "0" cellspacing = "5" cellpadding = "5"><tr><td><form method = "get" action = http://localhost:81/testgoogle/approve.php>';
+$message .= '<table border = "0" cellspacing = "5" cellpadding = "5"><tr><td><form method = "get" action = http://127.0.0.1/30M/googleamp/testgoogle/approve.php>';//urlที่ทำงาน=http://localhost:81/testgoogle/approve.php
 $message .= '<input type = "hidden" name = "goingid" value ='.$goingid.'>';
 $message .= '<input type = "submit" name = "approve" value = "Approve" style = "background-color: #4CAF50;border-radius: 4px;font-size: 16px;color: white;box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);">'; 
-$message .= '</form></td><td><form method="get" action="http://localhost:81/testgoogle/cancle.php">';
+$message .= '</form></td><td><form method="get" action="http://127.0.0.1/30M/googleamp/testgoogle/cancle.php">';//urlที่ทำงาน=http://localhost:81/testgoogle/cancle.php
 $message .= '&nbsp;&nbsp;&nbsp;';
 $message .= '<input type = "hidden" name = "goid" value='.$goingid.'>';
 $message .= '<input type = "submit" name = "cancle" value = "Cancle" style = "background-color: #4CAF50;border-radius: 4px;font-size: 16px;color: white;box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);">';
@@ -76,7 +83,16 @@ $mail->Subject = ' คำขอการยืนยันการออกน�
 $mail->SetFrom('sandna03@gmail.com', 'sand');
 
 // คนรับ
-$mail->AddAddress($_GET['boss']);
+if(count($bossmail)>1){
+    for($i=0;$i<count($bossmail);$i++){
+    $mail->AddAddress($bossmail[$i]);
+}
+}
+else{
+    $mail->AddAddress($bossmail);
+}
+
+
 
 // if your send to multiple person add this line again
     
@@ -106,7 +122,7 @@ try {
     $conn = mysqli_connect($server, $user, $pass, $db);
     mysqli_set_charset($conn,"utf8");
     
-    /*$position;
+    $position;
     
     $sql = "SELECT position_id FROM user WHERE user_id=".$_GET['uid'];
     $result = mysqli_query($conn,$sql);
@@ -122,7 +138,7 @@ try {
     else{
         header( "location:dootook.php?uid=".$_GET['uid']."&branch=".$_GET['branch'] );
         
-    }*/
+    }
  	exit(0);
 
 } 
