@@ -100,9 +100,9 @@
     $userbranchlatlng = array();
     mysqli_set_charset($conn,"utf8");
     
-    $branchnamesql = "select branchs.branch_lat,branchs.branch_lng,branchs.branch_id
-    from branchs, user
-    where branchs.branch_id = user.branch_id
+    $branchnamesql = "select branch.branch_lat,branch.branch_lng,branch.branch_id
+    from branch, user
+    where branch.branch_id = user.branch_id
     and user.branch_id =".$_GET['branch']." LIMIT 1";
     //echo $branchnamesql;
     
@@ -116,9 +116,7 @@
         }
         
     }
-
-
-
+    //echo $userbranchlatlng[0].",".$userbranchlatlng[1];
     ?>
     
         <script id = "sc" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBHlC_bwi0D_b86YE0ZN1hnymItuDb_5N0&callback=initMap" async defer></script>
@@ -278,7 +276,7 @@
             var img =  document.createElement("img");
             img.setAttribute('src', dataUrl);
             img.setAttribute('id', 'image');
-            img.setAttribute('download','img/snapshot.jpg');
+            img.setAttribute('download','pic/route.png');
             document.getElementById('pic').appendChild(img);
            // var url = img.src.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
            // window.open(url);
@@ -339,7 +337,7 @@
     <strong>สาขา</strong>
 
     <select name="campus" id="campus">
-    <option value="" selected="selected"><?php echo $_GET['branch'] ?></option>
+    <!--<option value="" selected="selected"><?php echo $_GET['branch'] ?></option>-->
     <?php // ดึงสาขาทั้งหมดมาจาก DB
     $sql = "SELECT branch_name FROM `branch` WHERE branch_id =".$_GET['branch'];
     $res = mysqli_query($conn,$sql);

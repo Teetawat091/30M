@@ -14,7 +14,7 @@ $src = $_POST['imgsrc'];
 $img = str_replace('data:image/png;base64,', '', $src);
 $img = str_replace(' ', '+', $img);
 $data = base64_decode($img);
-$file = 'img/image.png';
+$file = 'pic/route.png';
 $success = file_put_contents($file, $data);
 
 echo $_POST['datetime'];

@@ -39,7 +39,7 @@
 			//*** Session
 			session_write_close();
 			//*** Go to Main page
-			if($objResult["position"]==18||$objResult["position"]==19){
+			if($objResult["position_id"]==18||$objResult["position_id"]==19){
 				header("location:hrview.php?uid=".$objResult["user_id"]."&branch=".$objResult["branch_id"]);
 			}
 			else{

@@ -8,7 +8,7 @@
 <?php $server = "localhost";
 $user = "root";
 $pass = "";
-$db = "ogf";
+$db = "pongcool_ps";
 $conn = mysqli_connect($server, $user, $pass, $db);
 mysqli_set_charset($conn,"utf8");
 
@@ -17,7 +17,8 @@ $goid = $_GET['goid'];
 $sql = "UPDATE `user_outgoing` SET `status` = 'cancle' WHERE `user_outgoing`.`user_outgoing_id` =".$goid;
 $res = mysqli_query($conn,$sql);
 if($res){
-	echo "Approve Complete";
+	echo "Cancle Complete";
+	echo "<script> window.setTimeout('window.close()',1000);</script>";
 	//header("location:https://mail.google.com");
 }
 else{

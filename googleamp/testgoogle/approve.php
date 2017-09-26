@@ -8,7 +8,7 @@
 <?php $server = "localhost";
 $user = "root";
 $pass = "";
-$db = "ogf";
+$db = "pongcool_ps";
 $conn = mysqli_connect($server, $user, $pass, $db);
 mysqli_set_charset($conn,"utf8");
 
@@ -18,18 +18,9 @@ $sql = "UPDATE `user_outgoing` SET `status` = 'approve' WHERE `user_outgoing`.`u
 $res = mysqli_query($conn,$sql);
 if($res){
 	echo "Approve Complete";
-	//header( "location:https://mail.google.com" );
- 	exit(0);
-
+	echo "<script> window.setTimeout('window.close()',1000);</script>";
 }
-else{
-	echo "Approve Fail";
-
-}
-
-
  ?>
- window.history.back()
- Hello it's me
+ 
 </body>
 </html>

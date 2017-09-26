@@ -13,6 +13,16 @@
 
 // display all error except deprecated and notice
 $goingid = $_GET['dt'];
+//ทำต่อbossmail หลายยคน
+/*$bossmail;
+echo $_GET['boss'];
+if(strpos($_GET['boss'], ",")!==false){
+    $bossmail = explode(",", $_GET['boss']);
+    for($i=0;$i<count($bossmail);$i++){
+        echo '<br>'.$bossmail[$i].'<br>';
+    }
+}*/
+
 error_reporting(E_ALL & ~E_DEPRECATED & ~E_NOTICE);
 require_once "phpmailer/phpmailer/class.phpmailer.php";
 
@@ -82,40 +92,41 @@ $mail->AddAddress($_GET['boss']);
 $mail->MsgHTML($message);
 
 // add attachment if any
-$mail->AddAttachment('img/image.png');
+$mail->AddAttachment('pic/route.png');
 
 try {
     // send mail
     $mail->Send();
-   echo $msg = "Mail send successfully";
+    echo $msg = '<br>'."Mail send successfully";
    //echo $message;
     $server = "localhost";
     $user = "root";
     $pass = "";
-    $db = "ogf";
+    $db = "pongcool_ps";
     $conn = mysqli_connect($server, $user, $pass, $db);
     mysqli_set_charset($conn,"utf8");
     
-    $position;
+    /*$position;
     
-    $sql = "SELECT position FROM user WHERE user_id=".$_GET['uid'];
+    $sql = "SELECT position_id FROM user WHERE user_id=".$_GET['uid'];
     $result = mysqli_query($conn,$sql);
     if($result){
         while($response = mysqli_fetch_array($result,MYSQLI_ASSOC)){
-            $position = $response['position'];
+            $position = $response['position_id'];
         }
     }
-    if($position=="hr"){
+    if($position==18||$position==19){
         header( "location:hrview.php?uid=".$_GET['uid']."&branch=".$_GET['branch']);
         
     }
     else{
         header( "location:dootook.php?uid=".$_GET['uid']."&branch=".$_GET['branch'] );
         
-    }
+    }*/
  	exit(0);
 
-} catch (phpmailerException $e) {
+} 
+catch (phpmailerException $e) {
     $msg = $e->getMessage();
 } catch (Exception $e) {
     $msg = $e->getMessage();

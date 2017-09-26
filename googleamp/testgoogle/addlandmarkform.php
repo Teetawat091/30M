@@ -47,7 +47,7 @@
     $server = "localhost";
     $user = "root";
     $pass = "";
-    $db = "ogf";
+    $db = "pongcool_ps";
     $conn = mysqli_connect($server, $user, $pass, $db);
     mysqli_set_charset($conn,"utf8");
     ?>
@@ -278,19 +278,19 @@ function setMapOnAll(map) {
     			$id = 1;
     		}
     		else if($_POST['branchid']== "หาดใหญ่"){
-    			$id = 2;
+    			$id = 3;
 
     		}
     		elseif ($_POST['branchid']== "อยุธยา") {
-    			$id = 3;
+    			$id = 11;
     			# code...
     		}
     		elseif ($_POST['branchid']== "สุราษฯ") {
-    			$id = 4;
+    			$id = 2;
     			# code...
     		}
     		else if($_POST['branchid']== "ศรีราชา"){
-    			$id = 5;
+    			$id = 10;
 
     		}
 

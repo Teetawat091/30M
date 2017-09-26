@@ -33,13 +33,12 @@ html,body{
 	}
 </style>
 <body >
-<img src="img/image.png" width="70%">
 <div id="php">
 <?php
 $server = "localhost";
 $user = "root";
 $pass = "";
-$db = "ogf";
+$db = "pongcool_ps";
 $conn = mysqli_connect($server, $user, $pass, $db);
 mysqli_set_charset($conn,"utf8");
 
@@ -167,29 +166,60 @@ for($i=0;$i<$countstep;$i++){
 	}
 }
     
-    $bossmailsql = "SELECT boss_email FROM user WHERE user_id =".$uid;
-    //echo $bossmailsql;
+    $position;
     $bossmail;
-    $bossmailresult =  mysqli_query($conn,$bossmailsql);
-    if($bossmailresult){
-        while ($mailres= mysqli_fetch_array($bossmailresult,MYSQLI_ASSOC)){
-	 	
-	 	$bossmail=$mailres['boss_email'];
-	 }
-    }
-    //echo $bossmail;
-
-   /* $position;
-    $positionsql = "SELECT position FROM user WHERE user_id=".$uid;
+    $bossid;
+    $encodebossmail;
+    $positionsql = "SELECT position_id,leave_apporve_id FROM user WHERE user_id=".$uid;
     //echo $positionsql;
     $pos = mysqli_query($conn,$positionsql);
     if($pos){
     	while ($poss = mysqli_fetch_array($pos,MYSQLI_ASSOC)) {
-    		$position = $poss['position'];
+    		$position = $poss['position_id'];
+    		$bossid = $poss['leave_apporve_id'];
     	}
     }
-    echo $position;*/
-
+    else{
+    	echo "fail";
+    }
+    //print_r($bossid);
+    $bossid = str_replace("[", "", $bossid);
+    $bossid = str_replace("]", "", $bossid);				
+    //var_dump($bossid);
+    if(strpos($bossid, ",")!==false){
+    	$bossid = explode(",", $bossid);
+    	//echo count($bossid);
+    	for($i=0;$i<count($bossid);$i++){
+    		//echo $bossid[$i].'<br>';
+    		$bossmailsql = "SELECT email FROM user WHERE user.user_id =".$bossid[$i];
+    		//echo $bossmailsql;
+    		$bossmailresult =  mysqli_query($conn,$bossmailsql);
+    		if($bossmailresult){
+        		while ($mailres= mysqli_fetch_array($bossmailresult,MYSQLI_ASSOC)){
+	 			$bossmail[$i]=$mailres['email'];
+	 			//echo $bossmail[$i];
+	 }
+    }
+    	}
+    	
+    }
+    else{
+    	//echo $bossid;
+    	$bossmailsql = "SELECT email FROM user WHERE user.user_id =".$bossid;
+    	//echo $bossmailsql;
+    	$bossmailresult =  mysqli_query($conn,$bossmailsql);
+    	if($bossmailresult){
+        	while ($mailres= mysqli_fetch_array($bossmailresult,MYSQLI_ASSOC)){	
+	 		$bossmail[$i]=$mailres['email'];
+	 	}
+    }
+    
+    }
+    echo '<pre>';
+    echo var_dump($bossmail);
+    echo '</pre>';
+    $encodebossmail = json_encode($bossmail);
+    	echo $encodebossmail;
 	}
 mysqli_close($conn);
 
@@ -206,18 +236,21 @@ mysqli_close($conn);
 </div>	
 <div id="backbtn" style="float: left; padding-left: 30px"><a id = "backlink" href=""><button>Back</button></a></div>
 </div>
+<img src="pic/route.png" width="70%">
 </body>
 <script type="text/javascript">
 
-
-	//var userposition = "<?php echo $position; ?>";
+	var bmail = <?php echo $encodebossmail; ?>;
+	console.log(bmail);
+	
+	var userposition = "<?php echo $position; ?>";
 	//console.log(userposition);
 
-	/*if (userposition==="hr") {
+	if (userposition==18||userposition==19) {
 		document.getElementById('backlink').href = "hrview.php?uid=<?php echo $uid?>&branch=<?php echo $_POST['branch']?>"
 	}else{
 		document.getElementById('backlink').href = "dootook.php?uid=<?php echo $uid?>&branch=<?php echo $_POST['branch']?>"
-	}*/
+	}
 	
 </script>
 </html>
