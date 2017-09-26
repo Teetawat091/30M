@@ -206,7 +206,7 @@ for($i=0;$i<$countstep;$i++){
     }
     else{
     	for($i=0;$i<count($bossid);$i++){
-    	echo $bossid;
+    	//echo $bossid;
     	$bossmailsql = "SELECT email FROM user WHERE user.user_id =".$bossid;
     	//echo $bossmailsql;
     	$bossmailresult =  mysqli_query($conn,$bossmailsql);
@@ -218,11 +218,11 @@ for($i=0;$i<$countstep;$i++){
     
     }
 }
-    echo '<pre>';
+   /* echo '<pre>';
     echo var_dump($bossmail);
     echo '</pre>';
     $encodebossmail = json_encode($bossmail);
-    	echo $encodebossmail;
+    	echo $encodebossmail;*/
 	}
 mysqli_close($conn);
 
