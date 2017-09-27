@@ -305,6 +305,7 @@ function setMapOnAll(map) {
     		}
 
     	}
+        mysqli_close($conn);
     ?>
     </body>
     </html>

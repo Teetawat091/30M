@@ -4,8 +4,8 @@
 	
 	$serverName	  = "localhost";
 	$userName	  = "root";
-	$userPassword	  = "";
-	$dbName	  = "pongcool_ps";
+	$userPassword = "";
+	$dbName	= "pongcool_ps";
 
 	$con = mysqli_connect($serverName,$userName,$userPassword,$dbName);
     mysqli_set_charset($con,"utf8");
@@ -24,14 +24,17 @@
 	$strSQL = "SELECT * FROM user WHERE username = '".$strUsername."' 
 	and password = PASSWORD('".$strPassword."')";
 	//.$strPassword."'";
-	echo $strSQL;
+	//echo $strSQL;
 	$objQuery = mysqli_query($con,$strSQL);
 	$objResult = mysqli_fetch_array($objQuery);
 	if(!$objResult)
 	{
-		echo "<script type = 'text/javascript'>confirm('Username or Password Wrong');</script>";
-		//header('location:index.php');
-		
+		?>
+		<script type = 'text/javascript'>
+			alert('Username or Password Wrong')
+		 	window.history.back()
+		</script>
+		<?php
 		exit();
 	}
 	else

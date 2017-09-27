@@ -25,6 +25,7 @@ else{
 	echo "Approve Fail";
 
 }
+mysqli_close($conn);
  ?>
 </body>
 </html>

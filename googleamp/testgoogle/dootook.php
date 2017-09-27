@@ -30,12 +30,19 @@
         left: 15%;
         z-index: 5;
         background-color: #fff;
-        padding: 5px;
+        padding: 7.6px;
         border: 0px solid #999;
         line-height: 30px;
-        padding-left: 10px;
-        
-        
+        padding-left: 10px; 
+      }
+      #description{
+        position: absolute;
+        left: 47.7%;
+        display: inline-flex;
+        padding: 4.7px;
+        z-index: 5;
+        background-color: #fff;
+
       }
       #right-panel {
         float: right;
@@ -401,9 +408,16 @@
       <input type="hidden" name="branch" id="branch" value="<?php echo $_GET['branch'] ?>">
       <input type="hidden" name="userlat" id="userlat" value="<?php echo $userbranchlatlng[0] ?>">
       <input type="hidden" name="userlng" id="userlng" value="<?php echo $userbranchlatlng[1] ?>">
+      <input type="hidden" name="descriptions" id="descriptions" value="">
     
     </form>
   
+    </div>
+    <div
+    id="description">
+    <button id="adddescription" onclick="showdialog()"> Add description</button><br><br><br>
+    <button id="save" style="display: none;" onclick="hidedialog()">save description</button>
+   <textarea  rows="2" cols="15" id="desc" style="border-radius: 4px ;display:none;"></textarea>
     </div>
       <body >
         <div id="map" class="col-xs-12 col-md-12 col-lg-10"></div>
@@ -413,7 +427,26 @@
     <script>
      document.getElementById('or').value = <?php echo $userbranchlatlng[0]?>;
      document.getElementById('or').value = document.getElementById('or').value+","+<?php echo $userbranchlatlng[1] ?>;
-     document.getElementById('cam').value = <?php echo $userbranchlatlng[2] ?>;    
+     document.getElementById('cam').value = <?php echo $userbranchlatlng[2] ?>;  
+
+     function showdialog(){
+      $("#desc").show(1000);
+
+      //document.getElementById('desc').style.display = 'block';
+      document.getElementById('save').style.display = 'block';
+      document.getElementById('adddescription').style.display = 'none';
+     }
+     function hidedialog(){
+
+      //console.log(document.getElementById('desc').value);
+      $("#desc").hide(1000);
+      document.getElementById('save').style.display = 'none';
+      document.getElementById('adddescription').style.display = 'block';
+      document.getElementById('descriptions').value = document.getElementById('desc').value;
+      console.log(document.getElementById('descriptions').value);
+
+     }
+
     </script>
 
 </html>

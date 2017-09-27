@@ -25,6 +25,7 @@ input[type=text],select,input[type=number],input[type=password],textarea,input[t
 
 #data{
 	text-align: center;
+	overflow:  hidden;
 	overflow-y: scroll;
 	height: 100%;
 }
@@ -56,8 +57,8 @@ input[type=text],select,input[type=number],input[type=password],textarea,input[t
 
 		<strong>Name : </strong><input type="text" name="name" value=""><br><br>
 		<strong>Surname : </strong><input type="text" name="sname" value=""><br><br>
-		<strong>User Code : </strong><input type="number" name="" value="1080"><br><br>
-		<strong>Username : </strong><input type="text" name="user" value=""><br><br>
+		<strong>User Code : </strong><input type="number" name="usercode" value="1080"><br><br>
+		<strong>Username : </strong><input type="text" name="users" value=""><br><br>
 		<strong>Password : </strong><input type="password" name="pass" value=""><br><br>
 		<strong>Email : </strong><input type="text" name="mail"><br><br>
 		<strong>Dob : </strong><input type="text" name="dob" value=""><br><br>
@@ -103,7 +104,7 @@ input[type=text],select,input[type=number],input[type=password],textarea,input[t
 			 }
 			 }
 			?>
-			<option></option>
+			
 		</select> <br><br>
 		<strong>UserStatus : </strong>
 
@@ -114,11 +115,37 @@ input[type=text],select,input[type=number],input[type=password],textarea,input[t
 			<option value="Retire">Retire</option>
 		</select>
 
-		<strong>Leave Approve Id</strong> <input type="text" name="leave"><br><br>
+		<strong>Leave Approve Id</strong> <input type="text" name="leave" id="leave" value="" >
+
+		<select id="bossid" onchange="setval(this.value)">
+			<option selected="selected" value="">Please select your boss</option>
+			<?php
+			$bossidsql = "SELECT name,user_id FROM user WHERE user_id>910";
+			$boss = mysqli_query($connect,$bossidsql);
+			if($boss){
+				while ($row = mysqli_fetch_array($boss,MYSQLI_ASSOC)) {
+					?>
+					<option value="<?php echo $row['user_id'] ?>"><?php echo $row['user_id']."-".$row['name'];?></option>
+
+					<?php
+				}
+			}
+			
+			 ?>
+			
+		</select>
+		<br><br>
 
 		<input type="submit" name="submit" value="submit">
 	</form>
 </div>
 
 </body>
+<script type="text/javascript">
+	function setval(value) {
+		var boss = document.getElementById('leave').value+"["+value+"],";
+
+		document.getElementById('leave').value = boss;
+	}
+</script>
 </html>

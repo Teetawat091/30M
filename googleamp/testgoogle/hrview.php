@@ -11,6 +11,7 @@
 <style type="text/css">
 	html,body{
 		height: 100%;
+		background-size: cover;
 	}
 	
 	#leftpanel{
@@ -24,6 +25,7 @@
 		font-family: 'Roboto','sans-serif';
 		transition: width 3s;
 		text-align: center;
+
 	}
 	button.btn{
 		width: 70%;
@@ -49,7 +51,8 @@
 <strong> Selectform </strong><br><br><br>
 	<a href="hrview.php?page=addlandmarkform&uid=<?php echo $_GET['uid'] ?>&branch=<?php echo $_GET['branch']?>" id="landmark"><button class="btn" id="addlandmarkform"><strong><i>Add location form</i></strong></button></a>
 	<br><br>
-	<a href="hrview.php?page=dootook&uid=<?php echo $_GET['uid'] ?>&branch=<?php echo $_GET['branch']?>" id="dootook"><button class="btn" id="dootook"><strong><i>Outgoing Form</i></strong></button></a>
+	<a href="hrview.php?page=dootook&uid=<?php echo $_GET['uid'] ?>&branch=<?php echo $_GET['branch']?>" id="dootook"><button class="btn" id="dootook"><strong><i>Outgoing Form</i></strong></button></a> <br><br>
+	<a href="hrview.php?page=adduser&uid=<?php echo $_GET['uid'] ?>&branch=<?php echo $_GET['branch'] ?>" id="adduser"><button class="btn" id="adds"><strong><i>Add user</i></strong></button></a>
 	
 	
 </div>

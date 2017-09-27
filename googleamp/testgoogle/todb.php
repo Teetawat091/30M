@@ -183,7 +183,7 @@ for($i=0;$i<$countstep;$i++){
     	echo "fail";
     }
 
-    print_r($bossid);
+    //print_r($bossid);
     $bossid = str_replace("[", "", $bossid);
     $bossid = str_replace("]", "", $bossid);				
     //var_dump($bossid);
@@ -218,11 +218,11 @@ for($i=0;$i<$countstep;$i++){
     
     }
 }
-   /* echo '<pre>';
+   /*echo '<pre>';
     echo var_dump($bossmail);
-    echo '</pre>';
+    echo '</pre>';*/
     $encodebossmail = json_encode($bossmail);
-    	echo $encodebossmail;*/
+    	//echo $encodebossmail;
 	}
 mysqli_close($conn);
 
